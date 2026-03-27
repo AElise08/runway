@@ -420,8 +420,8 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full md:max-w-7xl mx-auto px-4 md:px-12 lg:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 lg:gap-32 pb-40">
-              <div className="lg:col-span-8 space-y-12 md:space-y-16 lg:space-y-20">
+            <div className="w-full md:max-w-7xl xl:max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12 xl:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 xl:gap-24 pb-40">
+              <div className="lg:col-span-8 space-y-12 md:space-y-16 lg:space-y-20 min-w-0">
                 <div className="relative pb-12 md:pb-16 border-b border-white/5">
                   <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
                   <p className="text-3xl md:text-6xl font-serif italic leading-[1.4] md:leading-[1.3] text-white/90 selection:bg-white selection:text-black">
@@ -460,7 +460,7 @@ const App: React.FC = () => {
               </div>
 
               <div className="lg:col-span-4 space-y-12 md:space-y-20">
-                <div className="p-6 md:p-12 bg-white/[0.02] border border-white/5 space-y-8 md:space-y-12 md:sticky md:top-40">
+                <div className="p-6 md:p-8 lg:p-10 bg-white/[0.02] border border-white/5 space-y-8 md:space-y-12 md:sticky md:top-40 min-w-0">
                   
                   {/* Rating Visual Bar */}
                   <div className="space-y-4">
@@ -477,7 +477,7 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="space-y-10">
-                    <h4 className="text-[12px] uppercase tracking-[0.5em] text-white/30 font-black border-b border-white/10 pb-4">Aquisições Mandatórias</h4>
+                    <h4 className="text-[10px] xl:text-[12px] uppercase tracking-[0.3em] xl:tracking-[0.5em] text-white/30 font-black border-b border-white/10 pb-4 break-words">Aquisições Mandatórias</h4>
                     <div className="flex flex-col gap-8">
                       {result.suggestedAccessories.map((item, i) => (
                         <div key={i} className="group flex flex-col gap-2">
@@ -489,8 +489,8 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="pt-12 border-t border-white/5 space-y-8">
-                    <h4 className="text-[12px] uppercase tracking-[0.5em] text-white/30 font-black">Status de Publicação</h4>
-                    <div className="flex items-center gap-6">
+                    <h4 className="text-[10px] xl:text-[12px] uppercase tracking-[0.3em] xl:tracking-[0.5em] text-white/30 font-black break-words">Status de Publicação</h4>
+                    <div className="flex items-center gap-4 xl:gap-6">
                        <div className={`w-6 h-6 rounded-full ${result.verdict === 'The Nod' ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : result.verdict === 'The Lip Purse' ? 'bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]' : 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.4)]'}`} />
                        <span className="text-xs md:text-sm uppercase tracking-[0.4em] font-black text-white/80">{result.verdict}</span>
                     </div>
@@ -503,13 +503,13 @@ const App: React.FC = () => {
                     <button 
                       onClick={exportVerdict}
                       disabled={isExporting}
-                      className="w-full py-6 md:py-8 bg-transparent border border-white text-white hover:bg-white hover:text-black transition-all uppercase text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.7em] font-black group flex items-center justify-center gap-4"
+                      className="w-full py-6 bg-transparent border border-white text-white hover:bg-white hover:text-black transition-all uppercase text-[8px] xl:text-[10px] tracking-[0.2em] xl:tracking-[0.4em] font-black group flex items-center justify-center gap-3"
                     >
                       {isExporting ? 'Processando..' : <><Download size={14} /> Exportar Capa</>}
                     </button>
                     <button 
                       onClick={reset}
-                      className="w-full py-6 md:py-8 bg-white text-black hover:bg-neutral-200 transition-all uppercase text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.7em] font-black group shadow-[0_0_40px_rgba(255,255,255,0.05)] flex items-center justify-center gap-4"
+                      className="w-full py-6 bg-white text-black hover:bg-neutral-200 transition-all uppercase text-[8px] xl:text-[10px] tracking-[0.2em] xl:tracking-[0.4em] font-black group shadow-[0_0_40px_rgba(255,255,255,0.05)] flex items-center justify-center gap-3"
                     >
                       <RefreshCw size={14} className="group-hover:rotate-180 transition-transform duration-1000" /> Nova Audiência
                     </button>
