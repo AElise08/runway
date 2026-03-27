@@ -6,7 +6,7 @@ import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
 import Auth from './components/Auth';
 import { supabase } from './services/supabase';
-import { analyzeLook } from './services/groqService';
+import { analyzeLook } from './services/mistralService';
 import { CritiqueResult, AppState, Profile } from './types';
 import { RefreshCw, Quote, Sparkles, X, ChevronDown, CameraOff, Clock, Download } from 'lucide-react';
 
@@ -175,7 +175,7 @@ const App: React.FC = () => {
       if (errorMsg.includes("429") || errorMsg.includes("quota")) {
         setError("Miranda está em uma reunião com Donatella. Ela não tem tempo para você agora. Tente em alguns minutos.");
       } else if (errorMsg.includes("401") || errorMsg.includes("key") || errorMsg.toLowerCase().includes("unauthorized")) {
-        setError("Erro técnico: Chave da Groq inválida ou não configurada no Vercel. Demitam a TI.");
+        setError("Erro técnico: Chave da Mistral inválida ou não configurada no Vercel. Demitam a TI.");
       } else if (errorMsg.includes("413") || errorMsg.toLowerCase().includes("too large") || errorMsg.includes("size")) {
         setError("A foto enviada é grande demais até para o ego da Miranda. Reduza a qualidade.");
       } else {

@@ -1,4 +1,4 @@
-import Groq from 'groq-sdk';
+import { Mistral } from '@mistralai/mistralai';
 
 const getSystemInstruction = (isPremium: boolean) => {
   const currentDate = new Date();
@@ -31,9 +31,8 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
 
 export const analyzeLook = async (imageBase64: string, isPremium: boolean = false): Promise<string> => {
   try {
-    const groq = new Groq({ 
-      apiKey: import.meta.env.VITE_GROQ_API_KEY || '',
-      dangerouslyAllowBrowser: true 
+    const mistral = new Mistral({
+      apiKey: import.meta.env.VITE_MISTRAL_API_KEY || ''
     });
     
     let formattedImage = imageBase64;
@@ -41,28 +40,29 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
       formattedImage = `data:image/jpeg;base64,${imageBase64}`;
     }
 
-    const completion = await groq.chat.completions.create({
+    const completion = await mistral.chat.complete({
+      model: "pixtral-12b-2409",
+      temperature: 0.2,
       messages: [
         {
           role: "user",
           content: [
             { type: "text", text: getSystemInstruction(isPremium) + "\n\nAnalise o look anexado e retorne SOMENTE o JSON puro, sem blocos de codigo e sem formatacao markdown." },
-            {
-              type: "image_url",
-              image_url: {
-                url: formattedImage,
-              }
-            }
-          ],
-        },
+            { type: "image_url", imageUrl: formattedImage }
+          ]
+        }
       ],
-      model: "llama-3.2-90b-vision-preview",
-      temperature: 0.2
+      responseFormat: {
+        type: "json_object",
+      },
     });
 
-    let content = completion.choices[0]?.message?.content || '{}';
+    let content = completion.choices?.[0]?.message?.content || '{}';
     
-    // Tratamento radical para extrair o JSON mesmo se a IA insistir em adicionar textos ou markdown ("""json ... """)
+    if (typeof content !== 'string') {
+       content = JSON.stringify(content);
+    }
+    
     if (content.includes('```json')) {
       content = content.split('```json')[1].split('```')[0].trim();
     } else if (content.includes('```')) {
@@ -77,7 +77,7 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
 
     return content;
   } catch (error) {
-    console.error("Erro no Groq:", error);
+    console.error("Erro na Mistral:", error);
     throw error;
   }
 };
