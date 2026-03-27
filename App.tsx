@@ -6,7 +6,7 @@ import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
 import Auth from './components/Auth';
 import { supabase } from './services/supabase';
-import { analyzeLook } from './services/geminiService';
+import { analyzeLook } from './services/groqService';
 import { CritiqueResult, AppState, Profile } from './types';
 import { RefreshCw, Quote, Sparkles, X, ChevronDown, CameraOff, Clock, Download } from 'lucide-react';
 
