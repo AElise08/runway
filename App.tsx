@@ -517,64 +517,62 @@ const App: React.FC = () => {
 
       {result && image && (
         <div style={{ position: 'absolute', top: -9999, left: -9999, opacity: 1, pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1440px] bg-white relative p-12 flex flex-col items-center overflow-hidden font-sans text-black shadow-2xl">
-            {/* Magazine Name Banner */}
-            <div className="w-full text-center z-20 top-12 absolute pt-8">
-              <h1 className="text-[12rem] font-serif tracking-tighter leading-none text-black drop-shadow-lg scale-y-[1.2]">RUNWAY</h1>
-              <div className="flex justify-between items-center px-12 mt-8 text-black/80 font-black uppercase tracking-[0.8em] text-lg">
+          <div ref={exportRef} className="w-[1080px] h-[1440px] bg-white relative flex flex-col items-center overflow-hidden font-sans text-black shadow-2xl">
+            
+            {/* Imagem de Fundo (Full Bleed - Ocupa tudo) */}
+            <div className="absolute inset-0 z-0 border-[16px] border-white">
+              <img src={image} className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]" alt="" />
+              {/* Gradiente escuro apenas na parte inferior e superior para garantir leitura do texto */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
+            </div>
+
+            {/* Cabeçalho "RUNWAY" (Texto vermelho como na Vogue/Runway Meryl Streep) */}
+            <div className="w-full text-center z-20 pt-16 px-16">
+              <h1 className="text-[14rem] font-serif tracking-tighter leading-none text-[#d91921] drop-shadow-2xl scale-y-[1.15] scale-x-[1.05]">RUNWAY</h1>
+              <div className="flex justify-between items-center px-8 mt-2 text-white font-black uppercase tracking-[0.6em] text-xl drop-shadow-md">
                 <span>M A G A Z I N E</span>
                 <span>ISSUE EDITION</span>
               </div>
             </div>
 
-            {/* The Image (Full bleed underneath header) */}
-            <div className="absolute inset-0 mt-[260px] mx-12 mb-12 border border-neutral-200 overflow-hidden z-10 shadow-[0_0_80px_rgba(0,0,0,0.1)]">
-              <img src={image} className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]" alt="" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80"></div>
-              
-              {/* Overlay Content */}
-              <div className="absolute bottom-16 left-16 right-16 flex flex-col justify-end h-full z-30 space-y-12">
-                <div className="flex justify-between items-end mb-4">
-                  <div className="bg-white text-black px-6 py-2 uppercase tracking-[0.5em] font-black text-sm">
-                    {result.verdict}
-                  </div>
-                  <div className="text-right">
-                    <p className="text-white text-[8rem] font-serif italic leading-none">{result.rating}<span className="text-4xl text-white/50">%</span></p>
-                    <p className="text-white/60 text-lg uppercase tracking-[0.4em] font-black">Editorial Score</p>
-                  </div>
-                </div>
-
-                <p className="text-white text-6xl font-serif italic leading-tight drop-shadow-2xl">"{result.lead}"</p>
-
-                <div className="w-full grid grid-cols-2 gap-12 pt-12 border-t border-white/20">
-                  <div className="space-y-4">
-                    <p className="text-white text-2xl font-black uppercase tracking-[0.2em]">{result.sections[0]?.title}</p>
-                    <p className="text-white/80 text-xl leading-relaxed font-light line-clamp-4">{result.sections[0]?.content}</p>
-                  </div>
-                  <div className="space-y-4">
-                    <p className="text-white text-2xl font-black uppercase tracking-[0.2em]">Mandatory Cop</p>
-                    <p className="text-white/80 text-xl leading-relaxed font-light">{result.suggestedAccessories[0]}</p>
-                  </div>
-                </div>
+            {/* Overlay de Textos Flutuantes (Como manchetes de revista) */}
+            <div className="absolute top-[400px] left-16 max-w-[380px] z-30 space-y-12">
+              <div className="space-y-4 shadow-[0_0_40px_rgba(0,0,0,0.5)] bg-black/20 p-6 backdrop-blur-sm border-l-4 border-[#d91921]">
+                <p className="text-[#d91921] text-4xl font-black uppercase italic leading-none shadow-black drop-shadow-md">HELL ON <br/>HEELS!</p>
+                <p className="text-white text-2xl uppercase tracking-[0.1em] font-bold drop-shadow-md leading-tight">
+                  <span className="text-[#d91921]">THE</span> SCORE <span className="text-[#d91921]">OF</span> FASHION:
+                </p>
+                <p className="text-white/90 text-lg uppercase tracking-wider font-light drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
+                <p className="text-white text-7xl font-serif italic drop-shadow-xl pt-2">{result.rating}%</p>
               </div>
             </div>
 
-            {/* Barcode / Footer details floating on bottom edge of image */}
-            <div className="absolute bottom-20 right-20 z-40 bg-white p-4 rounded-sm">
-              <div className="w-40 h-16 bg-black/5 flex flex-col justify-between p-2 blur-[0.3px]">
-                <div className="w-full h-8 flex gap-1 items-end">
-                   {[...Array(20)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 6 + 1 + 'px'}}></div>)}
+            <div className="absolute bottom-[350px] left-16 z-30 space-y-2">
+               <h3 className="text-white text-5xl font-serif italic drop-shadow-2xl bg-black/30 p-2 leading-tight">"{result.lead}"</h3>
+            </div>
+
+            <div className="absolute bottom-[200px] right-16 z-30 text-right max-w-[450px]">
+               <h3 className="text-[#d91921] text-6xl font-light uppercase tracking-tighter drop-shadow-xl bg-white/90 px-4 py-2 inline-block">THE VERDICT</h3><br/>
+               <h4 className="text-white text-5xl font-bold uppercase drop-shadow-xl mt-2">{result.verdict}!</h4>
+            </div>
+
+            <div className="absolute bottom-16 left-16 max-w-[600px] z-30">
+               <p className="text-white text-3xl font-black uppercase tracking-[0.2em] drop-shadow-md pb-2 border-b border-white/30">{result.sections[0]?.title}</p>
+               <p className="text-white/90 text-2xl font-serif italic mt-4 drop-shadow-md bg-black/40 p-4 leading-normal line-clamp-3">{result.sections[0]?.content}</p>
+            </div>
+
+            {/* Código de barras no rodapé */}
+            <div className="absolute bottom-16 right-16 z-40 bg-white p-3 shadow-2xl">
+              <div className="flex flex-col justify-between p-1">
+                <div className="w-48 h-12 flex gap-[2px] items-end">
+                   {[...Array(35)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1 + 'px'}}></div>)}
                 </div>
-                <div className="flex justify-between text-[10px] font-mono tracking-widest">
-                  <span>ISSN 0921</span>
-                  <span>MIRANDA</span>
+                <div className="flex justify-between text-[14px] font-mono tracking-widest pt-1">
+                  <span>9 770921 213008</span>
                 </div>
               </div>
             </div>
             
-            <div className="absolute bottom-24 left-20 z-40 text-sm uppercase tracking-[0.6em] font-black text-white/50">
-              PROJECT MIRANDA
-            </div>
           </div>
         </div>
       )}
