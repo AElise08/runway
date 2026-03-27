@@ -517,34 +517,64 @@ const App: React.FC = () => {
 
       {result && image && (
         <div style={{ position: 'absolute', top: -9999, left: -9999, opacity: 1, pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1920px] bg-[#050505] relative border-[12px] border-white flex flex-col items-center overflow-hidden font-sans text-white">
-            <h1 className="absolute top-12 left-0 right-0 text-center text-[10rem] font-serif italic tracking-tighter leading-none opacity-5 z-20">VOGUE</h1>
-            <h1 className="mt-24 text-[7rem] font-serif italic tracking-tighter leading-none z-20 mix-blend-difference mb-12 text-white">RUNWAY</h1>
-            
-            <div className="relative w-[920px] h-[920px] bg-neutral-900 border border-white/10 overflow-hidden shadow-2xl z-10">
-              <img src={image} className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]" alt="" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-              <div className="absolute bottom-16 left-16 right-16 flex flex-col items-center text-center space-y-10">
-                <VerdictBadge verdict={result.verdict} />
-                <p className="text-white text-5xl font-serif italic leading-snug">"{result.lead}"</p>
+          <div ref={exportRef} className="w-[1080px] h-[1440px] bg-white relative p-12 flex flex-col items-center overflow-hidden font-sans text-black shadow-2xl">
+            {/* Magazine Name Banner */}
+            <div className="w-full text-center z-20 top-12 absolute pt-8">
+              <h1 className="text-[12rem] font-serif tracking-tighter leading-none text-black drop-shadow-lg scale-y-[1.2]">RUNWAY</h1>
+              <div className="flex justify-between items-center px-12 mt-8 text-black/80 font-black uppercase tracking-[0.8em] text-lg">
+                <span>M A G A Z I N E</span>
+                <span>ISSUE EDITION</span>
               </div>
             </div>
 
-            <div className="mt-16 w-[920px] grid grid-cols-2 gap-16 text-left z-20">
-              <div className="space-y-6">
-                <p className="text-2xl font-black uppercase tracking-[0.3em] font-serif text-white/90">{result.sections[0]?.title || 'A Tirania do Caimento'}</p>
-                <p className="text-xl text-white/60 leading-relaxed font-light line-clamp-[9]">{result.sections[0]?.content}</p>
+            {/* The Image (Full bleed underneath header) */}
+            <div className="absolute inset-0 mt-[260px] mx-12 mb-12 border border-neutral-200 overflow-hidden z-10 shadow-[0_0_80px_rgba(0,0,0,0.1)]">
+              <img src={image} className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]" alt="" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80"></div>
+              
+              {/* Overlay Content */}
+              <div className="absolute bottom-16 left-16 right-16 flex flex-col justify-end h-full z-30 space-y-12">
+                <div className="flex justify-between items-end mb-4">
+                  <div className="bg-white text-black px-6 py-2 uppercase tracking-[0.5em] font-black text-sm">
+                    {result.verdict}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-white text-[8rem] font-serif italic leading-none">{result.rating}<span className="text-4xl text-white/50">%</span></p>
+                    <p className="text-white/60 text-lg uppercase tracking-[0.4em] font-black">Editorial Score</p>
+                  </div>
+                </div>
+
+                <p className="text-white text-6xl font-serif italic leading-tight drop-shadow-2xl">"{result.lead}"</p>
+
+                <div className="w-full grid grid-cols-2 gap-12 pt-12 border-t border-white/20">
+                  <div className="space-y-4">
+                    <p className="text-white text-2xl font-black uppercase tracking-[0.2em]">{result.sections[0]?.title}</p>
+                    <p className="text-white/80 text-xl leading-relaxed font-light line-clamp-4">{result.sections[0]?.content}</p>
+                  </div>
+                  <div className="space-y-4">
+                    <p className="text-white text-2xl font-black uppercase tracking-[0.2em]">Mandatory Cop</p>
+                    <p className="text-white/80 text-xl leading-relaxed font-light">{result.suggestedAccessories[0]}</p>
+                  </div>
+                </div>
               </div>
-              <div className="border-l border-white/20 pl-16 space-y-8">
-                <p className="text-2xl italic font-serif leading-relaxed text-white/80">Avaliado por Miranda Priestly. The Issue. O veredito é indiscutível.</p>
-                <div className="pt-4">
-                  <p className="text-5xl font-black font-serif">{result.rating}% <span className="text-xl font-light text-white/40 uppercase tracking-[0.3em] ml-2">Editorial Viability</span></p>
+            </div>
+
+            {/* Barcode / Footer details floating on bottom edge of image */}
+            <div className="absolute bottom-20 right-20 z-40 bg-white p-4 rounded-sm">
+              <div className="w-40 h-16 bg-black/5 flex flex-col justify-between p-2 blur-[0.3px]">
+                <div className="w-full h-8 flex gap-1 items-end">
+                   {[...Array(20)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 6 + 1 + 'px'}}></div>)}
+                </div>
+                <div className="flex justify-between text-[10px] font-mono tracking-widest">
+                  <span>ISSN 0921</span>
+                  <span>MIRANDA</span>
                 </div>
               </div>
             </div>
             
-            <div className="absolute bottom-12 right-16 text-xl uppercase tracking-[0.6em] font-black text-white/30">ED. VOL IV</div>
-            <div className="absolute bottom-12 left-16 text-xl uppercase tracking-[0.6em] font-black text-white/30">PROJECT MIRANDA</div>
+            <div className="absolute bottom-24 left-20 z-40 text-sm uppercase tracking-[0.6em] font-black text-white/50">
+              PROJECT MIRANDA
+            </div>
           </div>
         </div>
       )}
