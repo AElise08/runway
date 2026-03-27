@@ -270,8 +270,8 @@ const App: React.FC = () => {
         {state === 'idle' && (
           <div className="max-w-5xl mx-auto px-6 py-12 md:py-24 flex flex-col items-center text-center space-y-12 md:space-y-16 animate-in fade-in duration-1000">
             <div className="space-y-6 md:space-y-8">
-              <h2 className="text-4xl md:text-8xl font-serif italic text-white/90 tracking-tighter leading-tight md:leading-none">"Florais?<br className="md:hidden" /> Para a primavera?<br className="md:hidden" /> Inovador."</h2>
-              <p className="text-white/40 max-w-lg mx-auto leading-relaxed text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-light">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif italic text-white/90 tracking-tighter leading-tight md:leading-none max-w-4xl mx-auto break-words px-4">"Florais?<br /> Para a primavera?<br /> Inovador."</h2>
+              <p className="text-white/40 max-w-lg mx-auto leading-relaxed text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-light px-4">
                 A Edição de Setembro exige perfeição. Mostre-me sua melhor composição ou retire-se imediatamente.
               </p>
             </div>
@@ -339,8 +339,8 @@ const App: React.FC = () => {
         )}
 
         {state === 'camera' && (
-          <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-8 lg:py-12 flex flex-col items-center space-y-6 md:space-y-8 animate-in zoom-in-95 duration-500">
-            <div className="relative w-full max-w-md lg:max-w-[480px] aspect-[3/4] bg-neutral-900 overflow-hidden border border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.05)] rounded-sm group">
+          <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-8 lg:py-6 flex flex-col items-center space-y-6 animate-in zoom-in-95 duration-500">
+            <div className="relative w-full max-w-sm md:max-w-[380px] aspect-[3/4] bg-neutral-900 overflow-hidden border border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.05)] rounded-sm group">
               <video 
                 ref={videoRef} 
                 autoPlay 
