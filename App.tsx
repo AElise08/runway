@@ -170,9 +170,32 @@ const App: React.FC = () => {
     reader.onload = (event) => {
       const dataUrl = event.target?.result as string;
       if (dataUrl) {
-        setImage(dataUrl);
-        const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
-        processImage(base64String);
+        const img = new Image();
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+          const MAX_DIMENSION = 800;
+
+          if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+            const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+            width = width * ratio;
+            height = height * ratio;
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            setImage(compressedDataUrl);
+            const base64String = compressedDataUrl.replace(/^data:image\/\w+;base64,/, "");
+            processImage(base64String);
+          }
+        };
+        img.src = dataUrl;
       }
     };
     reader.onerror = () => {
