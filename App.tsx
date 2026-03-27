@@ -606,36 +606,14 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            {/* Bottom Elements: Selo Miranda & Barcode */}
-            <div className="absolute bottom-10 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
+            {/* Bottom Elements: Verdict & Barcode */}
+            <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
               
-              <div className="flex items-center gap-6">
-                {/* Official Miranda Seal */}
-                <div className="relative w-[100px] h-[100px] flex items-center justify-center">
-                  {/* Outer spinning text path */}
-                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="46" fill="none" stroke="#D32F2F" strokeWidth="2" strokeDasharray="4 2"/>
-                    <circle cx="50" cy="50" r="33" fill="none" stroke="white" strokeWidth="0.5" opacity="0.5"/>
-                    <path id="sealTextPath" d="M 50, 10 A 40,40 0 1,1 49.9,10" fill="transparent" />
-                    <text className="text-[12px] font-black uppercase tracking-[0.2em]" fill="white" opacity="0.9">
-                      <textPath href="#sealTextPath" startOffset="0%">
-                        • THE MIRANDA EVALUATION
-                      </textPath>
-                    </text>
-                  </svg>
-                  {/* Center Monogram */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center pt-1">
-                    <span className="text-[#D32F2F] font-serif text-5xl font-bold italic leading-none drop-shadow-lg">M</span>
-                  </div>
-                </div>
-
-                {/* Refined Verdict text */}
-                <div className="flex flex-col justify-center translate-y-2">
-                  <p className="text-white/50 text-[10px] font-bold uppercase tracking-[0.6em] mb-1">OFFICIAL RATING</p>
-                  <h4 className="text-white text-3xl font-black uppercase tracking-tight mix-blend-difference">
-                    <span className="text-[#D32F2F]">VERDICT: </span> {result.verdict.replace(/The /i, '').toUpperCase()}
-                  </h4>
-                </div>
+              <div className="flex flex-col">
+                <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">OFFICIAL VERDICT</p>
+                <h4 className="text-white text-3xl font-black uppercase tracking-tight">
+                  <span className="text-[#D32F2F]">THE </span> {result.verdict.replace(/The /i, '').toUpperCase()}
+                </h4>
               </div>
 
               <div className="flex flex-col items-end gap-2">
