@@ -1,8 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import { User } from '@supabase/supabase-js';
-import { removeBackground } from '@imgly/background-removal';
 import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
 import Auth from './components/Auth';
@@ -14,8 +12,6 @@ import { RefreshCw, Quote, Sparkles, X, ChevronDown, CameraOff, Clock, Download 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState | 'camera'>('idle');
   const [image, setImage] = useState<string | null>(null);
-  const [cutoutImage, setCutoutImage] = useState<string | null>(null);
-  const [isRemovingBg, setIsRemovingBg] = useState(false);
   const [result, setResult] = useState<CritiqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
@@ -132,7 +128,7 @@ const App: React.FC = () => {
 
       let targetWidth = width;
       let targetHeight = height;
-      const MAX_DIMENSION = 800; // Reduz a resolução para não explodir os limites grátis (429/Tokens)
+      const MAX_DIMENSION = 800;
 
       if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
         const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
@@ -146,11 +142,9 @@ const App: React.FC = () => {
       if (ctx) {
         ctx.translate(targetWidth, 0);
         ctx.scale(-1, 1);
-        // Desenha redimensionado
         ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
         
-        // Compacta fortemente (reduz payload e uso de Tokens na API)
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
         setImage(dataUrl);
         
         const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
@@ -166,25 +160,8 @@ const App: React.FC = () => {
   const processImage = async (base64: string) => {
     setState('analyzing');
     setError(null);
-    setCutoutImage(null);
-    setIsRemovingBg(true);
-
-    // Inicia remoção de fundo em background
-    const url = `data:image/jpeg;base64,${base64}`;
-    removeBackground(url).then((blob: Blob) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob); 
-      reader.onloadend = () => {
-         setCutoutImage(reader.result as string);
-         setIsRemovingBg(false);
-      }
-    }).catch(e => {
-      console.error("Erro ao remover fundo", e);
-      setIsRemovingBg(false);
-    });
 
     try {
-      // Usa isPremium real do banco de dados (se carregado)
       const jsonStr = await analyzeLook(base64, isPremium);
       const parsed: CritiqueResult = JSON.parse(jsonStr);
       setResult(parsed);
@@ -193,7 +170,6 @@ const App: React.FC = () => {
       setUsageCount(newCount);
       localStorage.setItem('miranda_usage_count', newCount.toString());
       
-      // Update usage if on DB/Premium
       if (user && profile) {
          await supabase.from('profiles').update({ daily_looks: profile.daily_looks + 1 }).eq('id', user.id);
          setProfile({...profile, daily_looks: profile.daily_looks + 1});
@@ -221,7 +197,6 @@ const App: React.FC = () => {
     stopCamera();
     setState('idle');
     setImage(null);
-    setCutoutImage(null);
     setResult(null);
     setError(null);
   };
@@ -230,7 +205,13 @@ const App: React.FC = () => {
     if (!exportRef.current) return;
     try {
       setIsExporting(true);
-      const canvas = await html2canvas(exportRef.current, { useCORS: true, backgroundColor: '#000', scale: 2 } as any);
+      const canvas = await html2canvas(exportRef.current, { 
+        useCORS: true, 
+        backgroundColor: '#000', 
+        scale: 2,
+        width: 1080,
+        height: 1920
+      } as any);
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = 'miranda-capa.png';
@@ -391,7 +372,7 @@ const App: React.FC = () => {
             <div className="text-center space-y-6 md:space-y-10 max-w-md">
               <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Explique-me..."</h3>
               <p className="text-white/20 text-[8px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.8em] font-black leading-loose px-4">
-                {isRemovingBg ? "Recortando o excesso... Miranda gosta apenas do essencial." : "Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway."}
+                Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway.
               </p>
             </div>
           </div>
@@ -400,11 +381,10 @@ const App: React.FC = () => {
         {state === 'result' && result && image && (
           <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000">
             <div className="relative w-full h-[75vh] md:h-[80vh] lg:h-[85vh] bg-[#0a0a0a] border-b border-white/10 overflow-hidden flex flex-col justify-end">
-              {cutoutImage && <div className="absolute inset-0 bg-[#d91921]/10 blur-[100px]"></div>}
               <img 
-                src={cutoutImage || image} 
+                src={image} 
                 alt="Editorial Shot" 
-                className={`w-full ${cutoutImage ? 'h-[90%] object-contain relative z-10' : 'h-full object-cover absolute inset-0 grayscale-[0.05] contrast-[1.1]'}`}
+                className="w-full h-full object-cover absolute inset-0 grayscale-[0.05] contrast-[1.1]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 pointer-events-none"></div>
               
@@ -537,95 +517,91 @@ const App: React.FC = () => {
 
       <canvas ref={canvasRef} className="hidden" />
 
+      {/* Export Template - Hidden from view */}
       {result && image && (
-        <div style={{ position: 'absolute', top: -9999, left: -9999, opacity: 1, pointerEvents: 'none' }}>
+        <div style={{ position: 'fixed', top: '-99999px', left: '-99999px', width: '1080px', height: '1920px' }}>
           <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
 
-            {/* Foto de Fundo Inteira */}
-            <div className="absolute inset-0 z-0 bg-black flex flex-col justify-end">
-              {cutoutImage && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-[800px] h-[800px] bg-[#d91921] rounded-full blur-[120px] opacity-40"></div>
-                </div>
-              )}
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0 bg-black">
               <img 
-                src={cutoutImage || image} 
-                className={`w-full ${cutoutImage ? 'h-[85%] object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.8)] z-10 relative' : 'h-full object-cover absolute inset-0'}`} 
+                src={image} 
+                className="w-full h-full object-cover"
                 alt="" 
               />
-              {!cutoutImage && <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 via-40% to-black/95 z-10"></div>}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/90 z-10"></div>
             </div>
 
-            {/* === ZONA SUPERIOR (0–400px): Cabeçalho da Revista === */}
-            <div className="w-full text-center z-20 pt-12 px-8 flex flex-col items-center">
-              <h1 className="text-[14rem] font-serif tracking-tighter leading-[0.8] text-[#d91921] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] scale-y-110">RUNWAY</h1>
-              <div className="w-[800px] flex justify-between items-center mt-6 text-white font-bold uppercase tracking-[0.8em] text-xl drop-shadow-lg">
+            {/* Header - Magazine Title */}
+            <div className="w-full text-center z-20 pt-16 px-12 flex flex-col items-center">
+              <h1 className="text-[14rem] font-serif tracking-tighter leading-[0.75] text-[#d91921] drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] scale-y-110">RUNWAY</h1>
+              <div className="w-[900px] flex justify-between items-center mt-8 text-white font-bold uppercase tracking-[0.8em] text-2xl drop-shadow-lg">
                 <span>W E S T <span className="text-[#d91921]">E N D</span></span>
                 <span>I S S U E</span>
               </div>
             </div>
 
-            {/* === ZONA MÉDIA-ALTA (400–850px): Manchetes laterais === */}
-            <div className="absolute top-[400px] left-12 max-w-[380px] z-30 flex flex-col gap-4">
-              <p className="text-white text-4xl font-bold uppercase italic leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+            {/* Left Side Headlines */}
+            <div className="absolute top-[420px] left-16 max-w-[420px] z-30 flex flex-col gap-6">
+              <p className="text-white text-5xl font-bold uppercase italic leading-tight drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">
                 HELL ON <br/>
                 <span className="text-[#d91921]">HEELS!</span>
               </p>
 
-              <div className="space-y-1 mt-4">
-                <p className="text-[#d91921] text-2xl font-black uppercase tracking-wider drop-shadow-md">THE INDEX OF</p>
-                <p className="text-white text-3xl font-light uppercase tracking-[0.1em] drop-shadow-md">FASHION:</p>
-                <p className="text-white text-lg uppercase tracking-widest font-light mt-1 drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
+              <div className="space-y-2 mt-6">
+                <p className="text-[#d91921] text-3xl font-black uppercase tracking-wider drop-shadow-lg">THE INDEX OF</p>
+                <p className="text-white text-4xl font-light uppercase tracking-[0.15em] drop-shadow-lg">FASHION:</p>
+                <p className="text-white text-xl uppercase tracking-widest font-light mt-2 drop-shadow-lg">WHAT YOU NEED TO KNOW NOW.</p>
               </div>
 
-              {/* Avaliação destacada */}
-              <div className="mt-6 bg-[#d91921] text-white py-5 px-8 rounded-sm shadow-2xl inline-block -rotate-2 transform self-start">
-                <p className="text-xl uppercase tracking-[0.4em] font-black text-center mb-1">SCORE</p>
-                <p className="text-7xl font-serif italic font-bold leading-none">{result.rating}%</p>
+              {/* Score Badge */}
+              <div className="mt-8 bg-[#d91921] text-white py-6 px-10 rounded-sm shadow-2xl inline-block -rotate-2 transform self-start">
+                <p className="text-2xl uppercase tracking-[0.5em] font-black text-center mb-2">SCORE</p>
+                <p className="text-8xl font-serif italic font-bold leading-none">{result.rating}%</p>
               </div>
             </div>
 
-            {/* Informações da Lateral Direita */}
-            <div className="absolute top-[500px] right-12 max-w-[320px] z-30 text-right space-y-8">
-               <div className="space-y-2">
-                 <p className="text-white text-2xl font-serif drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">HOW TO</p>
-                 <p className="text-[#d91921] text-5xl font-black uppercase tracking-tighter drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">SURVIVE</p>
-                 <p className="text-white text-xl font-light uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">THE BOSS FROM HELL!</p>
+            {/* Right Side Info */}
+            <div className="absolute top-[520px] right-16 max-w-[380px] z-30 text-right space-y-10">
+               <div className="space-y-3">
+                 <p className="text-white text-3xl font-serif drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">HOW TO</p>
+                 <p className="text-[#d91921] text-6xl font-black uppercase tracking-tight drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">SURVIVE</p>
+                 <p className="text-white text-2xl font-light uppercase tracking-widest drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">THE BOSS FROM HELL!</p>
                </div>
             </div>
 
-            {/* === ZONA MÉDIA-BAIXA (850–1350px): Citação principal === */}
-            <div className="absolute top-[880px] left-14 right-14 z-30">
-               <h3 className="text-white text-[2.8rem] font-serif italic leading-[1.2] drop-shadow-[0_5px_8px_rgba(0,0,0,0.9)] text-center" style={{ display: '-webkit-box', WebkitLineClamp: 6, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+            {/* Main Quote */}
+            <div className="absolute top-[950px] left-20 right-20 z-30">
+               <h3 className="text-white text-[3.2rem] font-serif italic leading-[1.25] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center px-8" style={{ display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                  &ldquo;{result.lead}&rdquo;
                </h3>
             </div>
 
-            {/* === ZONA INFERIOR (1350–1750px): Análise + Veredito === */}
-            <div className="absolute bottom-[280px] left-16 right-16 z-30 flex gap-10">
-              {/* Análise à esquerda */}
-              <div className="flex-1 border-l-4 border-[#d91921] pl-6">
-                <p className="text-[#d91921] text-xl font-black uppercase tracking-[0.3em] drop-shadow-md mb-2">{result.sections[0]?.title}</p>
-                <p className="text-white/90 text-xl font-serif italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+            {/* Analysis Section */}
+            <div className="absolute bottom-[320px] left-20 right-20 z-30 flex gap-12">
+              {/* Left Analysis */}
+              <div className="flex-1 border-l-[6px] border-[#d91921] pl-8">
+                <p className="text-[#d91921] text-2xl font-black uppercase tracking-[0.4em] drop-shadow-lg mb-3">{result.sections[0]?.title}</p>
+                <p className="text-white/95 text-2xl font-serif italic drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
               </div>
-              {/* Veredito à direita */}
-              <div className="w-[280px] flex-shrink-0 text-right flex flex-col justify-end">
-                <p className="text-white text-lg uppercase tracking-[0.3em] font-light drop-shadow-md mb-2">OFFICIAL VERDICT</p>
-                <h4 className="text-[#d91921] text-3xl font-black uppercase drop-shadow-md">{result.verdict}</h4>
+              {/* Right Verdict */}
+              <div className="w-[320px] flex-shrink-0 text-right flex flex-col justify-end">
+                <p className="text-white text-xl uppercase tracking-[0.4em] font-light drop-shadow-lg mb-3">OFFICIAL VERDICT</p>
+                <h4 className="text-[#d91921] text-4xl font-black uppercase drop-shadow-lg">{result.verdict}</h4>
               </div>
             </div>
 
-            {/* === ZONA RODAPÉ (1750–1920px): Barcode + Branding === */}
-            <div className="absolute bottom-10 left-16 right-16 z-40 flex justify-between items-end">
-              <div className="text-base uppercase tracking-[0.6em] font-black text-white/50 drop-shadow-md">
+            {/* Footer with Barcode */}
+            <div className="absolute bottom-12 left-20 right-20 z-40 flex justify-between items-end">
+              <div className="text-xl uppercase tracking-[0.7em] font-black text-white/60 drop-shadow-lg">
                 PROJECT MIRANDA
               </div>
-              <div className="bg-white p-3 shadow-xl">
+              <div className="bg-white p-4 shadow-2xl">
                 <div className="flex flex-col items-center">
-                  <div className="w-48 h-14 flex gap-[2px] items-end justify-between px-1">
-                     {[...Array(38)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1 + 'px'}}></div>)}
+                  <div className="w-56 h-16 flex gap-[2px] items-end justify-between px-2">
+                     {[...Array(42)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1.5 + 'px'}}></div>)}
                   </div>
-                  <div className="w-full flex justify-between text-[12px] font-mono tracking-widest pt-1 font-bold text-black border-t border-black/20 mt-1">
+                  <div className="w-full flex justify-between text-[14px] font-mono tracking-widest pt-2 font-bold text-black border-t-2 border-black/20 mt-2 px-1">
                     <span>ISSN 0921</span>
                     <span>MIRANDA</span>
                   </div>
