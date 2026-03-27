@@ -249,7 +249,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black transition-colors duration-1000 relative">
+    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black transition-colors duration-1000 relative overflow-x-hidden w-full">
       <Header user={user} setShowAuth={setShowAuth} />
       
       {showAuth && !user && (
@@ -339,8 +339,8 @@ const App: React.FC = () => {
         )}
 
         {state === 'camera' && (
-          <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-12 flex flex-col items-center space-y-8 md:space-y-12 animate-in zoom-in-95 duration-500">
-            <div className="relative w-full max-w-lg aspect-[3/4] bg-neutral-900 overflow-hidden border border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.05)] rounded-sm group">
+          <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-8 lg:py-12 flex flex-col items-center space-y-6 md:space-y-8 animate-in zoom-in-95 duration-500">
+            <div className="relative w-full max-w-md lg:max-w-[480px] aspect-[3/4] bg-neutral-900 overflow-hidden border border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.05)] rounded-sm group">
               <video 
                 ref={videoRef} 
                 autoPlay 
@@ -399,7 +399,7 @@ const App: React.FC = () => {
 
         {state === 'result' && result && image && (
           <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000">
-            <div className="relative w-full h-[70vh] md:h-[90vh] bg-[#0a0a0a] border-b border-white/10 overflow-hidden flex flex-col justify-end">
+            <div className="relative w-full h-[75vh] md:h-[80vh] lg:h-[85vh] bg-[#0a0a0a] border-b border-white/10 overflow-hidden flex flex-col justify-end">
               {cutoutImage && <div className="absolute inset-0 bg-[#d91921]/10 blur-[100px]"></div>}
               <img 
                 src={cutoutImage || image} 
@@ -409,7 +409,7 @@ const App: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 pointer-events-none"></div>
               
               {/* Floating Result Info */}
-              <div className="absolute bottom-8 md:bottom-24 left-4 md:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-8 z-20">
+              <div className="absolute bottom-8 md:bottom-20 lg:bottom-24 left-4 md:left-12 lg:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-6 lg:space-y-8 z-20">
                 <div className="flex flex-wrap items-center gap-4 md:gap-6">
                   <VerdictBadge verdict={result.verdict} />
                   <div className="flex items-baseline gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-4 md:px-6 py-1 md:py-2 rounded-full">
@@ -418,7 +418,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 
-                <h2 className="text-5xl md:text-[10rem] font-serif italic tracking-tighter text-white leading-[0.8] md:leading-[0.8]">The<br className="md:hidden" /> Analysis.</h2>
+                <h2 className="text-5xl md:text-[7rem] lg:text-[10rem] font-serif italic tracking-tighter text-white leading-[0.85] md:leading-[0.8] max-w-full break-words">The<br className="md:hidden" /> Analysis.</h2>
                 <div className="flex flex-wrap items-center gap-3 md:gap-6 text-[8px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.6em] text-white/40 font-black">
                   <span>Issue</span>
                   <span className="w-1 md:w-1.5 h-1 md:h-1.5 bg-white/20 rounded-full hidden md:block"></span>
@@ -434,8 +434,8 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 md:px-24 py-16 md:py-32 grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-32">
-              <div className="lg:col-span-8 space-y-16 md:space-y-20">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 lg:gap-32">
+              <div className="lg:col-span-8 space-y-12 md:space-y-16 lg:space-y-20">
                 <div className="relative pb-12 md:pb-16 border-b border-white/5">
                   <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
                   <p className="text-3xl md:text-6xl font-serif italic leading-[1.4] md:leading-[1.3] text-white/90 selection:bg-white selection:text-black">
