@@ -582,22 +582,22 @@ const App: React.FC = () => {
 
             {/* Main Quote */}
             <div className="absolute top-[950px] left-20 right-20 z-30">
-               <h3 className="text-white text-[3.2rem] font-serif italic leading-[1.25] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center px-8" style={{ display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+               <h3 className="text-white/95 text-[2.2rem] font-serif italic leading-[1.4] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center px-12" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                  &ldquo;{result.lead}&rdquo;
                </h3>
             </div>
 
             {/* Analysis Section */}
-            <div className="absolute bottom-[320px] left-20 right-20 z-30 flex gap-12">
+            <div className="absolute bottom-[280px] left-20 right-20 z-30 flex gap-12">
               {/* Left Analysis */}
-              <div className="flex-1 border-l-[6px] border-[#d91921] pl-8">
-                <p className="text-[#d91921] text-2xl font-black uppercase tracking-[0.4em] drop-shadow-lg mb-3">{result.sections[0]?.title}</p>
-                <p className="text-white/95 text-2xl font-serif italic drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+              <div className="flex-1 border-l-[4px] border-[#d91921] pl-6">
+                <p className="text-[#d91921] text-lg font-black uppercase tracking-[0.3em] drop-shadow-lg mb-2">{result.sections[0]?.title}</p>
+                <p className="text-white/90 text-xl font-serif italic drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
               </div>
               {/* Right Verdict */}
               <div className="w-[320px] flex-shrink-0 text-right flex flex-col justify-end">
-                <p className="text-white text-xl uppercase tracking-[0.4em] font-light drop-shadow-lg mb-3">OFFICIAL VERDICT</p>
-                <h4 className="text-[#d91921] text-4xl font-black uppercase drop-shadow-lg">{result.verdict}</h4>
+                <p className="text-white/80 text-lg uppercase tracking-[0.4em] font-light drop-shadow-lg mb-2">OFFICIAL VERDICT</p>
+                <h4 className="text-[#d91921] text-3xl font-black uppercase drop-shadow-lg">{result.verdict}</h4>
               </div>
             </div>
 
