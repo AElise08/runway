@@ -127,15 +127,27 @@ const App: React.FC = () => {
         return;
       }
 
-      canvas.width = width;
-      canvas.height = height;
+      let targetWidth = width;
+      let targetHeight = height;
+      const MAX_DIMENSION = 800; // Reduz a resolução para não explodir os limites grátis (429/Tokens)
+
+      if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+        const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+        targetWidth = width * ratio;
+        targetHeight = height * ratio;
+      }
+
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.translate(width, 0);
+        ctx.translate(targetWidth, 0);
         ctx.scale(-1, 1);
-        ctx.drawImage(video, 0, 0, width, height);
+        // Desenha redimensionado
+        ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
         
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+        // Compacta fortemente (reduz payload e uso de Tokens na API)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
         setImage(dataUrl);
         
         const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
@@ -172,8 +184,8 @@ const App: React.FC = () => {
     } catch (err: any) {
       console.error("Analysis Error:", err);
       const errorMsg = err?.message || err?.toString() || "";
-      if (errorMsg.includes("429") || errorMsg.includes("quota")) {
-        setError("Miranda está em uma reunião com Donatella. Ela não tem tempo para você agora. Tente em alguns minutos.");
+      if (errorMsg.includes("429") || errorMsg.includes("quota") || errorMsg.includes("Too Many Requests")) {
+        setError("Miranda está em uma reunião com Donatella. Ela não tem tempo para você agora. Isso ocorre pelo altíssimo volume de acessos na IA. Tente novamente em 20 segundos.");
       } else if (errorMsg.includes("401") || errorMsg.includes("key") || errorMsg.toLowerCase().includes("unauthorized")) {
         setError("Erro técnico: Chave da Mistral inválida ou não configurada no Vercel. Demitam a TI.");
       } else if (errorMsg.includes("413") || errorMsg.toLowerCase().includes("too large") || errorMsg.includes("size")) {
