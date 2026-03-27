@@ -142,7 +142,7 @@ const App: React.FC = () => {
 
       let targetWidth = width;
       let targetHeight = height;
-      const MAX_DIMENSION = 512;
+      const MAX_DIMENSION = 1620;
 
       if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
         const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
@@ -158,7 +158,7 @@ const App: React.FC = () => {
         ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
         
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
         setImage(dataUrl);
         
         const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
@@ -188,7 +188,7 @@ const App: React.FC = () => {
         img.onload = () => {
           let width = img.width;
           let height = img.height;
-          const MAX_DIMENSION = 512;
+          const MAX_DIMENSION = 1620;
 
           if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
             const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
@@ -203,7 +203,7 @@ const App: React.FC = () => {
           
           if (ctx) {
             ctx.drawImage(img, 0, 0, width, height);
-            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.5);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.95);
             setImage(compressedDataUrl);
             const base64String = compressedDataUrl.replace(/^data:image\/\w+;base64,/, "");
             processImage(base64String);
@@ -627,7 +627,7 @@ const App: React.FC = () => {
             </div>
 
             {/* Additional Magazine Headers */}
-            <div className="absolute top-44 left-16 z-20 flex flex-col items-start uppercase">
+            <div className="absolute top-56 left-16 z-20 flex flex-col items-start uppercase">
                <span className="text-white/80 tracking-[0.6em] text-sm font-bold border-b border-[#D32F2F] pb-2 mb-2">Issue No. 4</span>
                <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
             </div>
@@ -645,17 +645,17 @@ const App: React.FC = () => {
 
             {/* Score Element - Selo Miranda */}
             <div className="absolute top-[400px] right-16 z-30">
-              <div className="w-56 h-56 rounded-full bg-black/80 backdrop-blur-sm flex flex-col justify-center items-center shadow-2xl border-[3px] border-white/80 p-2 relative overflow-hidden group">
-                <div className="absolute inset-2 rounded-full border border-white/30 dashed outline-dashed outline-1 outline-white/20"></div>
+              <div className="w-56 h-56 rounded-full bg-[#D32F2F] backdrop-blur-sm flex flex-col justify-center items-center shadow-2xl border-[3px] border-white p-2 relative overflow-hidden group">
+                <div className="absolute inset-2 rounded-full border border-white/50 dashed outline-dashed outline-1 outline-white/40"></div>
                 <div className="z-10 flex flex-col items-center">
                   <p className="text-white/90 text-[11px] font-bold uppercase tracking-[0.4em] mb-1 text-center">
                     SELO MIRANDA<br/>DE AVALIAÇÃO
                   </p>
                   <p className="text-white text-7xl font-serif italic font-black leading-none my-2 drop-shadow-lg">{result.rating}%</p>
                   <div className="flex gap-1 items-center justify-center">
-                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
-                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
-                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
+                    <span className="w-2 h-2 rounded-full bg-white"></span>
+                    <span className="w-2 h-2 rounded-full bg-white"></span>
+                    <span className="w-2 h-2 rounded-full bg-white"></span>
                   </div>
                 </div>
               </div>
