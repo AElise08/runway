@@ -157,6 +157,30 @@ const App: React.FC = () => {
     }
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setError("Isso não é uma imagem. Não teste a paciência de Miranda.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      if (dataUrl) {
+        setImage(dataUrl);
+        const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
+        processImage(base64String);
+      }
+    };
+    reader.onerror = () => {
+      setError("Erro ao ler a imagem da galeria. Tente novamente ou desista.");
+    };
+    reader.readAsDataURL(file);
+  };
+
   const processImage = async (base64: string) => {
     setState('analyzing');
     setError(null);
