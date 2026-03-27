@@ -10,29 +10,39 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
   return (
-    <header className="py-4 md:py-8 px-4 flex flex-col items-center justify-center border-b border-white/10 bg-black sticky top-0 z-50 relative group">
-      <div className="md:absolute md:top-8 md:right-6 mb-4 md:mb-0 w-full md:w-auto flex justify-end">
-        {user ? (
-          <button 
-            onClick={() => supabase.auth.signOut()} 
-            className="text-[9px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors"
-          >
-            Sair ({user.email?.split('@')[0]})
-          </button>
-        ) : (
-          <button 
-            onClick={() => setShowAuth(true)} 
-            className="text-[9px] uppercase tracking-[0.3em] font-black text-white hover:text-white/70 transition-colors border border-white/20 px-4 py-2"
-          >
-            Acesso Editorial
-          </button>
-        )}
-      </div>
+    <header className="sticky top-0 z-50 px-4 pt-4 md:pt-6">
+      <div className="max-w-6xl mx-auto rounded-full border border-[#f0e6db]/60 bg-[#f6f0e9]/95 text-[#16110f] shadow-[0_18px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+        <div className="flex items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-4">
+          <nav className="hidden md:flex items-center gap-6 text-[10px] uppercase tracking-[0.28em] font-black text-[#16110f]/70">
+            <a href="#landing-hero" className="hover:text-[#16110f] transition-colors">Roast</a>
+            <a href="#landing-benefits" className="hover:text-[#16110f] transition-colors">Desafios</a>
+            <a href="#landing-flow" className="hover:text-[#16110f] transition-colors">Como Funciona</a>
+          </nav>
 
-      <div className="flex flex-col items-center gap-2">
-        <h1 className="text-4xl md:text-8xl font-serif tracking-widest uppercase mb-1 md:mb-2 text-center">Runway</h1>
-        <div className="px-4 py-2 border border-[#D32F2F]/35 bg-[#240303]/60 text-[#FFD8D8] text-[10px] md:text-xs tracking-[0.3em] uppercase font-light text-center">
-          Runway Season
+          <div className="flex flex-col items-center flex-1 md:flex-none">
+            <h1 className="text-2xl md:text-5xl font-serif tracking-[0.25em] uppercase text-center">Runway</h1>
+            <span className="text-[8px] md:text-[10px] uppercase tracking-[0.38em] text-[#7f1d1d] font-black">
+              Runway Season
+            </span>
+          </div>
+
+          <div className="flex items-center justify-end gap-2 md:gap-3 min-w-[128px] md:min-w-[220px]">
+            {user ? (
+              <button
+                onClick={() => supabase.auth.signOut()}
+                className="px-4 md:px-5 py-2.5 rounded-full text-[9px] uppercase tracking-[0.28em] font-black text-[#16110f]/75 hover:text-[#16110f] transition-colors"
+              >
+                Sair
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowAuth(true)}
+                className="px-4 md:px-6 py-2.5 rounded-full bg-[#2a0505] text-[#fff1eb] text-[9px] uppercase tracking-[0.28em] font-black hover:bg-[#3b0909] transition-colors"
+              >
+                Acesso Editorial
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </header>

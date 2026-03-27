@@ -7,9 +7,10 @@ import Auth from './components/Auth';
 import { supabase } from './services/supabase';
 import { analyzeLook } from './services/mistralService';
 import { AnalysisContext, CritiqueResult, AppState, Profile } from './types';
-import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2 } from 'lucide-react';
+import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2, ArrowRight } from 'lucide-react';
 
 const MAX_EXPORT_DIMENSION = 3840;
+const MAX_DISPLAY_DIMENSION = 1920;
 const MAX_AI_DIMENSION = 800;
 const CAMPAIGN_RELEASE_DATE = new Date('2026-05-01T00:00:00');
 
@@ -77,6 +78,39 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
     promptContext: 'Considere repertório fashion, intenção editorial, ousadia e sofisticação visual.',
     teaser: 'Para descobrir se existe moda ali ou só figurino nervoso.',
     premiumAngle: 'substituições mais editoriais e ousadas sem perder sofisticação',
+  },
+];
+
+const LANDING_PILLARS = [
+  {
+    title: 'Roast Compartilhavel',
+    body: 'Um veredito memoravel, visualmente forte e pronto para virar story antes da dignidade voltar.',
+  },
+  {
+    title: 'Desafios Tematicos',
+    body: 'Look de trabalho, date night e outros contextos para aumentar comparacao, curiosidade e retorno.',
+  },
+  {
+    title: 'Premium Corrige',
+    body: 'Nao para na humilhacao: mostra como manter, tirar e substituir para o look finalmente funcionar.',
+  },
+];
+
+const LANDING_FLOW = [
+  {
+    step: '01',
+    title: 'Escolha o contexto',
+    body: 'Defina se a analise sera geral, para trabalho, encontro, primeira impressao ou fashion week.',
+  },
+  {
+    step: '02',
+    title: 'Envie o look',
+    body: 'Use a camera ou importe uma foto e receba um Runway Index com comentario editorial.',
+  },
+  {
+    step: '03',
+    title: 'Compartilhe ou corrija',
+    body: 'Publique a humilhacao ou destrave o premium para transformar o look de verdade.',
   },
 ];
 
@@ -274,6 +308,7 @@ const dataUrlToBlob = async (dataUrl: string) => {
 const App: React.FC = () => {
   const [state, setState] = useState<AppState | 'camera'>('idle');
   const [image, setImage] = useState<string | null>(null);
+  const [exportImage, setExportImage] = useState<string | null>(null);
   const [result, setResult] = useState<CritiqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
@@ -408,14 +443,23 @@ const App: React.FC = () => {
         ctx.drawImage(video, 0, 0, width, height);
 
         // Alta qualidade para tela e exportação, separada da versão comprimida da IA.
-        const hqDataUrl = createImageDataUrl({
+        const displayDataUrl = createImageDataUrl({
+          source: canvas,
+          width,
+          height,
+          maxDimension: MAX_DISPLAY_DIMENSION,
+          quality: 0.9,
+        });
+        setImage(displayDataUrl);
+
+        const exportDataUrl = createImageDataUrl({
           source: canvas,
           width,
           height,
           maxDimension: MAX_EXPORT_DIMENSION,
           quality: 0.95,
         });
-        setImage(hqDataUrl);
+        setExportImage(exportDataUrl);
 
         // Compressão apenas para a IA, preservando proporção original.
         const apiDataUrl = createImageDataUrl({
@@ -451,14 +495,23 @@ const App: React.FC = () => {
         const img = new Image();
         img.onload = () => {
           // Alta qualidade para interface/exportação e compressão separada para IA.
-          const hqDataUrl = createImageDataUrl({
+          const displayDataUrl = createImageDataUrl({
+            source: img,
+            width: img.width,
+            height: img.height,
+            maxDimension: MAX_DISPLAY_DIMENSION,
+            quality: 0.92,
+          });
+          setImage(displayDataUrl);
+
+          const exportDataUrl = createImageDataUrl({
             source: img,
             width: img.width,
             height: img.height,
             maxDimension: MAX_EXPORT_DIMENSION,
             quality: 1.0,
           });
-          setImage(hqDataUrl);
+          setExportImage(exportDataUrl);
 
           const apiDataUrl = createImageDataUrl({
             source: img,
@@ -520,6 +573,7 @@ const App: React.FC = () => {
     stopCamera();
     setState('idle');
     setImage(null);
+    setExportImage(null);
     setResult(null);
     setError(null);
   };
@@ -1105,14 +1159,14 @@ const App: React.FC = () => {
       <canvas ref={canvasRef} className="hidden" />
 
       {/* Export Template - Hidden from view */}
-      {result && image && (
+      {result && exportImage && (
         <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1620px', pointerEvents: 'none' }}>
           <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-white bg-[#1A1A1A]">
 
             {/* Background Image / Photography */}
             <div className="absolute inset-0 z-0">
               <img 
-                src={image} 
+                src={exportImage} 
                 crossOrigin="anonymous" 
                 className="w-full h-full object-cover" 
                 alt="Background" 
