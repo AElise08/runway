@@ -15,12 +15,13 @@ Aja com profundo desprezo refinado, utilize referências diretas de Alta-Costura
     `MODO ROAST: Destrua cada peça do look e a junção delas. Aponte erros claros de styling (caimento errado, tecido ou silhueta malfeita). Sem conselhos. Apenas críticas focadas na moda e outfit apresentados.`;
 
   const rules = `
+IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
 RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
 {
   "verdict": "The Nod | The Lip Purse | The Purse Drop",
   "rating": 50,
-  "lead": "Sua citação sarcástica aqui.",
-  "sections": [{"title": "Tópico (ex: Modelagem)", "content": "Sua crítica ácida aqui."}],
+  "lead": "Sua citação sarcástica e ácida em PORTUGUÊS aqui.",
+  "sections": [{"title": "Tópico em português", "content": "Sua crítica ácida aqui."}],
   "fashionTips": ["Dica 1", "Dica 2"],
   "suggestedAccessories": ["Acessório de grife 1", "Acessório 2"]
 }
