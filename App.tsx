@@ -210,7 +210,13 @@ const App: React.FC = () => {
         backgroundColor: '#000', 
         scale: 2,
         width: 1080,
-        height: 1920
+        height: 1920,
+        windowWidth: 1080,
+        windowHeight: 1920,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0
       } as any);
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
@@ -230,7 +236,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black transition-colors duration-1000 relative overflow-x-hidden w-full">
+    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black transition-colors duration-1000 relative w-full">
       <Header user={user} setShowAuth={setShowAuth} />
       
       {showAuth && !user && (
@@ -414,7 +420,7 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full max-w-[100vw] overflow-x-hidden md:max-w-7xl mx-auto px-4 md:px-12 lg:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 lg:gap-32 pb-40">
+            <div className="w-full md:max-w-7xl mx-auto px-4 md:px-12 lg:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 lg:gap-32 pb-40">
               <div className="lg:col-span-8 space-y-12 md:space-y-16 lg:space-y-20">
                 <div className="relative pb-12 md:pb-16 border-b border-white/5">
                   <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
@@ -519,7 +525,7 @@ const App: React.FC = () => {
 
       {/* Export Template - Hidden from view */}
       {result && image && (
-        <div style={{ position: 'fixed', top: '-99999px', left: '-99999px', width: '1080px', height: '1920px' }}>
+        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1920px', pointerEvents: 'none' }}>
           <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
 
             {/* Background Image */}
