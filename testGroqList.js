@@ -8,7 +8,10 @@ const groq = new Groq({
 async function main() {
   try {
     const list = await groq.models.list();
-    console.log(list.data.map(m => m.id));
+    // print all models containing 'vision'
+    const visionModels = list.data.filter(m => m.id.includes('llama') && m.id.includes('v'));
+    console.log("VISION MODELS:", visionModels.map(m => m.id));
+    console.log("ALL MODELS:", list.data.map(m => m.id));
   } catch (err) {
     console.error("ERROR:");
     console.error(err);

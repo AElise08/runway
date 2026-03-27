@@ -56,7 +56,7 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
           ],
         },
       ],
-      model: "llama-3.2-11b-vision-preview",
+      model: "llama-3.2-90b-vision-preview",
       temperature: 0.2
     });
 
