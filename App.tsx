@@ -207,12 +207,12 @@ const App: React.FC = () => {
       setIsExporting(true);
       const canvas = await html2canvas(exportRef.current, { 
         useCORS: true, 
-        backgroundColor: '#1A1A1A', 
+        backgroundColor: '#000', 
         scale: 2,
         width: 1080,
-        height: 1620,
+        height: 1920,
         windowWidth: 1080,
-        windowHeight: 1620,
+        windowHeight: 1920,
         scrollX: 0,
         scrollY: 0,
         x: 0,
@@ -525,13 +525,13 @@ const App: React.FC = () => {
 
       {/* Export Template - Hidden from view */}
       {result && image && (
-        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1620px', pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-[#1A1A1A] bg-[#1A1A1A]">
-            
+        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1920px', pointerEvents: 'none' }}>
+          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
+
             {/* Background Image */}
-            <div className="absolute inset-0 z-0 bg-black">
+            <div className="absolute inset-0 z-0 bg-[#0a0a0a]">
               <div 
-                className="w-full h-full"
+                className="w-full h-full grayscale-[0.2] contrast-[1.1] brightness-[0.9]"
                 style={{ 
                   backgroundImage: `url(${image})`, 
                   backgroundSize: 'cover', 
@@ -539,90 +539,84 @@ const App: React.FC = () => {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/60 via-transparent to-[#1A1A1A]/95 z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90 z-10 mix-blend-multiply"></div>
+              {/* Added a slight noise texture effect pseudo-element behavior below if possible, but gradient will do for depth */}
             </div>
 
             {/* Header - Magazine Title */}
-            <div className="w-full text-center z-20 pt-[80px] px-12 flex flex-col items-center">
-              <h1 className="text-[140px] font-sans font-black tracking-tighter leading-[0.8] text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] uppercase scale-y-[1.15]">
-                PROJECT
-                <br />
-                MIRANDA
-              </h1>
-              <div className="w-[850px] flex justify-between items-center mt-12 text-white font-bold uppercase tracking-[0.6em] text-xl drop-shadow-md">
+            <div className="w-full text-center z-20 pt-16 px-12 flex flex-col items-center">
+              <h1 className="text-[10rem] font-sans font-black tracking-tighter leading-[0.8] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] mix-blend-overlay">PROJECT</h1>
+              <h1 className="text-[12rem] font-sans font-black tracking-tighter leading-[0.8] text-[#D32F2F] drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] -mt-8">MIRANDA</h1>
+              <div className="w-full max-w-[900px] flex justify-between items-center mt-12 text-white font-medium uppercase tracking-[1em] text-xl drop-shadow-lg border-y border-white/20 py-4">
                 <span>C R I T I C A L</span>
-                <span className="text-[#D32F2F]">T H E O R Y</span>
+                <span>T H E O R Y</span>
                 <span>I S S U E</span>
               </div>
             </div>
 
             {/* Left Side Headlines */}
-            <div className="absolute top-[480px] left-[60px] max-w-[450px] z-30 flex flex-col gap-8">
-              <p className="text-white text-[64px] font-serif font-bold uppercase italic leading-[0.95] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-                HELL ON <br/>
-                <span className="text-[#D32F2F]">HEELS!</span>
-              </p>
-
-              <div className="space-y-3">
-                <p className="text-[#D32F2F] text-2xl font-black uppercase tracking-[0.2em] drop-shadow-md">THE INDEX OF</p>
-                <p className="text-white text-3xl font-light uppercase tracking-[0.1em] drop-shadow-md">FASHION:</p>
-                <p className="text-white/80 text-lg uppercase tracking-widest font-light mt-1 drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
+            <div className="absolute top-[480px] left-16 max-w-[480px] z-30 flex flex-col gap-8">
+              <div className="space-y-1 mt-6 border-l-4 border-[#D32F2F] pl-6">
+                <p className="text-[#D32F2F] text-2xl font-bold uppercase tracking-widest drop-shadow-lg">THE INDEX OF</p>
+                <p className="text-white text-3xl font-light uppercase tracking-[0.2em] drop-shadow-lg">FASHION</p>
               </div>
 
-              {/* Score Element */}
-              <div className="mt-6 bg-[#D32F2F] text-white py-6 px-10 border-2 border-[#D32F2F] shadow-[0_15px_30px_rgba(0,0,0,0.5)] inline-flex flex-col items-center justify-center self-start backdrop-blur-sm bg-opacity-90">
-                <p className="text-xl uppercase tracking-[0.4em] font-medium mb-1">SCORE</p>
-                <p className="text-[110px] font-sans font-black leading-none tracking-tighter">{result.rating}%</p>
+              <p className="text-white text-6xl font-serif italic leading-none drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)] mt-4">
+                HELL ON <br/>
+                <span className="text-[#D32F2F] font-black not-italic font-sans tracking-tighter">HEELS!</span>
+              </p>
+
+              {/* Score Badge */}
+              <div className="mt-12 bg-[#D32F2F] text-white py-8 px-12 shadow-2xl inline-flex flex-col items-center justify-center transform hover:scale-105 transition-transform border border-white/10">
+                <p className="text-xl uppercase tracking-[0.6em] font-medium text-center mb-0 opacity-90">SCORE</p>
+                <p className="text-[7rem] font-sans font-black leading-none tracking-tighter">{result.rating}<span className="text-5xl">%</span></p>
               </div>
             </div>
 
             {/* Right Side Info */}
-            <div className="absolute top-[650px] right-[60px] max-w-[350px] z-30 text-right space-y-3">
-               <p className="text-white/90 text-2xl font-serif italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">“The Devil Wears Prada”</p>
-               <p className="text-[#D32F2F] text-[52px] font-black uppercase tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] leading-none">MEETS</p>
-               <p className="text-white text-xl font-light uppercase tracking-[0.2em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] text-right">CRITICAL THEORY</p>
+            <div className="absolute top-[520px] right-16 max-w-[380px] z-30 text-right space-y-10">
             </div>
 
-            {/* Main Quote Callout */}
-            <div className="absolute top-[1020px] left-[60px] right-[60px] z-30 bg-[#1A1A1A]/40 backdrop-blur-md border border-white/10 p-10">
-               <h3 className="text-white/95 text-[38px] font-serif italic leading-[1.3] drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] text-center px-4" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                 &ldquo;{result.lead}&rdquo;
-               </h3>
+            {/* Main Quote */}
+            <div className="absolute top-[1050px] left-20 right-20 z-30">
+               <div className="bg-black/40 backdrop-blur-sm p-10 border border-white/10 shadow-2xl">
+                 <h3 className="text-white text-[2.4rem] font-serif italic leading-[1.3] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                   &ldquo;{result.lead}&rdquo;
+                 </h3>
+               </div>
             </div>
 
-            {/* Analysis Section & Verdict */}
-            <div className="absolute bottom-[200px] left-[60px] right-[60px] z-30 flex items-end justify-between gap-12">
+            {/* Analysis Section */}
+            <div className="absolute bottom-[280px] left-20 right-20 z-30 flex gap-12 bg-gradient-to-t from-black/80 to-transparent p-12 -mx-12">
               {/* Left Analysis */}
-              <div className="flex-1 border-l-[6px] border-[#D32F2F] pl-6 h-full flex flex-col justify-end">
-                <p className="text-[#D32F2F] text-xl font-bold uppercase tracking-[0.15em] mb-2 drop-shadow-md">{result.sections[0]?.title}</p>
-                <p className="text-white/80 text-[22px] font-sans font-light leading-relaxed drop-shadow-md" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+              <div className="flex-1 border-l-[4px] border-[#D32F2F] pl-8">
+                <p className="text-[#D32F2F] text-xl font-bold uppercase tracking-[0.4em] drop-shadow-lg mb-4">{result.sections[0]?.title}</p>
+                <p className="text-white/80 text-xl font-sans font-light drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
               </div>
-              
               {/* Right Verdict */}
-              <div className="w-[380px] flex-shrink-0 bg-[#1A1A1A]/80 p-6 border-t-4 border-[#D32F2F] backdrop-blur-sm text-right flex flex-col justify-center shadow-lg">
-                <p className="text-white/70 text-sm uppercase tracking-[0.3em] font-medium mb-2">OFFICIAL VERDICT</p>
-                <h4 className="text-[#D32F2F] text-4xl font-black uppercase tracking-tight">{result.verdict}</h4>
+              <div className="w-[380px] flex-shrink-0 text-right flex flex-col justify-end pb-2">
+                <p className="text-white/60 text-lg uppercase tracking-[0.5em] font-medium drop-shadow-lg mb-3">OFFICIAL VERDICT</p>
+                <h4 className="text-[#D32F2F] text-3xl font-black uppercase tracking-wider drop-shadow-lg leading-tight">{result.verdict}</h4>
               </div>
             </div>
 
             {/* Footer with Barcode */}
-            <div className="absolute bottom-12 left-[60px] right-[60px] z-40 flex justify-between items-end border-t border-white/20 pt-4">
-              <div className="text-[16px] uppercase tracking-[0.8em] font-bold text-white/50">
+            <div className="absolute bottom-16 left-20 right-20 z-40 flex justify-between items-end">
+              <div className="text-2xl uppercase tracking-[0.8em] font-black text-white/40 drop-shadow-lg mix-blend-screen">
                 PROJECT MIRANDA
               </div>
-              <div className="bg-white p-3 shadow-xl">
+              <div className="bg-white p-5 shadow-2xl skew-x-[-2deg]">
                 <div className="flex flex-col items-center">
-                  <div className="w-[200px] h-14 flex gap-[2px] items-end justify-between px-1">
-                     {[...Array(38)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1 + 'px'}}></div>)}
+                  <div className="w-64 h-20 flex gap-[3px] items-end justify-between px-2">
+                     {[...Array(48)].map((_,i) => <div key={i} className="bg-[#1A1A1A] h-full" style={{width: Math.random() * 5 + 1.5 + 'px'}}></div>)}
                   </div>
-                  <div className="w-full flex justify-between text-[11px] font-mono tracking-widest pt-1 font-bold text-black border-t-[1.5px] border-black mt-1">
+                  <div className="w-full flex justify-between text-[15px] font-sans tracking-widest pt-3 font-bold text-[#1A1A1A] border-t-2 border-[#1A1A1A]/30 mt-3 px-1 relative">
                     <span>ISSN 8921</span>
                     <span>MIRANDA</span>
                   </div>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       )}
