@@ -88,8 +88,11 @@ export const analyzeLook = async (
 
     let content = completion.choices?.[0]?.message?.content || '{}';
     
-    if (typeof content !== 'string') {
-       content = JSON.stringify(content);
+    // As of Mistral SDK v1.x, content can be an array of ContentChunks
+    if (Array.isArray(content)) {
+      content = content.map((c: any) => c.text || '').join('');
+    } else if (typeof content !== 'string') {
+      content = JSON.stringify(content);
     }
     
     if (content.includes('```json')) {
