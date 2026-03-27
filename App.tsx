@@ -135,7 +135,7 @@ const App: React.FC = () => {
         ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, width, height);
         
-        const dataUrl = canvas.toDataURL('image/png');
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
         setImage(dataUrl);
         
         const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
@@ -174,8 +174,12 @@ const App: React.FC = () => {
       const errorMsg = err?.message || err?.toString() || "";
       if (errorMsg.includes("429") || errorMsg.includes("quota")) {
         setError("Miranda está em uma reunião com Donatella. Ela não tem tempo para você agora. Tente em alguns minutos.");
+      } else if (errorMsg.includes("401") || errorMsg.includes("key") || errorMsg.toLowerCase().includes("unauthorized")) {
+        setError("Erro técnico: Chave da Groq inválida ou não configurada no Vercel. Demitam a TI.");
+      } else if (errorMsg.includes("413") || errorMsg.toLowerCase().includes("too large") || errorMsg.includes("size")) {
+        setError("A foto enviada é grande demais até para o ego da Miranda. Reduza a qualidade.");
       } else {
-        setError("Erro técnico catastrófico. Claramente alguém na TI será demitido.");
+        setError("Erro técnico catastrófico. Claramente alguém na TI será demitido. Detalhe: " + errorMsg.substring(0, 50));
       }
       setState('idle');
     }
