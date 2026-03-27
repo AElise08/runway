@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
       </div>
 
       <h1 className="text-6xl md:text-8xl font-serif tracking-widest uppercase mb-2">Runway</h1>
-      <p className="text-xs tracking-[0.3em] uppercase text-white/50 font-light">September Issue Edition</p>
+      <p className="text-xs tracking-[0.3em] uppercase text-white/50 font-light">Issue Edition</p>
     </header>
   );
 };

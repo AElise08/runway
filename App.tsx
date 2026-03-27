@@ -382,7 +382,7 @@ const App: React.FC = () => {
                 
                 <h2 className="text-6xl md:text-[10rem] font-serif italic tracking-tighter text-white leading-[0.8]">The Analysis.</h2>
                 <div className="flex items-center gap-6 text-[11px] uppercase tracking-[0.6em] text-white/40 font-black">
-                  <span>September Issue</span>
+                  <span>Issue</span>
                   <span className="w-1.5 h-1.5 bg-white/20 rounded-full"></span>
                   <span>Editorial Board</span>
                   <span className="w-1.5 h-1.5 bg-white/20 rounded-full"></span>
@@ -520,7 +520,7 @@ const App: React.FC = () => {
                 <p className="text-xl text-white/60 leading-relaxed font-light">{result.sections[0]?.content}</p>
               </div>
               <div className="border-l border-white/20 pl-16 space-y-8">
-                <p className="text-2xl italic font-serif leading-relaxed text-white/80">Avaliado por Miranda Priestly. The September Issue. O veredito é indiscutível.</p>
+                <p className="text-2xl italic font-serif leading-relaxed text-white/80">Avaliado por Miranda Priestly. The Issue. O veredito é indiscutível.</p>
                 <div className="pt-4">
                   <p className="text-5xl font-black font-serif">{result.rating}% <span className="text-xl font-light text-white/40 uppercase tracking-[0.3em] ml-2">Editorial Viability</span></p>
                 </div>
