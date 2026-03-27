@@ -521,7 +521,7 @@ const App: React.FC = () => {
             <h1 className="absolute top-12 left-0 right-0 text-center text-[10rem] font-serif italic tracking-tighter leading-none opacity-5 z-20">VOGUE</h1>
             <h1 className="mt-24 text-[7rem] font-serif italic tracking-tighter leading-none z-20 mix-blend-difference mb-12 text-white">RUNWAY</h1>
             
-            <div className="relative w-[920px] h-[1100px] bg-neutral-900 border border-white/10 overflow-hidden shadow-2xl z-10">
+            <div className="relative w-[920px] h-[920px] bg-neutral-900 border border-white/10 overflow-hidden shadow-2xl z-10">
               <img src={image} className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]" alt="" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
               <div className="absolute bottom-16 left-16 right-16 flex flex-col items-center text-center space-y-10">
@@ -533,7 +533,7 @@ const App: React.FC = () => {
             <div className="mt-16 w-[920px] grid grid-cols-2 gap-16 text-left z-20">
               <div className="space-y-6">
                 <p className="text-2xl font-black uppercase tracking-[0.3em] font-serif text-white/90">{result.sections[0]?.title || 'A Tirania do Caimento'}</p>
-                <p className="text-xl text-white/60 leading-relaxed font-light">{result.sections[0]?.content}</p>
+                <p className="text-xl text-white/60 leading-relaxed font-light line-clamp-[9]">{result.sections[0]?.content}</p>
               </div>
               <div className="border-l border-white/20 pl-16 space-y-8">
                 <p className="text-2xl italic font-serif leading-relaxed text-white/80">Avaliado por Miranda Priestly. The Issue. O veredito é indiscutível.</p>
