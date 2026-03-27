@@ -285,12 +285,25 @@ const App: React.FC = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center gap-4 w-full">
-                <button 
-                  onClick={startCamera}
-                  className="group relative px-8 md:px-24 py-6 md:py-10 bg-white text-black font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-[10px] md:text-[11px] transition-all hover:tracking-[0.4em] md:hover:tracking-[0.8em] hover:bg-neutral-200 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.1)] w-full max-w-[300px] md:w-auto md:max-w-none break-words whitespace-normal text-center leading-relaxed"
-                >
-                  Iniciar Audiência
-                </button>
+                <div className="flex flex-col md:flex-row gap-4 w-full md:max-w-[500px] justify-center">
+                  <button 
+                    onClick={startCamera}
+                    className="group relative px-6 md:px-12 py-6 md:py-10 bg-white text-black font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-neutral-200 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.1)] w-full text-center leading-relaxed"
+                  >
+                    Iniciar Audiência
+                  </button>
+                  <label 
+                    className="cursor-pointer group relative px-6 md:px-12 py-6 md:py-10 bg-transparent border border-white text-white font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-white/10 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.05)] w-full text-center leading-relaxed flex items-center justify-center gap-2 m-0"
+                  >
+                    Importar Galeria
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={handleFileUpload} 
+                      className="hidden" 
+                    />
+                  </label>
+                </div>
                 <span className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold text-center px-4">
                   {isPremium ? `${maxUses - (profile?.daily_looks || 0)} Análises Premium Restantes Hoje` : `${maxUses - usageCount} Avaliações Gratuitas Restantes`}
                 </span>
@@ -559,20 +572,21 @@ const App: React.FC = () => {
             </div>
 
             {/* Primary Headlines & Asymmetrical Grid */}
-            <div className="absolute top-[400px] left-16 z-30 max-w-[500px]">
-              <div className="space-y-2 bg-black/20 p-4 backdrop-blur-sm border-l-4 border-[#D32F2F]">
-                <p className="text-white text-4xl font-bold uppercase tracking-[0.2em] drop-shadow-lg">
+            <div className="absolute top-[380px] left-16 z-30 max-w-[500px]">
+              <div className="space-y-1">
+                <p className="text-white text-3xl font-bold uppercase tracking-[0.2em] mix-blend-difference">
                   THE INDEX OF FASHION
                 </p>
-                <p className="text-white/90 text-sm uppercase tracking-[0.4em] font-medium pt-1 drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
+                <div className="w-16 h-1 bg-[#D32F2F] mt-2 mb-2"></div>
+                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">WHAT YOU NEED TO KNOW NOW.</p>
               </div>
             </div>
 
             {/* Score Element - Geometric Shape */}
-            <div className="absolute top-[380px] right-16 z-30">
-              <div className="w-48 h-48 bg-[#D32F2F] flex flex-col justify-center items-center shadow-2xl border-2 border-black outline outline-2 outline-offset-2 outline-[#D32F2F] rotate-3">
-                <p className="text-black text-lg font-black uppercase tracking-[0.4em] mb-1 mix-blend-overlay">SCORE</p>
-                <p className="text-white text-7xl font-serif italic font-bold leading-none drop-shadow-md">{result.rating}%</p>
+            <div className="absolute top-[400px] right-16 z-30">
+              <div className="w-48 h-48 bg-[#D32F2F] flex flex-col justify-center items-center shadow-2xl border-4 border-white/10 outline outline-1 outline-offset-4 outline-[#D32F2F]/50">
+                <p className="text-white text-lg font-bold uppercase tracking-[0.4em] mb-1">SCORE</p>
+                <p className="text-white text-7xl font-serif italic font-bold leading-none">{result.rating}%</p>
               </div>
             </div>
 
@@ -592,23 +606,34 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            {/* Bottom Elements: Verdict & Barcode */}
-            <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
+            {/* Bottom Elements: Selo Miranda & Barcode */}
+            <div className="absolute bottom-10 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
               
               <div className="flex items-center gap-6">
-                {/* Selo Miranda */}
-                <div className="relative flex items-center justify-center w-28 h-28 rounded-full border-[5px] border-[#D32F2F] bg-[#1A1A1A]/95 p-2 shadow-[0_0_30px_rgba(211,47,47,0.6)] -rotate-12">
-                  <div className="absolute inset-1 border-[1px] border-dashed border-[#D32F2F]/60 rounded-full"></div>
-                  <div className="text-center z-10">
-                    <span className="block text-[#D32F2F] text-[9px] uppercase tracking-[0.3em] font-black">Approved by</span>
-                    <span className="block text-white text-2xl font-serif italic font-bold mt-1 leading-none shadow-black drop-shadow-md">Miranda</span>
+                {/* Official Miranda Seal */}
+                <div className="relative w-[100px] h-[100px] flex items-center justify-center">
+                  {/* Outer spinning text path */}
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="46" fill="none" stroke="#D32F2F" strokeWidth="2" strokeDasharray="4 2"/>
+                    <circle cx="50" cy="50" r="33" fill="none" stroke="white" strokeWidth="0.5" opacity="0.5"/>
+                    <path id="sealTextPath" d="M 50, 10 A 40,40 0 1,1 49.9,10" fill="transparent" />
+                    <text className="text-[12px] font-black uppercase tracking-[0.2em]" fill="white" opacity="0.9">
+                      <textPath href="#sealTextPath" startOffset="0%">
+                        • THE MIRANDA EVALUATION
+                      </textPath>
+                    </text>
+                  </svg>
+                  {/* Center Monogram */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pt-1">
+                    <span className="text-[#D32F2F] font-serif text-5xl font-bold italic leading-none drop-shadow-lg">M</span>
                   </div>
                 </div>
 
-                <div className="flex flex-col">
-                  <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">VERDICT</p>
-                  <h4 className="text-white text-[1.5rem] font-black uppercase tracking-tight max-w-[280px] leading-tight text-[#D32F2F] drop-shadow-lg">
-                    {result.verdict.toUpperCase()}
+                {/* Refined Verdict text */}
+                <div className="flex flex-col justify-center translate-y-2">
+                  <p className="text-white/50 text-[10px] font-bold uppercase tracking-[0.6em] mb-1">OFFICIAL RATING</p>
+                  <h4 className="text-white text-3xl font-black uppercase tracking-tight mix-blend-difference">
+                    <span className="text-[#D32F2F]">VERDICT: </span> {result.verdict.replace(/The /i, '').toUpperCase()}
                   </h4>
                 </div>
               </div>
