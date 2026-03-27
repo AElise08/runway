@@ -6,11 +6,79 @@ import VerdictBadge from './components/VerdictBadge';
 import Auth from './components/Auth';
 import { supabase } from './services/supabase';
 import { analyzeLook } from './services/mistralService';
-import { CritiqueResult, AppState, Profile } from './types';
-import { RefreshCw, Quote, Sparkles, X, ChevronDown, CameraOff, Clock, Download } from 'lucide-react';
+import { AnalysisContext, CritiqueResult, AppState, Profile } from './types';
+import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2 } from 'lucide-react';
 
 const MAX_EXPORT_DIMENSION = 3840;
 const MAX_AI_DIMENSION = 800;
+const CAMPAIGN_RELEASE_DATE = new Date('2026-05-01T00:00:00');
+
+type VerdictRarity = 'common' | 'rare' | 'legendary';
+
+interface CampaignState {
+  isLive: boolean;
+  daysLeft: number;
+  countdownLabel: string;
+  sublabel: string;
+}
+
+interface EditorialVerdictMeta {
+  title: string;
+  strapline: string;
+  rarity: VerdictRarity;
+  shareHook: string;
+}
+
+type ChallengeKey = 'none' | 'office' | 'date-night' | 'first-impression' | 'fashion-week';
+
+interface ChallengeOption extends AnalysisContext {
+  key: ChallengeKey;
+  teaser: string;
+  premiumAngle: string;
+}
+
+const CHALLENGE_OPTIONS: ChallengeOption[] = [
+  {
+    key: 'none',
+    label: 'Julgamento Livre',
+    frameLabel: 'Free Roast',
+    promptContext: 'Faça uma análise editorial geral, sem assumir dress code específico.',
+    teaser: 'Para quem quer só descobrir se o look merece humilhação pública.',
+    premiumAngle: 'diagnóstico completo com correção editorial sob medida',
+  },
+  {
+    key: 'office',
+    label: 'Look de Trabalho',
+    frameLabel: 'Office Trial',
+    promptContext: 'Considere ambiente de trabalho, autoridade visual, elegância e competência percebida.',
+    teaser: 'Testa se a produção transmite competência ou caos corporativo.',
+    premiumAngle: 'ajustes para parecer mais cara, competente e polida no trabalho',
+  },
+  {
+    key: 'date-night',
+    label: 'Date Night',
+    frameLabel: 'Date Night',
+    promptContext: 'Considere atração, intenção, sensualidade controlada e coerência noturna.',
+    teaser: 'Ideal para ver se o look seduz ou pede desculpas por existir.',
+    premiumAngle: 'versões mais elegante, mais ousada e mais magnética para encontros',
+  },
+  {
+    key: 'first-impression',
+    label: 'Primeira Impressão',
+    frameLabel: 'First Impression',
+    promptContext: 'Considere impacto imediato, confiança, clareza de estilo e memorabilidade.',
+    teaser: 'Mede se você chega como presença ou como ruído visual.',
+    premiumAngle: 'um plano de imagem para causar impacto sem parecer forçada',
+  },
+  {
+    key: 'fashion-week',
+    label: 'Fashion Week',
+    frameLabel: 'Fashion Week',
+    promptContext: 'Considere repertório fashion, intenção editorial, ousadia e sofisticação visual.',
+    teaser: 'Para descobrir se existe moda ali ou só figurino nervoso.',
+    premiumAngle: 'substituições mais editoriais e ousadas sem perder sofisticação',
+  },
+];
 
 const renderBoldText = (text: string) => {
   if (!text) return text;
@@ -72,6 +140,137 @@ const createImageDataUrl = ({
   return canvas.toDataURL('image/jpeg', quality);
 };
 
+const getCampaignState = (): CampaignState => {
+  const now = new Date();
+  const msLeft = CAMPAIGN_RELEASE_DATE.getTime() - now.getTime();
+  const daysLeft = Math.max(0, Math.ceil(msLeft / (1000 * 60 * 60 * 24)));
+
+  if (msLeft <= 0) {
+    return {
+      isLive: true,
+      daysLeft: 0,
+      countdownLabel: 'ESTREIA EM CURSO',
+      sublabel: 'Runway Season entrou ao vivo. Julgamentos em estado crítico.',
+    };
+  }
+
+  return {
+    isLive: false,
+    daysLeft,
+    countdownLabel: `FALTAM ${daysLeft} DIAS`,
+    sublabel: 'Contagem regressiva para a estreia de 1 de maio de 2026.',
+  };
+};
+
+const getEditorialVerdictMeta = (result: CritiqueResult): EditorialVerdictMeta => {
+  if (result.verdict === 'The Nod') {
+    if (result.rating >= 90) {
+      return {
+        title: 'Aprovada Com Severo Desgosto',
+        strapline: 'raridade lendaria',
+        rarity: 'legendary',
+        shareHook: 'Miranda aprovou meu look com severo desgosto.',
+      };
+    }
+
+    if (result.rating >= 75) {
+      return {
+        title: 'Sobreviveu a Reuniao',
+        strapline: 'veredito raro',
+        rarity: 'rare',
+        shareHook: 'Sobrevivi a reuniao editorial da Runway.',
+      };
+    }
+
+    return {
+      title: 'Passou Por Um Fio De Seda',
+      strapline: 'aprovacao tensa',
+      rarity: 'common',
+      shareHook: 'Passei por um fio de seda no comite da Runway.',
+    };
+  }
+
+  if (result.rating <= 15) {
+    return {
+      title: 'Demitida Antes Do Cafe',
+      strapline: 'veredito lendario',
+      rarity: 'legendary',
+      shareHook: 'Meu look foi demitido antes do cafe.',
+    };
+  }
+
+  if (result.rating <= 30) {
+    return {
+      title: 'Ceruleo Sem Salvacao',
+      strapline: 'veredito raro',
+      rarity: 'rare',
+      shareHook: 'Recebi um ceruleo sem salvacao da Miranda.',
+    };
+  }
+
+  if (result.rating <= 45) {
+    return {
+      title: 'Demitida Da Runway',
+      strapline: 'queda editorial',
+      rarity: 'rare',
+      shareHook: 'Meu look foi demitido da Runway.',
+    };
+  }
+
+  return {
+    title: 'Sob Revisao Hostil',
+    strapline: 'observacao disciplinar',
+    rarity: 'common',
+    shareHook: 'Meu look entrou sob revisao hostil na Runway.',
+  };
+};
+
+const shouldPromptShare = (result: CritiqueResult, verdictMeta: EditorialVerdictMeta) => {
+  return result.rating <= 35 || verdictMeta.rarity !== 'common' || result.lead.length <= 120;
+};
+
+const getChallengeOption = (key: ChallengeKey) => {
+  return CHALLENGE_OPTIONS.find((option) => option.key === key) ?? CHALLENGE_OPTIONS[0];
+};
+
+const getDiagnosisItems = (result: CritiqueResult) => {
+  if (result.diagnosis?.length) {
+    return result.diagnosis.slice(0, 4);
+  }
+
+  const labels = ['Silhueta', 'Proporcao', 'Cores', 'Contexto'];
+  return result.sections.slice(0, 4).map((section, index) => ({
+    label: labels[index] ?? section.title,
+    summary: section.content,
+  }));
+};
+
+const getPremiumFixGroups = (result: CritiqueResult, isPremium: boolean) => {
+  if (!isPremium) {
+    return [];
+  }
+
+  if (result.premiumFixes?.length) {
+    return result.premiumFixes;
+  }
+
+  if (!result.fashionTips?.length) {
+    return [];
+  }
+
+  return [
+    {
+      title: 'Plano de Reabilitacao',
+      items: result.fashionTips.slice(0, 4),
+    },
+  ];
+};
+
+const dataUrlToBlob = async (dataUrl: string) => {
+  const response = await fetch(dataUrl);
+  return response.blob();
+};
+
 const App: React.FC = () => {
   const [state, setState] = useState<AppState | 'camera'>('idle');
   const [image, setImage] = useState<string | null>(null);
@@ -83,6 +282,8 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [showAuth, setShowAuth] = useState(false);
+  const [selectedChallengeKey, setSelectedChallengeKey] = useState<ChallengeKey>('none');
+  const [activeChallengeKey, setActiveChallengeKey] = useState<ChallengeKey>('none');
 
   const [usageCount, setUsageCount] = useState<number>(() => {
     const saved = localStorage.getItem('miranda_usage_count');
@@ -129,6 +330,14 @@ const App: React.FC = () => {
   const isPremium = profile?.is_premium || false;
   const maxUses = isPremium ? 20 : 3;
   const isBlocked = !isPremium && usageCount >= maxUses;
+  const campaignState = getCampaignState();
+  const editorialVerdict = result ? getEditorialVerdictMeta(result) : null;
+  const showSharePrompt = result && editorialVerdict ? shouldPromptShare(result, editorialVerdict) : false;
+  const selectedChallenge = getChallengeOption(selectedChallengeKey);
+  const activeChallenge = getChallengeOption(activeChallengeKey);
+  const remainingUses = isPremium ? Math.max(0, maxUses - (profile?.daily_looks || 0)) : Math.max(0, maxUses - usageCount);
+  const diagnosisItems = result ? getDiagnosisItems(result) : [];
+  const premiumFixGroups = result ? getPremiumFixGroups(result, isPremium) : [];
 
   const startCamera = async () => {
     try {
@@ -218,7 +427,7 @@ const App: React.FC = () => {
         });
         const base64String = apiDataUrl.replace(/^data:image\/\w+;base64,/, "");
         stopCamera();
-        processImage(base64String);
+        processImage(base64String, selectedChallenge);
       }
     } else {
       setError("Câmera não está pronta. Aguarde um momento.");
@@ -259,7 +468,7 @@ const App: React.FC = () => {
             quality: 0.6,
           });
           const base64String = apiDataUrl.replace(/^data:image\/\w+;base64,/, "");
-          processImage(base64String);
+          processImage(base64String, selectedChallenge);
         };
         img.src = dataUrl;
       }
@@ -270,12 +479,13 @@ const App: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
-  const processImage = async (base64: string) => {
+  const processImage = async (base64: string, challengeContext: ChallengeOption) => {
     setState('analyzing');
     setError(null);
+    setActiveChallengeKey(challengeContext.key);
 
     try {
-      const jsonStr = await analyzeLook(base64, isPremium);
+      const jsonStr = await analyzeLook(base64, isPremium, challengeContext);
       const parsed: CritiqueResult = JSON.parse(jsonStr);
       setResult(parsed);
       
@@ -314,24 +524,29 @@ const App: React.FC = () => {
     setError(null);
   };
 
+  const createExportDataUrl = async () => {
+    if (!exportRef.current) return null;
+    const canvas = await html2canvas(exportRef.current, {
+      useCORS: true,
+      backgroundColor: '#1A1A1A',
+      scale: 2,
+      width: 1080,
+      height: 1620,
+      windowWidth: 1080,
+      windowHeight: 1620,
+      scrollX: 0,
+      scrollY: 0,
+      x: 0,
+      y: 0
+    } as any);
+    return canvas.toDataURL('image/png');
+  };
+
   const exportVerdict = async () => {
-    if (!exportRef.current) return;
     try {
       setIsExporting(true);
-      const canvas = await html2canvas(exportRef.current, { 
-        useCORS: true, 
-        backgroundColor: '#1A1A1A', 
-        scale: 2,
-        width: 1080,
-        height: 1620,
-        windowWidth: 1080,
-        windowHeight: 1620,
-        scrollX: 0,
-        scrollY: 0,
-        x: 0,
-        y: 0
-      } as any);
-      const dataUrl = canvas.toDataURL('image/png');
+      const dataUrl = await createExportDataUrl();
+      if (!dataUrl) return;
       const link = document.createElement('a');
       link.download = 'project-miranda-cover.png';
       link.href = dataUrl;
@@ -339,6 +554,42 @@ const App: React.FC = () => {
     } catch (e) {
       console.error(e);
       setError("O assistente fotográfico falhou ao exportar a capa.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const shareVerdict = async () => {
+    if (!result || !editorialVerdict) return;
+
+    try {
+      setIsExporting(true);
+      const dataUrl = await createExportDataUrl();
+      if (!dataUrl) return;
+
+      const shareText = result.shareCaption
+        ? `${result.shareCaption} ${activeChallenge.label !== 'Julgamento Livre' ? `Desafio: ${activeChallenge.label}. ` : ''}Runway Index: ${result.rating}%.`
+        : `${editorialVerdict.shareHook} ${activeChallenge.label !== 'Julgamento Livre' ? `Desafio: ${activeChallenge.label}. ` : ''}Runway Index: ${result.rating}%.`;
+      const blob = await dataUrlToBlob(dataUrl);
+      const file = new File([blob], 'runway-season.png', { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: 'Runway Season',
+          text: shareText,
+          files: [file],
+        });
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.download = 'runway-season-share.png';
+      link.href = dataUrl;
+      link.click();
+      setError('A capa foi baixada. Poste nos Stories, Reels, TikTok ou Status.');
+    } catch (e) {
+      console.error(e);
+      setError('Nao foi possivel compartilhar agora. A capa pode ser exportada manualmente.');
     } finally {
       setIsExporting(false);
     }
@@ -368,47 +619,119 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {state === 'idle' && (
-          <div className="max-w-5xl mx-auto px-6 py-12 md:py-24 flex flex-col items-center text-center space-y-12 md:space-y-16 animate-in fade-in duration-1000">
+          <div className="max-w-6xl mx-auto px-6 py-12 md:py-24 flex flex-col items-center text-center space-y-12 md:space-y-16 animate-in fade-in duration-1000">
+            <div className="w-full max-w-4xl mx-auto space-y-6">
+              <div className="inline-flex flex-wrap items-center justify-center gap-3 px-4 py-3 border border-[#D32F2F]/40 bg-[#240303]/70 text-[#FFD8D8] uppercase tracking-[0.35em] text-[9px] md:text-[10px] font-black shadow-[0_0_60px_rgba(211,47,47,0.14)]">
+                <span>Runway Season</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
+                <span>{campaignState.countdownLabel}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
+                <span>1 de maio de 2026</span>
+              </div>
+              <p className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-[#FFB0B0]/70 font-bold">
+                {campaignState.sublabel}
+              </p>
+            </div>
+
             <div className="space-y-6 md:space-y-8">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif italic text-white/90 tracking-tighter leading-tight md:leading-none max-w-4xl mx-auto break-words px-4">"Florais?<br /> Para a primavera?<br /> Inovador."</h2>
-              <p className="text-white/40 max-w-lg mx-auto leading-relaxed text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-light px-4">
-                A Edição de Setembro exige perfeição. Mostre-me sua melhor composição ou retire-se imediatamente.
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif italic text-white/95 tracking-tighter leading-tight md:leading-none max-w-5xl mx-auto break-words px-4">
+                Envie seu look. Receba o veredito que destruiria sua autoestima em uma redacao da Runway.
+              </h2>
+              <p className="text-white/50 max-w-3xl mx-auto leading-relaxed text-[10px] md:text-[12px] uppercase tracking-[0.35em] md:tracking-[0.5em] font-light px-4">
+                Roast editorial brutal, Runway Index compartilhavel e, no premium, a correcao real do look para voce voltar melhor vestida e menos humilhada.
               </p>
             </div>
 
             {isBlocked ? (
-              <div className="max-w-md mx-auto p-12 bg-[#1a1a1a] border border-white/20 text-center space-y-8 animate-in mt-12 shadow-[0_0_100px_rgba(255,255,255,0.05)]">
-                <h3 className="text-3xl font-serif italic text-white/90">Acesso Restrito</h3>
-                <p className="text-sm font-light leading-relaxed text-white/60">
-                  Miranda se recusa a aturar mais doentices visuais de graça. Assine o Passe Front Row para ter a mentoria real dela e 20 análises diárias.
+              <div className="max-w-2xl mx-auto p-8 md:p-12 bg-[#160707] border border-[#D32F2F]/30 text-center space-y-8 animate-in mt-12 shadow-[0_0_120px_rgba(211,47,47,0.12)]">
+                <div className="space-y-4">
+                  <span className="inline-flex items-center gap-2 px-4 py-2 border border-[#D32F2F]/40 bg-[#2A0505] text-[#FFD6D6] uppercase tracking-[0.35em] text-[9px] font-black">
+                    Runway Season Premium
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-serif italic text-white/90">O roast gratis acabou. A correcao premium comeca aqui.</h3>
+                </div>
+                <p className="text-sm font-light leading-relaxed text-white/70 max-w-xl mx-auto">
+                  O plano pago deixa de apenas humilhar: ele explica o que manter, o que tirar, o que substituir e como reconstruir o look com mais elegancia, versao acessivel e opcao mais ousada.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                  <div className="border border-white/10 bg-black/20 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-2">Premium Corrige</p>
+                    <p className="text-sm text-white/70 leading-relaxed">Diagnostico real de silhueta, cor, tecido e contexto.</p>
+                  </div>
+                  <div className="border border-white/10 bg-black/20 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-2">Mais Volume</p>
+                    <p className="text-sm text-white/70 leading-relaxed">20 analises por dia para testar variacoes sem depender da sorte.</p>
+                  </div>
+                  <div className="border border-white/10 bg-black/20 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-2">Mais Compartilhavel</p>
+                    <p className="text-sm text-white/70 leading-relaxed">Cards prontos para story com cara de capa e branding discreto.</p>
+                  </div>
+                </div>
+                <p className="text-[10px] uppercase tracking-[0.35em] text-white/35 font-bold">
+                  Gratis: roast e urgencia. Premium: recuperacao de reputacao.
                 </p>
                 <a 
                   href="https://pay.kiwify.com.br/xxxxx" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block px-12 py-5 bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] transition-all hover:bg-neutral-300 w-full mb-4 text-center"
+                  className="block px-12 py-5 bg-[#D32F2F] text-white font-black uppercase tracking-[0.4em] text-[10px] transition-all hover:bg-[#B32626] w-full mb-4 text-center"
                 >
-                  Assinar Passe Front Row VIP
+                  Desbloquear Correcao Premium
                 </a>
                 <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-white/40 italic">
-                  Faça login com o mesmo email usado na compra após o pagamento.
+                  Use o mesmo email da compra para liberar o acesso editorial.
                 </p>
-                
-                <button onClick={() => { localStorage.setItem('miranda_usage_count', '0'); window.location.reload(); }} className="px-4 py-2 border border-white/10 text-white/40 hover:text-white text-[9px] uppercase tracking-[0.5em] transition-all font-black mt-6 inline-block">Resetar Limite (Dev)</button>
+                <button onClick={() => { localStorage.setItem('miranda_usage_count', '0'); window.location.reload(); }} className="px-4 py-2 border border-white/10 text-white/40 hover:text-white text-[9px] uppercase tracking-[0.5em] transition-all font-black mt-2 inline-block">Resetar Limite (Dev)</button>
               </div>
             ) : (
-              <div className="flex flex-col items-center gap-4 w-full">
-                <div className="flex flex-col md:flex-row gap-4 w-full md:max-w-[500px] justify-center">
+              <div className="flex flex-col items-center gap-6 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl">
+                  <div className="border border-white/10 bg-white/[0.02] p-5 md:p-6 text-left">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#FFB0B0] font-black mb-3">Roast Editorial</p>
+                    <p className="text-sm text-white/65 leading-relaxed">Receba um veredito cruel, visualmente forte e pronto para print.</p>
+                  </div>
+                  <div className="border border-white/10 bg-white/[0.02] p-5 md:p-6 text-left">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#FFB0B0] font-black mb-3">Runway Season</p>
+                    <p className="text-sm text-white/65 leading-relaxed">Temporada especial de lancamento com countdown, selo e acabamento de campanha.</p>
+                  </div>
+                  <div className="border border-white/10 bg-white/[0.02] p-5 md:p-6 text-left">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#FFB0B0] font-black mb-3">Premium Corrige</p>
+                    <p className="text-sm text-white/65 leading-relaxed">Nao apenas humilha: mostra como salvar o look com intencao e criterio.</p>
+                  </div>
+                </div>
+
+                <div className="w-full max-w-5xl space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3 text-left">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/35 font-black">Escolha o desafio</p>
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-[#FFB0B0]/70 font-bold">
+                      Premium entrega: {selectedChallenge.premiumAngle}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                    {CHALLENGE_OPTIONS.map((challenge) => (
+                      <button
+                        key={challenge.key}
+                        onClick={() => setSelectedChallengeKey(challenge.key)}
+                        className={`text-left p-4 border transition-all ${selectedChallenge.key === challenge.key ? 'border-[#D32F2F] bg-[#240303]/70 shadow-[0_0_40px_rgba(211,47,47,0.12)]' : 'border-white/10 bg-white/[0.02] hover:border-white/25'}`}
+                      >
+                        <p className="text-[10px] uppercase tracking-[0.3em] font-black text-[#FFD6D6]">{challenge.label}</p>
+                        <p className="mt-3 text-xs text-white/50 leading-relaxed">{challenge.teaser}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-4 w-full md:max-w-[680px] justify-center">
                   <button 
                     onClick={startCamera}
-                    className="group relative px-6 md:px-12 py-6 md:py-10 bg-white text-black font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-neutral-200 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.1)] w-full text-center leading-relaxed"
+                    className="group relative px-6 md:px-12 py-6 md:py-10 bg-[#D32F2F] text-white font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-[#B32626] active:scale-95 shadow-[0_0_80px_rgba(211,47,47,0.18)] w-full text-center leading-relaxed"
                   >
-                    Iniciar Audiência
+                    Ser Julgada Agora
                   </button>
                   <label 
                     className="cursor-pointer group relative px-6 md:px-12 py-6 md:py-10 bg-transparent border border-white text-white font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-white/10 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.05)] w-full text-center leading-relaxed flex items-center justify-center gap-2 m-0"
                   >
-                    Importar Galeria
+                    Importar E Enfrentar Miranda
                     <input 
                       type="file" 
                       accept="image/*" 
@@ -418,7 +741,7 @@ const App: React.FC = () => {
                   </label>
                 </div>
                 <span className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold text-center px-4">
-                  {isPremium ? `${maxUses - (profile?.daily_looks || 0)} Análises Premium Restantes Hoje` : `${maxUses - usageCount} Avaliações Gratuitas Restantes`}
+                  {isPremium ? `${remainingUses} Analises Premium Restantes Hoje` : `${remainingUses} Avaliacoes Gratuitas Restantes`}
                 </span>
               </div>
             )}
@@ -431,21 +754,21 @@ const App: React.FC = () => {
               </div>
             )}
 
-            <div className="pt-16 md:pt-32 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 border-t border-white/5 w-full text-left">
+            <div className="pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10 border-t border-white/5 w-full text-left">
               <div className="space-y-4 md:space-y-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Artigo I</span>
-                <h4 className="font-serif text-2xl md:text-3xl italic">A Tirania do Caimento</h4>
-                <p className="text-xs text-white/40 leading-relaxed font-light">O desleixo com a silhueta é o primeiro sinal de uma mente medíocre. Miranda não tolera o disforme.</p>
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Campanha</span>
+                <h4 className="font-serif text-2xl md:text-3xl italic">Look feito para virar story</h4>
+                <p className="text-xs text-white/40 leading-relaxed font-light">Cada analise precisa parecer um meme premium, nao um print tecnico. O objetivo e postar antes da dignidade voltar.</p>
               </div>
-              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-12 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Artigo II</span>
-                <h4 className="font-serif text-2xl md:text-3xl italic">Acessórios ou Armas?</h4>
-                <p className="text-xs text-white/40 leading-relaxed font-light">Um cinto mal escolhido pode arruinar uma carreira. A joalheria deve ser intencional, nunca acidental.</p>
+              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-10 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Resultado</span>
+                <h4 className="font-serif text-2xl md:text-3xl italic">Veredito colecionavel</h4>
+                <p className="text-xs text-white/40 leading-relaxed font-light">Aprovada com severo desgosto, demitida antes do cafe, ceruleo sem salvacao. O resultado agora tem personalidade memoravel.</p>
               </div>
-              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-12 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Artigo III</span>
-                <h4 className="font-serif text-3xl italic">O Peso do Legado</h4>
-                <p className="text-xs text-white/40 leading-relaxed font-light">Lembre-se: você está vestindo o trabalho de centenas de pessoas. Tente não ser um fardo.</p>
+              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-10 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Premium</span>
+                <h4 className="font-serif text-3xl italic">Humilhar e corrigir</h4>
+                <p className="text-xs text-white/40 leading-relaxed font-light">A versao paga vende melhora concreta do look, nao apenas mais tentativas de ser aprovada pela propria sorte.</p>
               </div>
             </div>
           </div>
@@ -470,6 +793,15 @@ const App: React.FC = () => {
               )}
 
               <div className="absolute inset-0 border-[20px] md:border-[60px] border-black/40 pointer-events-none group-hover:border-black/20 transition-all duration-1000"></div>
+
+              <div className="absolute top-4 left-4 md:top-8 md:left-8 flex flex-col gap-2">
+                <div className="border border-[#D32F2F]/40 bg-[#240303]/70 px-3 py-2 uppercase tracking-[0.35em] text-[8px] font-black text-[#FFD6D6]">
+                  Runway Season
+                </div>
+                <div className="border border-white/10 bg-black/50 px-3 py-2 uppercase tracking-[0.32em] text-[8px] font-black text-white/70">
+                  {selectedChallenge.label}
+                </div>
+              </div>
               
               <div className="absolute top-4 right-4 md:top-10 md:right-10">
                 <button onClick={reset} className="p-4 bg-black/40 backdrop-blur-3xl rounded-full hover:bg-white hover:text-black transition-all border border-white/5">
@@ -522,6 +854,9 @@ const App: React.FC = () => {
               
               {/* Floating Result Info */}
               <div className="absolute bottom-8 md:bottom-20 lg:bottom-24 left-4 md:left-12 lg:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-6 lg:space-y-8 z-20">
+                <div className="border border-[#D32F2F]/45 bg-[#240303]/75 px-4 py-2 uppercase tracking-[0.35em] text-[8px] md:text-[9px] font-black text-[#FFD8D8]">
+                  {campaignState.isLive ? 'Runway Season Ao Vivo' : `Runway Season · ${campaignState.countdownLabel}`}
+                </div>
                 <div className="flex flex-wrap items-center gap-4 md:gap-6">
                   <VerdictBadge verdict={result.verdict} />
                   <div className="flex items-baseline gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-4 md:px-6 py-1 md:py-2 rounded-full">
@@ -530,13 +865,20 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 
-                <h2 className="text-5xl md:text-[7rem] lg:text-[10rem] font-serif italic tracking-tighter text-white leading-[0.85] md:leading-[0.8] max-w-full break-words">The<br className="md:hidden" /> Analysis.</h2>
+                <div className="space-y-3">
+                  <p className="text-[10px] md:text-[12px] uppercase tracking-[0.45em] text-[#FFB0B0] font-black">
+                    {editorialVerdict?.strapline}
+                  </p>
+                  <h2 className="text-4xl md:text-[5.5rem] lg:text-[7rem] font-serif italic tracking-tighter text-white leading-[0.85] md:leading-[0.8] max-w-full break-words">
+                    {editorialVerdict?.title}
+                  </h2>
+                </div>
                 <div className="flex flex-wrap items-center gap-3 md:gap-6 text-[8px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.6em] text-white/40 font-black">
-                  <span>Issue</span>
+                  <span>{activeChallenge.frameLabel}</span>
                   <span className="w-1 md:w-1.5 h-1 md:h-1.5 bg-white/20 rounded-full hidden md:block"></span>
-                  <span>Editorial</span>
+                  <span>Editorial Roast</span>
                   <span className="w-1 md:w-1.5 h-1 md:h-1.5 bg-white/20 rounded-full hidden md:block"></span>
-                  <span>Volume IV</span>
+                  <span>Share Cut</span>
                 </div>
               </div>
 
@@ -553,6 +895,49 @@ const App: React.FC = () => {
                   <p className="text-3xl md:text-6xl font-serif italic leading-[1.4] md:leading-[1.3] text-white/90 selection:bg-white selection:text-black">
                     {renderBoldText(result.lead)}
                   </p>
+                </div>
+
+                {showSharePrompt && (
+                  <div className="border border-[#D32F2F]/30 bg-[linear-gradient(135deg,rgba(211,47,47,0.18),rgba(20,5,5,0.95))] px-6 md:px-8 py-6 md:py-7 rounded-[1.75rem]">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                      <div className="space-y-3">
+                        <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Gatilho de Compartilhamento</p>
+                        <h4 className="text-2xl md:text-3xl font-serif italic text-white">Isso esta humilhante o suficiente para virar story.</h4>
+                        <p className="text-sm md:text-base text-white/65 leading-relaxed">
+                          {result.shareCaption || editorialVerdict?.shareHook}
+                        </p>
+                      </div>
+                      <button
+                        onClick={shareVerdict}
+                        disabled={isExporting}
+                        className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-white text-black font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-neutral-200 rounded-full"
+                      >
+                        {isExporting ? 'Processando..' : <><Share2 size={14} /> Publicar Agora</>}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="border border-[#D32F2F]/20 bg-[#130505] px-6 md:px-8 py-5 md:py-6">
+                  <div className="flex flex-wrap items-center gap-3 md:gap-4 text-[9px] md:text-[10px] uppercase tracking-[0.35em] font-black text-[#FFB0B0]">
+                    <span>Runway Season</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
+                    <span>{editorialVerdict?.title}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
+                    <span>{campaignState.isLive ? 'janela cultural ativa' : campaignState.countdownLabel.toLowerCase()}</span>
+                  </div>
+                  <p className="mt-4 text-sm md:text-base text-white/60 leading-relaxed">
+                    Resultado preparado para compartilhar durante a temporada. Quando o veredito fica raro ou humilhante o suficiente, a Runway quer que isso vire story.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {diagnosisItems.map((item, index) => (
+                    <div key={`${item.label}-${index}`} className="border border-white/8 bg-white/[0.02] p-5 md:p-6">
+                      <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-3">{item.label}</p>
+                      <p className="text-sm md:text-base text-white/65 leading-relaxed">{renderBoldText(item.summary)}</p>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="space-y-16 md:space-y-24">
@@ -583,6 +968,62 @@ const App: React.FC = () => {
                     ))}
                   </ul>
                 </div>
+
+                {!isPremium && (
+                  <div className="pt-16 md:pt-24 border-t border-white/5">
+                    <div className="border border-[#D32F2F]/30 bg-[#120404] p-6 md:p-8 rounded-[1.75rem] space-y-6">
+                      <div className="space-y-3">
+                        <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Upsell de Transformacao</p>
+                        <h4 className="text-2xl md:text-4xl font-serif italic text-white">O roast ja te deu o trauma. O premium entrega a reabilitacao.</h4>
+                        <p className="text-white/65 leading-relaxed max-w-3xl">
+                          Para o desafio <strong className="text-white font-semibold">{activeChallenge.label}</strong>, o upgrade libera {activeChallenge.premiumAngle}, alem de mais analises por dia e um plano mais concreto para manter, tirar e substituir.
+                        </p>
+                      </div>
+                      <div className="grid gap-4 md:grid-cols-3">
+                        <div className="border border-white/10 bg-black/20 p-5 rounded-[1.25rem]">
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-black">Manter</p>
+                          <p className="mt-3 text-sm text-white/70 leading-relaxed">O que ainda funciona e vale salvar no look.</p>
+                        </div>
+                        <div className="border border-white/10 bg-black/20 p-5 rounded-[1.25rem]">
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-black">Substituir</p>
+                          <p className="mt-3 text-sm text-white/70 leading-relaxed">Peças, tecidos e proporcoes que pedem demissao imediata.</p>
+                        </div>
+                        <div className="border border-white/10 bg-black/20 p-5 rounded-[1.25rem]">
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-black">Evoluir</p>
+                          <p className="mt-3 text-sm text-white/70 leading-relaxed">Versoes mais elegantes, mais acessiveis ou mais ousadas do mesmo look.</p>
+                        </div>
+                      </div>
+                      <a
+                        href="https://pay.kiwify.com.br/xxxxx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
+                      >
+                        Desbloquear Correcao Premium <ArrowRight size={14} />
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {premiumFixGroups.length > 0 && (
+                  <div className="pt-16 md:pt-24 border-t border-white/5 space-y-10 md:space-y-12">
+                    <h4 className="text-[11px] md:text-[14px] uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">Plano Premium de Reabilitacao</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                      {premiumFixGroups.map((group, index) => (
+                        <div key={`${group.title}-${index}`} className="border border-[#D32F2F]/18 bg-[#140505] p-5 md:p-6 space-y-4">
+                          <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">{group.title}</p>
+                          <div className="space-y-3">
+                            {group.items.map((item, itemIndex) => (
+                              <p key={`${group.title}-${itemIndex}`} className="text-sm md:text-base text-white/70 leading-relaxed">
+                                {renderBoldText(item)}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="lg:col-span-4 space-y-12 md:space-y-20">
@@ -617,8 +1058,8 @@ const App: React.FC = () => {
                   <div className="pt-12 border-t border-white/5 space-y-8">
                     <h4 className="text-[10px] xl:text-[12px] uppercase tracking-[0.3em] xl:tracking-[0.5em] text-white/30 font-black break-words">Status de Publicação</h4>
                     <div className="flex items-center gap-4 xl:gap-6">
-                       <div className={`w-6 h-6 rounded-full ${result.verdict === 'The Nod' ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.4)]'}`} />
-                       <span className="text-xs md:text-sm uppercase tracking-[0.4em] font-black text-white/80">{result.verdict}</span>
+                       <div className={`w-6 h-6 rounded-full ${editorialVerdict?.rarity === 'legendary' ? 'bg-[#FF4D4D] shadow-[0_0_22px_rgba(255,77,77,0.45)]' : 'bg-[#D32F2F] shadow-[0_0_20px_rgba(211,47,47,0.35)]'}`} />
+                       <span className="text-xs md:text-sm uppercase tracking-[0.35em] font-black text-white/80">{editorialVerdict?.title}</span>
                     </div>
                     <p className="text-[11px] text-white/20 italic leading-loose uppercase tracking-[0.2em]">
                       Decidido por Miranda Priestly. Incontestável. "Isso é tudo."
@@ -626,6 +1067,15 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col gap-4 w-full mt-10">
+                    {showSharePrompt && (
+                      <button 
+                        onClick={shareVerdict}
+                        disabled={isExporting}
+                        className="w-full py-6 bg-[#D32F2F] text-white hover:bg-[#B32626] transition-all uppercase text-[8px] xl:text-[10px] tracking-[0.2em] xl:tracking-[0.4em] font-black group flex items-center justify-center gap-3 shadow-[0_0_50px_rgba(211,47,47,0.18)]"
+                      >
+                        {isExporting ? 'Processando..' : <><Share2 size={14} /> Publicar Vergonha Editorial</>}
+                      </button>
+                    )}
                     <button 
                       onClick={exportVerdict}
                       disabled={isExporting}
@@ -639,6 +1089,11 @@ const App: React.FC = () => {
                     >
                       <RefreshCw size={14} className="group-hover:rotate-180 transition-transform duration-1000" /> Nova Audiência
                     </button>
+                    {showSharePrompt && (
+                      <p className="text-[10px] uppercase tracking-[0.28em] text-[#FFB0B0]/70 leading-relaxed text-center">
+                        Isso esta humilhante o suficiente para virar story.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -681,14 +1136,26 @@ const App: React.FC = () => {
                <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
             </div>
 
+            <div className="absolute top-[276px] right-16 z-20">
+              <div className="border border-[#D32F2F]/50 bg-[#240303]/80 px-5 py-3 uppercase tracking-[0.35em] text-[10px] font-black text-[#FFD8D8]">
+                {campaignState.isLive ? 'Runway Season Live' : `Runway Season · ${campaignState.countdownLabel}`}
+              </div>
+              <p className="mt-3 text-right text-[10px] uppercase tracking-[0.35em] text-white/55 font-black">
+                {activeChallenge.label}
+              </p>
+            </div>
+
             {/* Primary Headlines & Asymmetrical Grid */}
             <div className="absolute top-[380px] left-16 z-30 max-w-[500px]">
-              <div className="space-y-1">
-                <p className="text-white text-3xl font-bold uppercase tracking-[0.2em] mix-blend-difference">
-                  THE INDEX OF FASHION
+              <div className="space-y-3">
+                <p className="text-[#FFB0B0] text-sm font-black uppercase tracking-[0.45em]">
+                  {editorialVerdict?.strapline}
+                </p>
+                <p className="text-white text-4xl font-bold uppercase tracking-[0.18em] mix-blend-difference leading-tight">
+                  {editorialVerdict?.title}
                 </p>
                 <div className="w-16 h-1 bg-[#D32F2F] mt-2 mb-2"></div>
-                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">WHAT YOU NEED TO KNOW NOW.</p>
+                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">Share cut for Stories, Reels and Status.</p>
               </div>
             </div>
 
@@ -724,6 +1191,13 @@ const App: React.FC = () => {
                   <h4 className="text-white text-xl font-bold uppercase tracking-[0.2em] mb-1 shadow-black drop-shadow-md">{result.sections[0]?.title}</h4>
                   <p className="text-white/80 text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
                </div>
+            </div>
+
+            <div className="absolute bottom-[84px] right-16 z-30 text-right max-w-[250px]">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Runway App</p>
+              <p className="mt-2 text-white/75 text-sm leading-relaxed">
+                {result.shareCaption || `Miranda me deu ${result.rating}% e um ${editorialVerdict?.title.toLowerCase()}.`}
+              </p>
             </div>
 
             {/* Bottom Elements: Barcode */}

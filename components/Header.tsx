@@ -29,8 +29,12 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
         )}
       </div>
 
-      <h1 className="text-4xl md:text-8xl font-serif tracking-widest uppercase mb-1 md:mb-2 text-center">Runway</h1>
-      <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50 font-light text-center">Issue Edition</p>
+      <div className="flex flex-col items-center gap-2">
+        <h1 className="text-4xl md:text-8xl font-serif tracking-widest uppercase mb-1 md:mb-2 text-center">Runway</h1>
+        <div className="px-4 py-2 border border-[#D32F2F]/35 bg-[#240303]/60 text-[#FFD8D8] text-[10px] md:text-xs tracking-[0.3em] uppercase font-light text-center">
+          Runway Season
+        </div>
+      </div>
     </header>
   );
 };
