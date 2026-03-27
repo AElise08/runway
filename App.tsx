@@ -207,12 +207,12 @@ const App: React.FC = () => {
       setIsExporting(true);
       const canvas = await html2canvas(exportRef.current, { 
         useCORS: true, 
-        backgroundColor: '#000', 
+        backgroundColor: '#1A1A1A', 
         scale: 2,
         width: 1080,
-        height: 1920,
+        height: 1620,
         windowWidth: 1080,
-        windowHeight: 1920,
+        windowHeight: 1620,
         scrollX: 0,
         scrollY: 0,
         x: 0,
@@ -220,7 +220,7 @@ const App: React.FC = () => {
       } as any);
       const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = 'miranda-capa.png';
+      link.download = 'project-miranda-cover.png';
       link.href = dataUrl;
       link.click();
     } catch (e) {
@@ -525,13 +525,13 @@ const App: React.FC = () => {
 
       {/* Export Template - Hidden from view */}
       {result && image && (
-        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1920px', pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
+        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1620px', pointerEvents: 'none' }}>
+          <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-white bg-[#1A1A1A]">
 
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0 bg-[#0a0a0a]">
+            {/* Background Image / Photography */}
+            <div className="absolute inset-0 z-0">
               <div 
-                className="w-full h-full grayscale-[0.2] contrast-[1.1] brightness-[0.9]"
+                className="w-full h-full"
                 style={{ 
                   backgroundImage: `url(${image})`, 
                   backgroundSize: 'cover', 
@@ -539,83 +539,88 @@ const App: React.FC = () => {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90 z-10 mix-blend-multiply"></div>
-              {/* Added a slight noise texture effect pseudo-element behavior below if possible, but gradient will do for depth */}
+              {/* Rich saturated contrast mapping - Vogue meets street culture */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#1A1A1A] z-10"></div>
+              {/* Added subtle texture/grain overlay */}
+              <div className="absolute inset-0 opacity-10 mix-blend-overlay z-[11]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
             </div>
 
-            {/* Header - Magazine Title */}
-            <div className="w-full text-center z-20 pt-16 px-12 flex flex-col items-center">
-              <h1 className="text-[10rem] font-sans font-black tracking-tighter leading-[0.8] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] mix-blend-overlay">PROJECT</h1>
-              <h1 className="text-[12rem] font-sans font-black tracking-tighter leading-[0.8] text-[#D32F2F] drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] -mt-8">MIRANDA</h1>
-              <div className="w-full max-w-[900px] flex justify-between items-center mt-12 text-white font-medium uppercase tracking-[1em] text-xl drop-shadow-lg border-y border-white/20 py-4">
-                <span>C R I T I C A L</span>
-                <span>T H E O R Y</span>
-                <span>I S S U E</span>
+            {/* Masthead: "PROJECT MIRANDA" */}
+            <div className="absolute top-12 left-0 right-0 z-20 flex justify-center w-full px-12">
+              <h1 className="text-[7.5rem] font-bold tracking-tighter leading-none text-white drop-shadow-2xl mix-blend-difference opacity-90 uppercase" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}>
+                PROJECT MIRANDA
+              </h1>
+            </div>
+
+            {/* Additional Magazine Headers */}
+            <div className="absolute top-44 left-16 z-20 flex flex-col items-start uppercase">
+               <span className="text-white/80 tracking-[0.6em] text-sm font-bold border-b border-[#D32F2F] pb-2 mb-2">Issue No. 4</span>
+               <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
+            </div>
+
+            {/* Primary Headlines & Asymmetrical Grid */}
+            <div className="absolute top-[380px] left-16 z-30 max-w-[500px]">
+              <h2 className="text-[#D32F2F] text-6xl font-black uppercase italic leading-[0.9] drop-shadow-xl" style={{ fontFamily: 'Impact, sans-serif' }}>
+                HELL ON<br/>HEELS!
+              </h2>
+              <div className="mt-8 space-y-1">
+                <p className="text-white text-3xl font-bold uppercase tracking-[0.2em] mix-blend-difference">
+                  THE INDEX OF FASHION
+                </p>
+                <div className="w-16 h-1 bg-[#D32F2F] mt-2 mb-2"></div>
+                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">WHAT YOU NEED TO KNOW NOW.</p>
               </div>
             </div>
 
-            {/* Left Side Headlines */}
-            <div className="absolute top-[480px] left-16 max-w-[480px] z-30 flex flex-col gap-8">
-              <div className="space-y-1 mt-6 border-l-4 border-[#D32F2F] pl-6">
-                <p className="text-[#D32F2F] text-2xl font-bold uppercase tracking-widest drop-shadow-lg">THE INDEX OF</p>
-                <p className="text-white text-3xl font-light uppercase tracking-[0.2em] drop-shadow-lg">FASHION</p>
-              </div>
-
-              <p className="text-white text-6xl font-serif italic leading-none drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)] mt-4">
-                HELL ON <br/>
-                <span className="text-[#D32F2F] font-black not-italic font-sans tracking-tighter">HEELS!</span>
-              </p>
-
-              {/* Score Badge */}
-              <div className="mt-12 bg-[#D32F2F] text-white py-8 px-12 shadow-2xl inline-flex flex-col items-center justify-center transform hover:scale-105 transition-transform border border-white/10">
-                <p className="text-xl uppercase tracking-[0.6em] font-medium text-center mb-0 opacity-90">SCORE</p>
-                <p className="text-[7rem] font-sans font-black leading-none tracking-tighter">{result.rating}<span className="text-5xl">%</span></p>
+            {/* Score Element - Geometric Shape */}
+            <div className="absolute top-[400px] right-16 z-30">
+              <div className="w-48 h-48 bg-[#D32F2F] flex flex-col justify-center items-center shadow-2xl border-4 border-white/10 outline outline-1 outline-offset-4 outline-[#D32F2F]/50">
+                <p className="text-white text-lg font-bold uppercase tracking-[0.4em] mb-1">SCORE</p>
+                <p className="text-white text-7xl font-serif italic font-bold leading-none">{result.rating}%</p>
               </div>
             </div>
 
-            {/* Right Side Info */}
-            <div className="absolute top-[520px] right-16 max-w-[380px] z-30 text-right space-y-10">
+            {/* Critical Commentary Box */}
+            <div className="absolute bottom-[280px] left-16 right-16 z-30 bg-[#1A1A1A]/80 backdrop-blur-md border-l-8 border-[#D32F2F] p-8 shadow-2xl">
+               <h3 className="text-white text-[28px] font-serif italic leading-[1.5] text-left opacity-95">
+                 &ldquo;{result.lead}&rdquo;
+               </h3>
             </div>
 
-            {/* Main Quote */}
-            <div className="absolute top-[1050px] left-20 right-20 z-30">
-               <div className="bg-black/40 backdrop-blur-sm p-10 border border-white/10 shadow-2xl">
-                 <h3 className="text-white text-[2.4rem] font-serif italic leading-[1.3] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                   &ldquo;{result.lead}&rdquo;
-                 </h3>
+            {/* Section Labels & Secondary Info */}
+            <div className="absolute bottom-[140px] left-16 z-30 max-w-[600px] flex gap-4 items-start">
+               <div className="w-2 h-16 bg-[#D32F2F] flex-shrink-0 mt-1"></div>
+               <div>
+                  <h4 className="text-white text-xl font-bold uppercase tracking-[0.2em] mb-1 shadow-black drop-shadow-md">{result.sections[0]?.title}</h4>
+                  <p className="text-white/80 text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
                </div>
             </div>
 
-            {/* Analysis Section */}
-            <div className="absolute bottom-[280px] left-20 right-20 z-30 flex gap-12 bg-gradient-to-t from-black/80 to-transparent p-12 -mx-12">
-              {/* Left Analysis */}
-              <div className="flex-1 border-l-[4px] border-[#D32F2F] pl-8">
-                <p className="text-[#D32F2F] text-xl font-bold uppercase tracking-[0.4em] drop-shadow-lg mb-4">{result.sections[0]?.title}</p>
-                <p className="text-white/80 text-xl font-sans font-light drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+            {/* Bottom Elements: Verdict & Barcode */}
+            <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
+              
+              <div className="flex flex-col">
+                <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">OFFICIAL VERDICT</p>
+                <h4 className="text-white text-3xl font-black uppercase tracking-tight">
+                  <span className="text-[#D32F2F]">THE </span> {result.verdict.replace(/The /i, '').toUpperCase()}
+                </h4>
               </div>
-              {/* Right Verdict */}
-              <div className="w-[380px] flex-shrink-0 text-right flex flex-col justify-end pb-2">
-                <p className="text-white/60 text-lg uppercase tracking-[0.5em] font-medium drop-shadow-lg mb-3">OFFICIAL VERDICT</p>
-                <h4 className="text-[#D32F2F] text-3xl font-black uppercase tracking-wider drop-shadow-lg leading-tight">{result.verdict}</h4>
-              </div>
-            </div>
 
-            {/* Footer with Barcode */}
-            <div className="absolute bottom-16 left-20 right-20 z-40 flex justify-between items-end">
-              <div className="text-2xl uppercase tracking-[0.8em] font-black text-white/40 drop-shadow-lg mix-blend-screen">
-                PROJECT MIRANDA
-              </div>
-              <div className="bg-white p-5 shadow-2xl skew-x-[-2deg]">
-                <div className="flex flex-col items-center">
-                  <div className="w-64 h-20 flex gap-[3px] items-end justify-between px-2">
-                     {[...Array(48)].map((_,i) => <div key={i} className="bg-[#1A1A1A] h-full" style={{width: Math.random() * 5 + 1.5 + 'px'}}></div>)}
-                  </div>
-                  <div className="w-full flex justify-between text-[15px] font-sans tracking-widest pt-3 font-bold text-[#1A1A1A] border-t-2 border-[#1A1A1A]/30 mt-3 px-1 relative">
-                    <span>ISSN 8921</span>
-                    <span>MIRANDA</span>
+              <div className="flex flex-col items-end gap-2">
+                <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">PROJECT MIRANDA</p>
+                <div className="bg-white p-3 shadow-xl">
+                  <div className="flex flex-col items-center">
+                    <div className="w-40 h-12 flex gap-[2px] items-end justify-between px-1">
+                       {[...Array(35)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 3 + 1 + 'px'}}></div>)}
+                    </div>
+                    <div className="w-full flex justify-between text-[10px] font-mono tracking-widest pt-1 font-bold text-black mt-1 border-t border-black/20">
+                      <span>ISSN 8921</span>
+                      <span>MIRANDA</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
