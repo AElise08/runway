@@ -559,24 +559,20 @@ const App: React.FC = () => {
             </div>
 
             {/* Primary Headlines & Asymmetrical Grid */}
-            <div className="absolute top-[380px] left-16 z-30 max-w-[500px]">
-              <h2 className="text-[#D32F2F] text-6xl font-black uppercase italic leading-[0.9] drop-shadow-xl" style={{ fontFamily: 'Impact, sans-serif' }}>
-                HELL ON<br/>HEELS!
-              </h2>
-              <div className="mt-8 space-y-1">
-                <p className="text-white text-3xl font-bold uppercase tracking-[0.2em] mix-blend-difference">
+            <div className="absolute top-[400px] left-16 z-30 max-w-[500px]">
+              <div className="space-y-2 bg-black/20 p-4 backdrop-blur-sm border-l-4 border-[#D32F2F]">
+                <p className="text-white text-4xl font-bold uppercase tracking-[0.2em] drop-shadow-lg">
                   THE INDEX OF FASHION
                 </p>
-                <div className="w-16 h-1 bg-[#D32F2F] mt-2 mb-2"></div>
-                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">WHAT YOU NEED TO KNOW NOW.</p>
+                <p className="text-white/90 text-sm uppercase tracking-[0.4em] font-medium pt-1 drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
               </div>
             </div>
 
             {/* Score Element - Geometric Shape */}
-            <div className="absolute top-[400px] right-16 z-30">
-              <div className="w-48 h-48 bg-[#D32F2F] flex flex-col justify-center items-center shadow-2xl border-4 border-white/10 outline outline-1 outline-offset-4 outline-[#D32F2F]/50">
-                <p className="text-white text-lg font-bold uppercase tracking-[0.4em] mb-1">SCORE</p>
-                <p className="text-white text-7xl font-serif italic font-bold leading-none">{result.rating}%</p>
+            <div className="absolute top-[380px] right-16 z-30">
+              <div className="w-48 h-48 bg-[#D32F2F] flex flex-col justify-center items-center shadow-2xl border-2 border-black outline outline-2 outline-offset-2 outline-[#D32F2F] rotate-3">
+                <p className="text-black text-lg font-black uppercase tracking-[0.4em] mb-1 mix-blend-overlay">SCORE</p>
+                <p className="text-white text-7xl font-serif italic font-bold leading-none drop-shadow-md">{result.rating}%</p>
               </div>
             </div>
 
@@ -599,11 +595,22 @@ const App: React.FC = () => {
             {/* Bottom Elements: Verdict & Barcode */}
             <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
               
-              <div className="flex flex-col">
-                <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">OFFICIAL VERDICT</p>
-                <h4 className="text-white text-3xl font-black uppercase tracking-tight">
-                  <span className="text-[#D32F2F]">THE </span> {result.verdict.replace(/The /i, '').toUpperCase()}
-                </h4>
+              <div className="flex items-center gap-6">
+                {/* Selo Miranda */}
+                <div className="relative flex items-center justify-center w-28 h-28 rounded-full border-[5px] border-[#D32F2F] bg-[#1A1A1A]/95 p-2 shadow-[0_0_30px_rgba(211,47,47,0.6)] -rotate-12">
+                  <div className="absolute inset-1 border-[1px] border-dashed border-[#D32F2F]/60 rounded-full"></div>
+                  <div className="text-center z-10">
+                    <span className="block text-[#D32F2F] text-[9px] uppercase tracking-[0.3em] font-black">Approved by</span>
+                    <span className="block text-white text-2xl font-serif italic font-bold mt-1 leading-none shadow-black drop-shadow-md">Miranda</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">VERDICT</p>
+                  <h4 className="text-white text-[1.5rem] font-black uppercase tracking-tight max-w-[280px] leading-tight text-[#D32F2F] drop-shadow-lg">
+                    {result.verdict.toUpperCase()}
+                  </h4>
+                </div>
               </div>
 
               <div className="flex flex-col items-end gap-2">
