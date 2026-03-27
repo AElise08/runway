@@ -210,9 +210,9 @@ const App: React.FC = () => {
         backgroundColor: '#000', 
         scale: 2,
         width: 1080,
-        height: 1920,
+        height: 1350,
         windowWidth: 1080,
-        windowHeight: 1920,
+        windowHeight: 1350,
         scrollX: 0,
         scrollY: 0,
         x: 0,
@@ -525,95 +525,52 @@ const App: React.FC = () => {
 
       {/* Export Template - Hidden from view */}
       {result && image && (
-        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1920px', pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
+        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1350px', pointerEvents: 'none' }}>
+          <div ref={exportRef} className="w-[1080px] h-[1350px] relative bg-[#e5e5e5] p-12 overflow-hidden flex items-center justify-center font-sans">
+            
+            {/* The Notebook Page Wrapper */}
+            <div className="w-[960px] h-[1250px] bg-white relative ml-8 shadow-2xl rounded-r-xl border border-gray-200">
+              
+              {/* Colorful Tabs on Right */}
+              <div className="absolute -right-8 top-32 w-8 h-20 bg-yellow-300 rounded-r-md shadow-sm opacity-90"></div>
+              <div className="absolute -right-8 top-64 w-8 h-20 bg-green-400 rounded-r-md shadow-sm opacity-90"></div>
+              <div className="absolute -right-10 top-96 w-10 h-24 bg-yellow-300 rounded-r-md shadow-sm opacity-90"></div>
+              <div className="absolute -right-8 bottom-64 w-8 h-20 bg-pink-400 rounded-r-md shadow-sm opacity-90"></div>
+              <div className="absolute -right-10 bottom-32 w-10 h-24 bg-yellow-300 rounded-r-md shadow-sm opacity-90"></div>
 
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0 bg-black">
-              <img 
-                src={image} 
-                className="w-full h-full object-cover"
-                alt="" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/90 z-10"></div>
-            </div>
-
-            {/* Header - Magazine Title */}
-            <div className="w-full text-center z-20 pt-16 px-12 flex flex-col items-center">
-              <h1 className="text-[14rem] font-serif tracking-tighter leading-[0.75] text-[#d91921] drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] scale-y-110">RUNWAY</h1>
-              <div className="w-[900px] flex justify-between items-center mt-8 text-white font-bold uppercase tracking-[0.8em] text-2xl drop-shadow-lg">
-                <span>W E S T <span className="text-[#d91921]">E N D</span></span>
-                <span>I S S U E</span>
-              </div>
-            </div>
-
-            {/* Left Side Headlines */}
-            <div className="absolute top-[420px] left-16 max-w-[420px] z-30 flex flex-col gap-6">
-              <p className="text-white text-5xl font-bold uppercase italic leading-tight drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">
-                HELL ON <br/>
-                <span className="text-[#d91921]">HEELS!</span>
-              </p>
-
-              <div className="space-y-2 mt-6">
-                <p className="text-[#d91921] text-3xl font-black uppercase tracking-wider drop-shadow-lg">THE INDEX OF</p>
-                <p className="text-white text-4xl font-light uppercase tracking-[0.15em] drop-shadow-lg">FASHION:</p>
-                <p className="text-white text-xl uppercase tracking-widest font-light mt-2 drop-shadow-lg">WHAT YOU NEED TO KNOW NOW.</p>
-              </div>
-
-              {/* Score Badge */}
-              <div className="mt-8 bg-[#d91921] text-white py-6 px-10 rounded-sm shadow-2xl inline-block -rotate-2 transform self-start">
-                <p className="text-2xl uppercase tracking-[0.5em] font-black text-center mb-2">SCORE</p>
-                <p className="text-8xl font-serif italic font-bold leading-none">{result.rating}%</p>
-              </div>
-            </div>
-
-            {/* Right Side Info */}
-            <div className="absolute top-[520px] right-16 max-w-[380px] z-30 text-right space-y-10">
-               <div className="space-y-3">
-                 <p className="text-white text-3xl font-serif drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">HOW TO</p>
-                 <p className="text-[#d91921] text-6xl font-black uppercase tracking-tight drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">SURVIVE</p>
-                 <p className="text-white text-2xl font-light uppercase tracking-widest drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">THE BOSS FROM HELL!</p>
-               </div>
-            </div>
-
-            {/* Main Quote */}
-            <div className="absolute top-[950px] left-20 right-20 z-30">
-               <h3 className="text-white text-[3.2rem] font-serif italic leading-[1.25] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center px-8" style={{ display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                 &ldquo;{result.lead}&rdquo;
-               </h3>
-            </div>
-
-            {/* Analysis Section */}
-            <div className="absolute bottom-[320px] left-20 right-20 z-30 flex gap-12">
-              {/* Left Analysis */}
-              <div className="flex-1 border-l-[6px] border-[#d91921] pl-8">
-                <p className="text-[#d91921] text-2xl font-black uppercase tracking-[0.4em] drop-shadow-lg mb-3">{result.sections[0]?.title}</p>
-                <p className="text-white/95 text-2xl font-serif italic drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
-              </div>
-              {/* Right Verdict */}
-              <div className="w-[320px] flex-shrink-0 text-right flex flex-col justify-end">
-                <p className="text-white text-xl uppercase tracking-[0.4em] font-light drop-shadow-lg mb-3">OFFICIAL VERDICT</p>
-                <h4 className="text-[#d91921] text-4xl font-black uppercase drop-shadow-lg">{result.verdict}</h4>
-              </div>
-            </div>
-
-            {/* Footer with Barcode */}
-            <div className="absolute bottom-12 left-20 right-20 z-40 flex justify-between items-end">
-              <div className="text-xl uppercase tracking-[0.7em] font-black text-white/60 drop-shadow-lg">
-                PROJECT MIRANDA
-              </div>
-              <div className="bg-white p-4 shadow-2xl">
-                <div className="flex flex-col items-center">
-                  <div className="w-56 h-16 flex gap-[2px] items-end justify-between px-2">
-                     {[...Array(42)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1.5 + 'px'}}></div>)}
-                  </div>
-                  <div className="w-full flex justify-between text-[14px] font-mono tracking-widest pt-2 font-bold text-black border-t-2 border-black/20 mt-2 px-1">
-                    <span>ISSN 0921</span>
-                    <span>MIRANDA</span>
-                  </div>
+              {/* Book content */}
+              <div className="w-full h-full p-16 flex flex-col items-center pl-24">
+                
+                {/* Header - RUNWAY Logo */}
+                <div className="w-full text-center flex flex-col items-center mb-10 mt-6">
+                  <h1 className="text-[10rem] font-serif tracking-tighter leading-none text-[#d91921] scale-y-110 drop-shadow-sm">RUNWAY</h1>
                 </div>
+
+                {/* Grayscale Photo Frame */}
+                <div className="w-[85%] flex-1 mb-16 relative">
+                  <img 
+                    src={image} 
+                    className="w-full h-full object-cover grayscale contrast-125 rounded-sm"
+                    alt="" 
+                  />
+                  <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)] pointer-events-none"></div>
+                </div>
+
+              </div>
+
+              {/* Spiral Binding Hooks left side */}
+              <div className="absolute left-[-24px] top-0 bottom-0 w-16 flex flex-col justify-evenly py-8 z-10 pointer-events-none">
+                 {[...Array(32)].map((_, i) => (
+                    <div key={i} className="flex items-center">
+                       {/* The metal ring */}
+                       <div className="w-16 h-5 border-4 border-gray-300 rounded-full bg-gradient-to-r from-gray-100 via-gray-400 to-gray-200 shadow-md"></div>
+                       {/* The hole in the paper */}
+                       <div className="w-6 h-6 rounded-full bg-[#1a1a1a] -ml-6 border border-gray-300 shadow-inner z-20"></div>
+                    </div>
+                 ))}
               </div>
             </div>
+
           </div>
         </div>
       )}
