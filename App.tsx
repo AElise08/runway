@@ -235,10 +235,10 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {state === 'idle' && (
-          <div className="max-w-5xl mx-auto px-6 py-24 flex flex-col items-center text-center space-y-16 animate-in fade-in duration-1000">
-            <div className="space-y-8">
-              <h2 className="text-5xl md:text-8xl font-serif italic text-white/90 tracking-tighter leading-none">"Florais? Para a primavera? Inovador."</h2>
-              <p className="text-white/40 max-w-lg mx-auto leading-relaxed text-[12px] uppercase tracking-[0.6em] font-light">
+          <div className="max-w-5xl mx-auto px-6 py-12 md:py-24 flex flex-col items-center text-center space-y-12 md:space-y-16 animate-in fade-in duration-1000">
+            <div className="space-y-6 md:space-y-8">
+              <h2 className="text-4xl md:text-8xl font-serif italic text-white/90 tracking-tighter leading-tight md:leading-none">"Florais?<br className="md:hidden" /> Para a primavera?<br className="md:hidden" /> Inovador."</h2>
+              <p className="text-white/40 max-w-lg mx-auto leading-relaxed text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-light">
                 A Edição de Setembro exige perfeição. Mostre-me sua melhor composição ou retire-se imediatamente.
               </p>
             </div>
@@ -264,39 +264,39 @@ const App: React.FC = () => {
                 <button onClick={() => { localStorage.setItem('miranda_usage_count', '0'); window.location.reload(); }} className="px-4 py-2 border border-white/10 text-white/40 hover:text-white text-[9px] uppercase tracking-[0.5em] transition-all font-black mt-6 inline-block">Resetar Limite (Dev)</button>
               </div>
             ) : (
-              <div className="flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center gap-4 w-full">
                 <button 
                   onClick={startCamera}
-                  className="group relative px-24 py-10 bg-white text-black font-black uppercase tracking-[0.6em] text-[11px] transition-all hover:tracking-[0.8em] hover:bg-neutral-200 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.1)]"
+                  className="group relative px-8 md:px-24 py-6 md:py-10 bg-white text-black font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-[10px] md:text-[11px] transition-all hover:tracking-[0.4em] md:hover:tracking-[0.8em] hover:bg-neutral-200 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.1)] w-full max-w-[300px] md:w-auto md:max-w-none break-words whitespace-normal text-center leading-relaxed"
                 >
                   Iniciar Audiência
                 </button>
-                <span className="text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold">
+                <span className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold text-center px-4">
                   {isPremium ? `${maxUses - (profile?.daily_looks || 0)} Análises Premium Restantes Hoje` : `${maxUses - usageCount} Avaliações Gratuitas Restantes`}
                 </span>
               </div>
             )}
 
             {error && (
-              <div className="max-w-md mx-auto p-12 bg-red-950/5 border border-red-500/10 text-red-300 text-xs text-center font-serif italic rounded-sm flex flex-col items-center gap-8 animate-in shake duration-500">
+              <div className="max-w-md mx-auto p-6 md:p-12 bg-red-950/5 border border-red-500/10 text-red-300 text-xs text-center font-serif italic rounded-sm flex flex-col items-center gap-6 md:gap-8 animate-in shake duration-500">
                 {error.includes("reunião") ? <Clock className="text-red-500/20" size={48} /> : <CameraOff className="text-red-500/20" size={48} />}
-                <p className="tracking-[0.4em] leading-loose uppercase text-[10px] font-black text-red-400/60">{error}</p>
-                <button onClick={() => setError(null)} className="px-12 py-4 border border-white/10 text-white/40 hover:text-white text-[9px] uppercase tracking-[0.5em] transition-all font-black">Dispensar</button>
+                <p className="tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase text-[9px] md:text-[10px] font-black text-red-400/60">{error}</p>
+                <button onClick={() => setError(null)} className="px-8 md:px-12 py-3 md:py-4 border border-white/10 text-white/40 hover:text-white text-[8px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all font-black">Dispensar</button>
               </div>
             )}
 
-            <div className="pt-32 grid grid-cols-1 md:grid-cols-3 gap-20 border-t border-white/5 w-full text-left">
-              <div className="space-y-6">
+            <div className="pt-16 md:pt-32 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 border-t border-white/5 w-full text-left">
+              <div className="space-y-4 md:space-y-6">
                 <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Artigo I</span>
-                <h4 className="font-serif text-3xl italic">A Tirania do Caimento</h4>
+                <h4 className="font-serif text-2xl md:text-3xl italic">A Tirania do Caimento</h4>
                 <p className="text-xs text-white/40 leading-relaxed font-light">O desleixo com a silhueta é o primeiro sinal de uma mente medíocre. Miranda não tolera o disforme.</p>
               </div>
-              <div className="space-y-6 border-l border-white/5 pl-12">
+              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-12 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
                 <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Artigo II</span>
-                <h4 className="font-serif text-3xl italic">Acessórios ou Armas?</h4>
+                <h4 className="font-serif text-2xl md:text-3xl italic">Acessórios ou Armas?</h4>
                 <p className="text-xs text-white/40 leading-relaxed font-light">Um cinto mal escolhido pode arruinar uma carreira. A joalheria deve ser intencional, nunca acidental.</p>
               </div>
-              <div className="space-y-6 border-l border-white/5 pl-12">
+              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-12 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
                 <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Artigo III</span>
                 <h4 className="font-serif text-3xl italic">O Peso do Legado</h4>
                 <p className="text-xs text-white/40 leading-relaxed font-light">Lembre-se: você está vestindo o trabalho de centenas de pessoas. Tente não ser um fardo.</p>
@@ -306,7 +306,7 @@ const App: React.FC = () => {
         )}
 
         {state === 'camera' && (
-          <div className="max-w-4xl mx-auto px-6 py-12 flex flex-col items-center space-y-12 animate-in zoom-in-95 duration-500">
+          <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-12 flex flex-col items-center space-y-8 md:space-y-12 animate-in zoom-in-95 duration-500">
             <div className="relative w-full max-w-lg aspect-[3/4] bg-neutral-900 overflow-hidden border border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.05)] rounded-sm group">
               <video 
                 ref={videoRef} 
@@ -323,15 +323,15 @@ const App: React.FC = () => {
                 </div>
               )}
 
-              <div className="absolute inset-0 border-[60px] border-black/40 pointer-events-none group-hover:border-black/20 transition-all duration-1000"></div>
+              <div className="absolute inset-0 border-[20px] md:border-[60px] border-black/40 pointer-events-none group-hover:border-black/20 transition-all duration-1000"></div>
               
-              <div className="absolute top-10 right-10">
+              <div className="absolute top-4 right-4 md:top-10 md:right-10">
                 <button onClick={reset} className="p-4 bg-black/40 backdrop-blur-3xl rounded-full hover:bg-white hover:text-black transition-all border border-white/5">
                   <X size={24} />
                 </button>
               </div>
               
-              <div className="absolute bottom-16 left-0 right-0 flex justify-center">
+              <div className="absolute bottom-8 md:bottom-16 left-0 right-0 flex justify-center">
                 <button 
                   onClick={capturePhoto}
                   disabled={!isCameraReady}
@@ -347,17 +347,17 @@ const App: React.FC = () => {
         )}
 
         {state === 'analyzing' && (
-          <div className="max-w-4xl mx-auto px-6 py-40 flex flex-col items-center justify-center space-y-24">
-            <div className="relative w-56 h-56">
+          <div className="max-w-4xl mx-auto px-6 py-20 md:py-40 flex flex-col items-center justify-center space-y-16 md:space-y-24">
+            <div className="relative w-40 h-40 md:w-56 md:h-56">
               <div className="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-125"></div>
               <div className="absolute inset-0 border-t-[0.5px] border-white rounded-full animate-spin duration-[4000ms]"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <Sparkles className="text-white/10 animate-pulse" size={64} />
               </div>
             </div>
-            <div className="text-center space-y-10 max-w-md">
-              <h3 className="text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Explique-me..."</h3>
-              <p className="text-white/20 text-[10px] uppercase tracking-[0.8em] font-black leading-loose">
+            <div className="text-center space-y-6 md:space-y-10 max-w-md">
+              <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Explique-me..."</h3>
+              <p className="text-white/20 text-[8px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.8em] font-black leading-loose px-4">
                 Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway.
               </p>
             </div>
@@ -366,30 +366,30 @@ const App: React.FC = () => {
 
         {state === 'result' && result && image && (
           <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000">
-            <div className="relative w-full h-[90vh] bg-neutral-900 border-b border-white/10 overflow-hidden">
+            <div className="relative w-full h-[70vh] md:h-[90vh] bg-neutral-900 border-b border-white/10 overflow-hidden">
               <img 
                 src={image} 
                 alt="Editorial Shot" 
                 className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
               
               {/* Floating Result Info */}
-              <div className="absolute bottom-24 left-8 md:left-24 right-8 flex flex-col items-start space-y-8">
-                <div className="flex flex-wrap items-center gap-6">
+              <div className="absolute bottom-8 md:bottom-24 left-4 md:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-8">
+                <div className="flex flex-wrap items-center gap-4 md:gap-6">
                   <VerdictBadge verdict={result.verdict} />
-                  <div className="flex items-baseline gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-2 rounded-full">
-                    <span className="text-[10px] uppercase tracking-[0.3em] font-black text-white/50">Runway Index</span>
-                    <span className="text-2xl font-serif italic font-bold text-white">{result.rating}</span>
+                  <div className="flex items-baseline gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-4 md:px-6 py-1 md:py-2 rounded-full">
+                    <span className="text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-black text-white/50">Runway Index</span>
+                    <span className="text-xl md:text-2xl font-serif italic font-bold text-white">{result.rating}</span>
                   </div>
                 </div>
                 
-                <h2 className="text-6xl md:text-[10rem] font-serif italic tracking-tighter text-white leading-[0.8]">The Analysis.</h2>
-                <div className="flex items-center gap-6 text-[11px] uppercase tracking-[0.6em] text-white/40 font-black">
+                <h2 className="text-5xl md:text-[10rem] font-serif italic tracking-tighter text-white leading-[0.8] md:leading-[0.8]">The<br className="md:hidden" /> Analysis.</h2>
+                <div className="flex flex-wrap items-center gap-3 md:gap-6 text-[8px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.6em] text-white/40 font-black">
                   <span>Issue</span>
-                  <span className="w-1.5 h-1.5 bg-white/20 rounded-full"></span>
-                  <span>Editorial Board</span>
-                  <span className="w-1.5 h-1.5 bg-white/20 rounded-full"></span>
+                  <span className="w-1 md:w-1.5 h-1 md:h-1.5 bg-white/20 rounded-full hidden md:block"></span>
+                  <span>Editorial</span>
+                  <span className="w-1 md:w-1.5 h-1 md:h-1.5 bg-white/20 rounded-full hidden md:block"></span>
                   <span>Volume IV</span>
                 </div>
               </div>
@@ -400,38 +400,38 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-8 md:px-24 py-32 grid grid-cols-1 lg:grid-cols-12 gap-32">
-              <div className="lg:col-span-8 space-y-20">
-                <div className="relative pb-16 border-b border-white/5">
-                  <Quote size={80} className="absolute -top-12 -left-12 text-white/[0.03] fill-white/[0.03]" />
-                  <p className="text-4xl md:text-6xl font-serif italic leading-[1.3] text-white/90 selection:bg-white selection:text-black">
+            <div className="max-w-7xl mx-auto px-6 md:px-24 py-16 md:py-32 grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-32">
+              <div className="lg:col-span-8 space-y-16 md:space-y-20">
+                <div className="relative pb-12 md:pb-16 border-b border-white/5">
+                  <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
+                  <p className="text-3xl md:text-6xl font-serif italic leading-[1.4] md:leading-[1.3] text-white/90 selection:bg-white selection:text-black">
                     {result.lead}
                   </p>
                 </div>
 
-                <div className="space-y-24">
+                <div className="space-y-16 md:space-y-24">
                   {result.sections.map((section, idx) => (
-                    <div key={idx} className="space-y-8 group">
+                    <div key={idx} className="space-y-6 md:space-y-8 group">
                       <div className="flex items-center gap-4">
-                        <span className="text-xs uppercase tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {section.title}</span>
+                        <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {section.title}</span>
                         <div className="flex-1 h-[0.5px] bg-white/5 group-hover:bg-white/10 transition-colors"></div>
                       </div>
-                      <h3 className="text-4xl font-serif italic text-white/80">{section.title}</h3>
-                      <p className="text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black">
+                      <h3 className="text-3xl md:text-4xl font-serif italic text-white/80">{section.title}</h3>
+                      <p className="text-xl md:text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black">
                         {section.content}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-24 border-t border-white/5 space-y-16">
-                  <h4 className="text-[14px] uppercase tracking-[0.8em] text-white/20 font-black">Diretrizes Corretivas</h4>
-                  <ul className="space-y-12">
+                <div className="pt-16 md:pt-24 border-t border-white/5 space-y-12 md:space-y-16">
+                  <h4 className="text-[11px] md:text-[14px] uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">Diretrizes Corretivas</h4>
+                  <ul className="space-y-8 md:space-y-12">
                     {result.fashionTips.map((tip, i) => (
                       <li key={i} className="flex items-start gap-12 group">
                         <span className="text-5xl font-serif italic text-white/5 group-hover:text-white/20 transition-all">0{i+1}</span>
                         <div className="pt-2">
-                          <span className="text-white/70 text-2xl font-light leading-relaxed group-hover:text-white transition-colors block">{tip}</span>
+                          <span className="text-white/70 text-lg md:text-2xl font-light leading-relaxed group-hover:text-white transition-colors block">{tip}</span>
                         </div>
                       </li>
                     ))}
@@ -439,8 +439,8 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              <div className="lg:col-span-4 space-y-20">
-                <div className="p-12 bg-white/[0.02] border border-white/5 space-y-12 sticky top-40">
+              <div className="lg:col-span-4 space-y-12 md:space-y-20">
+                <div className="p-6 md:p-12 bg-white/[0.02] border border-white/5 space-y-8 md:space-y-12 md:sticky md:top-40">
                   
                   {/* Rating Visual Bar */}
                   <div className="space-y-4">
@@ -462,7 +462,7 @@ const App: React.FC = () => {
                       {result.suggestedAccessories.map((item, i) => (
                         <div key={i} className="group flex flex-col gap-2">
                           <span className="text-[10px] uppercase tracking-[0.3em] text-white/20 block font-bold">Essencial 0{i+1}</span>
-                          <span className="text-2xl font-serif italic text-white/40 group-hover:text-white transition-all">{item}</span>
+                          <span className="text-xl md:text-2xl font-serif italic text-white/40 group-hover:text-white transition-all">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -472,7 +472,7 @@ const App: React.FC = () => {
                     <h4 className="text-[12px] uppercase tracking-[0.5em] text-white/30 font-black">Status de Publicação</h4>
                     <div className="flex items-center gap-6">
                        <div className={`w-6 h-6 rounded-full ${result.verdict === 'The Nod' ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : result.verdict === 'The Lip Purse' ? 'bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]' : 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.4)]'}`} />
-                       <span className="text-sm uppercase tracking-[0.4em] font-black text-white/80">{result.verdict}</span>
+                       <span className="text-xs md:text-sm uppercase tracking-[0.4em] font-black text-white/80">{result.verdict}</span>
                     </div>
                     <p className="text-[11px] text-white/20 italic leading-loose uppercase tracking-[0.2em]">
                       Decidido por Miranda Priestly. Incontestável. "Isso é tudo."
@@ -483,13 +483,13 @@ const App: React.FC = () => {
                     <button 
                       onClick={exportVerdict}
                       disabled={isExporting}
-                      className="w-full py-8 bg-transparent border border-white text-white hover:bg-white hover:text-black transition-all uppercase text-[11px] tracking-[0.7em] font-black group flex items-center justify-center gap-4"
+                      className="w-full py-6 md:py-8 bg-transparent border border-white text-white hover:bg-white hover:text-black transition-all uppercase text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.7em] font-black group flex items-center justify-center gap-4"
                     >
                       {isExporting ? 'Processando..' : <><Download size={14} /> Exportar Capa</>}
                     </button>
                     <button 
                       onClick={reset}
-                      className="w-full py-8 bg-white text-black hover:bg-neutral-200 transition-all uppercase text-[11px] tracking-[0.7em] font-black group shadow-[0_0_40px_rgba(255,255,255,0.05)] flex items-center justify-center gap-4"
+                      className="w-full py-6 md:py-8 bg-white text-black hover:bg-neutral-200 transition-all uppercase text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.7em] font-black group shadow-[0_0_40px_rgba(255,255,255,0.05)] flex items-center justify-center gap-4"
                     >
                       <RefreshCw size={14} className="group-hover:rotate-180 transition-transform duration-1000" /> Nova Audiência
                     </button>
