@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import { User } from '@supabase/supabase-js';
+import { removeBackground } from '@imgly/background-removal';
 import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
 import Auth from './components/Auth';
@@ -13,6 +14,8 @@ import { RefreshCw, Quote, Sparkles, X, ChevronDown, CameraOff, Clock, Download 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState | 'camera'>('idle');
   const [image, setImage] = useState<string | null>(null);
+  const [cutoutImage, setCutoutImage] = useState<string | null>(null);
+  const [isRemovingBg, setIsRemovingBg] = useState(false);
   const [result, setResult] = useState<CritiqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
@@ -163,6 +166,23 @@ const App: React.FC = () => {
   const processImage = async (base64: string) => {
     setState('analyzing');
     setError(null);
+    setCutoutImage(null);
+    setIsRemovingBg(true);
+
+    // Inicia remoção de fundo em background
+    const url = `data:image/jpeg;base64,${base64}`;
+    removeBackground(url).then((blob: Blob) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob); 
+      reader.onloadend = () => {
+         setCutoutImage(reader.result as string);
+         setIsRemovingBg(false);
+      }
+    }).catch(e => {
+      console.error("Erro ao remover fundo", e);
+      setIsRemovingBg(false);
+    });
+
     try {
       // Usa isPremium real do banco de dados (se carregado)
       const jsonStr = await analyzeLook(base64, isPremium);
@@ -201,6 +221,7 @@ const App: React.FC = () => {
     stopCamera();
     setState('idle');
     setImage(null);
+    setCutoutImage(null);
     setResult(null);
     setError(null);
   };
@@ -370,7 +391,7 @@ const App: React.FC = () => {
             <div className="text-center space-y-6 md:space-y-10 max-w-md">
               <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Explique-me..."</h3>
               <p className="text-white/20 text-[8px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.8em] font-black leading-loose px-4">
-                Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway.
+                {isRemovingBg ? "Recortando o excesso... Miranda gosta apenas do essencial." : "Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway."}
               </p>
             </div>
           </div>
@@ -378,16 +399,17 @@ const App: React.FC = () => {
 
         {state === 'result' && result && image && (
           <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000">
-            <div className="relative w-full h-[70vh] md:h-[90vh] bg-neutral-900 border-b border-white/10 overflow-hidden">
+            <div className="relative w-full h-[70vh] md:h-[90vh] bg-[#0a0a0a] border-b border-white/10 overflow-hidden flex flex-col justify-end">
+              {cutoutImage && <div className="absolute inset-0 bg-[#d91921]/10 blur-[100px]"></div>}
               <img 
-                src={image} 
+                src={cutoutImage || image} 
                 alt="Editorial Shot" 
-                className="w-full h-full object-cover grayscale-[0.05] contrast-[1.1]"
+                className={`w-full ${cutoutImage ? 'h-[90%] object-contain relative z-10' : 'h-full object-cover absolute inset-0 grayscale-[0.05] contrast-[1.1]'}`}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 pointer-events-none"></div>
               
               {/* Floating Result Info */}
-              <div className="absolute bottom-8 md:bottom-24 left-4 md:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-8">
+              <div className="absolute bottom-8 md:bottom-24 left-4 md:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-8 z-20">
                 <div className="flex flex-wrap items-center gap-4 md:gap-6">
                   <VerdictBadge verdict={result.verdict} />
                   <div className="flex items-baseline gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-4 md:px-6 py-1 md:py-2 rounded-full">
@@ -520,10 +542,18 @@ const App: React.FC = () => {
           <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
 
             {/* Foto de Fundo Inteira */}
-            <div className="absolute inset-0 z-0">
-              <img src={image} className="w-full h-full object-cover" alt="" />
-              {/* Gradiente mais forte para legibilidade */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 via-40% to-black/95"></div>
+            <div className="absolute inset-0 z-0 bg-black flex flex-col justify-end">
+              {cutoutImage && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-[800px] h-[800px] bg-[#d91921] rounded-full blur-[120px] opacity-40"></div>
+                </div>
+              )}
+              <img 
+                src={cutoutImage || image} 
+                className={`w-full ${cutoutImage ? 'h-[85%] object-contain drop-shadow-[0_0_40px_rgba(0,0,0,0.8)] z-10 relative' : 'h-full object-cover absolute inset-0'}`} 
+                alt="" 
+              />
+              {!cutoutImage && <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 via-40% to-black/95 z-10"></div>}
             </div>
 
             {/* === ZONA SUPERIOR (0–400px): Cabeçalho da Revista === */}
