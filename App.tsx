@@ -517,87 +517,90 @@ const App: React.FC = () => {
 
       {result && image && (
         <div style={{ position: 'absolute', top: -9999, left: -9999, opacity: 1, pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col items-center overflow-hidden font-sans text-white bg-black">
-            
+          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
+
             {/* Foto de Fundo Inteira */}
             <div className="absolute inset-0 z-0">
               <img src={image} className="w-full h-full object-cover" alt="" />
-              {/* Gradientes sutis: Parte superior pra ler o RUNWAY e Inferior para o texto da análise */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90"></div>
+              {/* Gradiente mais forte para legibilidade */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 via-40% to-black/95"></div>
             </div>
 
-            {/* Cabeçalho da Revista */}
-            <div className="w-full text-center z-20 pt-16 px-8 flex flex-col items-center">
-              <h1 className="text-[15rem] font-serif tracking-tighter leading-[0.8] text-[#d91921] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] scale-y-110">RUNWAY</h1>
-              <div className="w-[800px] flex justify-between items-center mt-8 text-white font-bold uppercase tracking-[0.8em] text-xl drop-shadow-lg">
+            {/* === ZONA SUPERIOR (0–400px): Cabeçalho da Revista === */}
+            <div className="w-full text-center z-20 pt-12 px-8 flex flex-col items-center">
+              <h1 className="text-[14rem] font-serif tracking-tighter leading-[0.8] text-[#d91921] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] scale-y-110">RUNWAY</h1>
+              <div className="w-[800px] flex justify-between items-center mt-6 text-white font-bold uppercase tracking-[0.8em] text-xl drop-shadow-lg">
                 <span>W E S T <span className="text-[#d91921]">E N D</span></span>
                 <span>I S S U E</span>
               </div>
             </div>
 
-            {/* Manchetes na Lateral Esquerda (Estilo Meryl Streep) */}
-            <div className="absolute top-[450px] left-12 max-w-[400px] z-30 flex flex-col gap-6">
-              <p className="text-white text-5xl font-bold uppercase italic leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+            {/* === ZONA MÉDIA-ALTA (400–850px): Manchetes laterais === */}
+            <div className="absolute top-[400px] left-12 max-w-[380px] z-30 flex flex-col gap-4">
+              <p className="text-white text-4xl font-bold uppercase italic leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
                 HELL ON <br/>
                 <span className="text-[#d91921]">HEELS!</span>
               </p>
-              
-              <div className="space-y-1 mt-6">
-                <p className="text-[#d91921] text-3xl font-black uppercase tracking-wider drop-shadow-md">THE INDEX OF</p>
-                <p className="text-white text-4xl font-light uppercase tracking-[0.1em] drop-shadow-md">FASHION:</p>
-                <p className="text-white text-xl uppercase tracking-widest font-light mt-2 drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
+
+              <div className="space-y-1 mt-4">
+                <p className="text-[#d91921] text-2xl font-black uppercase tracking-wider drop-shadow-md">THE INDEX OF</p>
+                <p className="text-white text-3xl font-light uppercase tracking-[0.1em] drop-shadow-md">FASHION:</p>
+                <p className="text-white text-lg uppercase tracking-widest font-light mt-1 drop-shadow-md">WHAT YOU NEED TO KNOW NOW.</p>
               </div>
 
               {/* Avaliação destacada */}
-              <div className="mt-12 bg-[#d91921] text-white py-6 px-10 rounded-sm shadow-2xl inline-block -rotate-2 transform self-start">
-                <p className="text-2xl uppercase tracking-[0.4em] font-black text-center mb-2">SCORE</p>
-                <p className="text-8xl font-serif italic font-bold leading-none">{result.rating}%</p>
+              <div className="mt-6 bg-[#d91921] text-white py-5 px-8 rounded-sm shadow-2xl inline-block -rotate-2 transform self-start">
+                <p className="text-xl uppercase tracking-[0.4em] font-black text-center mb-1">SCORE</p>
+                <p className="text-7xl font-serif italic font-bold leading-none">{result.rating}%</p>
               </div>
             </div>
 
-
             {/* Informações da Lateral Direita */}
-            <div className="absolute top-[600px] right-12 max-w-[350px] z-30 text-right space-y-12">
+            <div className="absolute top-[500px] right-12 max-w-[320px] z-30 text-right space-y-8">
                <div className="space-y-2">
-                 <p className="text-white text-3xl font-serif drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">HOW TO</p>
-                 <p className="text-[#d91921] text-6xl font-black uppercase tracking-tighter drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">SURVIVE</p>
-                 <p className="text-white text-2xl font-light uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">THE BOSS FROM HELL!</p>
+                 <p className="text-white text-2xl font-serif drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">HOW TO</p>
+                 <p className="text-[#d91921] text-5xl font-black uppercase tracking-tighter drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">SURVIVE</p>
+                 <p className="text-white text-xl font-light uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">THE BOSS FROM HELL!</p>
                </div>
             </div>
 
-            {/* Citação Inferior - Grandiosa e limpa */}
-            <div className="absolute bottom-[480px] left-16 right-16 z-30">
-               <h3 className="text-white text-[3.8rem] font-serif italic leading-[1.1] drop-shadow-[0_5px_8px_rgba(0,0,0,0.9)] text-center text-balance">
-                 "{result.lead}"
+            {/* === ZONA MÉDIA-BAIXA (850–1350px): Citação principal === */}
+            <div className="absolute top-[880px] left-14 right-14 z-30">
+               <h3 className="text-white text-[2.8rem] font-serif italic leading-[1.2] drop-shadow-[0_5px_8px_rgba(0,0,0,0.9)] text-center" style={{ display: '-webkit-box', WebkitLineClamp: 6, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                 &ldquo;{result.lead}&rdquo;
                </h3>
             </div>
 
-            {/* Veredito e Analise de detalhe no rodapé */}
-            <div className="absolute bottom-40 left-16 max-w-[650px] z-30 border-l-4 border-[#d91921] pl-8">
-               <p className="text-[#d91921] text-2xl font-black uppercase tracking-[0.4em] drop-shadow-md mb-3">{result.sections[0]?.title}</p>
-               <p className="text-white/90 text-2xl font-serif italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-relaxed line-clamp-4">{result.sections[0]?.content}</p>
-            </div>
-
-            <div className="absolute bottom-40 right-16 z-30 text-right flex flex-col items-end">
-               <p className="text-white text-2xl uppercase tracking-[0.3em] font-light drop-shadow-md mb-2">OFFICIAL VERDICT</p>
-               <h4 className="text-[#d91921] text-4xl font-black uppercase drop-shadow-md">{result.verdict}</h4>
-            </div>
-
-            {/* Código de barras e logos estéticos no final */}
-            <div className="absolute bottom-12 right-16 z-40 bg-white p-4 shadow-xl translate-y-2">
-              <div className="flex flex-col items-center">
-                <div className="w-56 h-16 flex gap-[3px] items-end justify-between px-1">
-                   {[...Array(38)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 5 + 1 + 'px'}}></div>)}
-                </div>
-                <div className="w-full flex justify-between text-[14px] font-mono tracking-widest pt-2 font-bold text-black border-t border-black/20 mt-1">
-                  <span>ISSN 0921</span>
-                  <span>MIRANDA</span>
-                </div>
+            {/* === ZONA INFERIOR (1350–1750px): Análise + Veredito === */}
+            <div className="absolute bottom-[280px] left-16 right-16 z-30 flex gap-10">
+              {/* Análise à esquerda */}
+              <div className="flex-1 border-l-4 border-[#d91921] pl-6">
+                <p className="text-[#d91921] text-xl font-black uppercase tracking-[0.3em] drop-shadow-md mb-2">{result.sections[0]?.title}</p>
+                <p className="text-white/90 text-xl font-serif italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+              </div>
+              {/* Veredito à direita */}
+              <div className="w-[280px] flex-shrink-0 text-right flex flex-col justify-end">
+                <p className="text-white text-lg uppercase tracking-[0.3em] font-light drop-shadow-md mb-2">OFFICIAL VERDICT</p>
+                <h4 className="text-[#d91921] text-3xl font-black uppercase drop-shadow-md">{result.verdict}</h4>
               </div>
             </div>
-            
-            <div className="absolute bottom-16 left-16 z-40 text-lg uppercase tracking-[0.8em] font-black text-white/50 drop-shadow-md">
-              PROJECT MIRANDA
+
+            {/* === ZONA RODAPÉ (1750–1920px): Barcode + Branding === */}
+            <div className="absolute bottom-10 left-16 right-16 z-40 flex justify-between items-end">
+              <div className="text-base uppercase tracking-[0.6em] font-black text-white/50 drop-shadow-md">
+                PROJECT MIRANDA
+              </div>
+              <div className="bg-white p-3 shadow-xl">
+                <div className="flex flex-col items-center">
+                  <div className="w-48 h-14 flex gap-[2px] items-end justify-between px-1">
+                     {[...Array(38)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1 + 'px'}}></div>)}
+                  </div>
+                  <div className="w-full flex justify-between text-[12px] font-mono tracking-widest pt-1 font-bold text-black border-t border-black/20 mt-1">
+                    <span>ISSN 0921</span>
+                    <span>MIRANDA</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
