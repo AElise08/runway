@@ -31,6 +31,24 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #444;
       }
+      
+      /* Global Layout Fixes for Notebooks/Mobile */
+      html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      * {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      h1, h2, h3, h4, h5, h6, p, span, div {
+        max-width: 100%;
+      }
     </style>
   <script type="importmap">
 {

@@ -414,7 +414,7 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 lg:gap-32">
+            <div className="w-full max-w-[100vw] overflow-x-hidden md:max-w-7xl mx-auto px-4 md:px-12 lg:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 lg:gap-32 pb-40">
               <div className="lg:col-span-8 space-y-12 md:space-y-16 lg:space-y-20">
                 <div className="relative pb-12 md:pb-16 border-b border-white/5">
                   <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
@@ -430,8 +430,8 @@ const App: React.FC = () => {
                         <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {section.title}</span>
                         <div className="flex-1 h-[0.5px] bg-white/5 group-hover:bg-white/10 transition-colors"></div>
                       </div>
-                      <h3 className="text-3xl md:text-4xl font-serif italic text-white/80">{section.title}</h3>
-                      <p className="text-xl md:text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black">
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-white/80 break-words">{section.title}</h3>
+                      <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black break-words">
                         {section.content}
                       </p>
                     </div>
