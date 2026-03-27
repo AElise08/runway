@@ -7,8 +7,8 @@ interface Props {
 
 const VerdictBadge: React.FC<Props> = ({ verdict }) => {
   const styles = {
-    'The Nod': 'bg-green-900/20 text-green-400 border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]',
-    'The Purse Drop': 'bg-red-900/20 text-red-400 border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]'
+    'The Nod': 'bg-[#8B0000]/25 text-[#FFE2E2] border-[#D32F2F]/60 shadow-[0_0_18px_rgba(211,47,47,0.28)]',
+    'The Purse Drop': 'bg-[#5C0000]/30 text-[#FF9B9B] border-[#FF4D4D]/65 shadow-[0_0_18px_rgba(255,77,77,0.24)]'
   };
 
   return (
