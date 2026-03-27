@@ -142,7 +142,7 @@ const App: React.FC = () => {
 
       let targetWidth = width;
       let targetHeight = height;
-      const MAX_DIMENSION = 800;
+      const MAX_DIMENSION = 512;
 
       if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
         const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
@@ -158,7 +158,7 @@ const App: React.FC = () => {
         ctx.scale(-1, 1);
         ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
         
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
         setImage(dataUrl);
         
         const base64String = dataUrl.replace(/^data:image\/\w+;base64,/, "");
@@ -188,7 +188,7 @@ const App: React.FC = () => {
         img.onload = () => {
           let width = img.width;
           let height = img.height;
-          const MAX_DIMENSION = 800;
+          const MAX_DIMENSION = 512;
 
           if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
             const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
@@ -203,7 +203,7 @@ const App: React.FC = () => {
           
           if (ctx) {
             ctx.drawImage(img, 0, 0, width, height);
-            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.5);
             setImage(compressedDataUrl);
             const base64String = compressedDataUrl.replace(/^data:image\/\w+;base64,/, "");
             processImage(base64String);
@@ -669,39 +669,28 @@ const App: React.FC = () => {
             </div>
 
             {/* Section Labels & Secondary Info */}
-            <div className="absolute bottom-[140px] left-16 z-30 max-w-[600px] flex gap-4 items-start">
-               <div className="w-2 h-16 bg-[#D32F2F] flex-shrink-0 mt-1"></div>
-               <div>
+            <div className="absolute bottom-[80px] left-16 z-30 max-w-[700px] flex gap-4 items-stretch">
+               <div className="w-2 bg-[#D32F2F] flex-shrink-0 mt-1"></div>
+               <div className="py-1">
                   <h4 className="text-white text-xl font-bold uppercase tracking-[0.2em] mb-1 shadow-black drop-shadow-md">{result.sections[0]?.title}</h4>
-                  <p className="text-white/80 text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+                  <p className="text-white/80 text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
                </div>
             </div>
 
-            {/* Bottom Elements: Verdict & Barcode */}
-            <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
-              
-              <div className="flex flex-col">
-                <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">OFFICIAL VERDICT</p>
-                <h4 className="text-white text-3xl font-black uppercase tracking-tight">
-                  <span className="text-[#D32F2F]">THE </span> {result.verdict.replace(/The /i, '').toUpperCase()}
-                </h4>
-              </div>
-
-              <div className="flex flex-col items-end gap-2">
-                <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">RUNWAY INFO</p>
-                <div className="bg-white p-3 shadow-xl">
-                  <div className="flex flex-col items-center">
-                    <div className="w-40 h-12 flex gap-[2px] items-end justify-between px-1">
-                       {[...Array(35)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 3 + 1 + 'px'}}></div>)}
-                    </div>
-                    <div className="w-full flex justify-between text-[10px] font-mono tracking-widest pt-1 font-bold text-black mt-1 border-t border-black/20">
-                      <span>ISSN 8921</span>
-                      <span>MIRANDA</span>
-                    </div>
+            {/* Bottom Elements: Barcode */}
+            <div className="absolute bottom-12 right-16 z-40 flex flex-col items-end gap-2">
+              <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">RUNWAY INFO</p>
+              <div className="bg-white p-3 shadow-xl">
+                <div className="flex flex-col items-center">
+                  <div className="w-40 h-12 flex gap-[2px] items-end justify-between px-1">
+                     {[...Array(35)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 3 + 1 + 'px'}}></div>)}
+                  </div>
+                  <div className="w-full flex justify-between text-[10px] font-mono tracking-widest pt-1 font-bold text-black mt-1 border-t border-black/20">
+                    <span>ISSN 8921</span>
+                    <span>MIRANDA</span>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
