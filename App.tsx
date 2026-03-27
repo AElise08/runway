@@ -114,6 +114,59 @@ const LANDING_FLOW = [
   },
 ];
 
+const EDITORIAL_HERO_BACKGROUND = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1600" height="1200" fill="#050505"/>
+    <defs>
+      <radialGradient id="redGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1210 280) rotate(90) scale(430 430)">
+        <stop stop-color="#D32F2F" stop-opacity="0.9"/>
+        <stop offset="1" stop-color="#D32F2F" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="whiteMist" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(420 980) rotate(90) scale(260 620)">
+        <stop stop-color="#F7F4EF" stop-opacity="0.95"/>
+        <stop offset="1" stop-color="#F7F4EF" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="silverFade" x1="930" y1="80" x2="1320" y2="880" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#F5F2EC" stop-opacity="0.55"/>
+        <stop offset="0.5" stop-color="#BBB4AE" stop-opacity="0.18"/>
+        <stop offset="1" stop-color="#F5F2EC" stop-opacity="0"/>
+      </linearGradient>
+      <filter id="blurXL" x="-200" y="-200" width="2000" height="1600" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feGaussianBlur stdDeviation="46"/>
+      </filter>
+      <filter id="grain" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox">
+        <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+        <feComponentTransfer>
+          <feFuncA type="table" tableValues="0 0.06"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+
+    <ellipse cx="1220" cy="290" rx="430" ry="430" fill="url(#redGlow)" filter="url(#blurXL)"/>
+    <ellipse cx="390" cy="1030" rx="620" ry="260" fill="url(#whiteMist)" filter="url(#blurXL)"/>
+
+    <g opacity="0.9">
+      <path d="M1074 126C1177 136 1264 240 1272 364C1284 566 1178 756 1112 884C1072 960 1021 1032 950 1088L886 1040C922 964 944 876 944 774C944 620 896 504 900 356C903 248 976 116 1074 126Z" fill="url(#silverFade)"/>
+      <circle cx="1088" cy="210" r="70" fill="#F5F2EC" fill-opacity="0.24"/>
+      <rect x="1010" y="260" width="176" height="450" rx="88" fill="#F5F2EC" fill-opacity="0.1"/>
+    </g>
+
+    <path d="M1236 0H1600V554C1485 610 1366 645 1268 648C1339 498 1378 334 1236 0Z" fill="#190606" fill-opacity="0.7"/>
+    <path d="M1115 1138L1600 930V1200H979L1115 1138Z" fill="#7E1010" fill-opacity="0.42"/>
+
+    <g opacity="0.18" stroke="#FFFFFF">
+      <path d="M920 128V1024"/>
+      <path d="M1008 128V1024"/>
+      <path d="M1096 128V1024"/>
+      <path d="M1184 128V1024"/>
+      <path d="M1272 128V1024"/>
+    </g>
+
+    <rect x="0" y="0" width="1600" height="1200" filter="url(#grain)"/>
+  </svg>
+`)}`;
+
 const renderBoldText = (text: string) => {
   if (!text) return text;
   const parts = text.split(/(\*\*.*?\*\*|\*.*?\*)/g);
@@ -673,158 +726,214 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {state === 'idle' && (
-          <div className="max-w-6xl mx-auto px-6 py-12 md:py-24 flex flex-col items-center text-center space-y-12 md:space-y-16 animate-in fade-in duration-1000">
-            <div className="w-full max-w-4xl mx-auto space-y-6">
-              <div className="inline-flex flex-wrap items-center justify-center gap-3 px-4 py-3 border border-[#D32F2F]/40 bg-[#240303]/70 text-[#FFD8D8] uppercase tracking-[0.35em] text-[9px] md:text-[10px] font-black shadow-[0_0_60px_rgba(211,47,47,0.14)]">
-                <span>Runway Season</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
-                <span>{campaignState.countdownLabel}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
-                <span>1 de maio de 2026</span>
-              </div>
-              <p className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-[#FFB0B0]/70 font-bold">
-                {campaignState.sublabel}
-              </p>
-            </div>
-
-            <div className="space-y-6 md:space-y-8">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif italic text-white/95 tracking-tighter leading-tight md:leading-none max-w-5xl mx-auto break-words px-4">
-                Envie seu look. Receba o veredito que destruiria sua autoestima em uma redacao da Runway.
-              </h2>
-              <p className="text-white/50 max-w-3xl mx-auto leading-relaxed text-[10px] md:text-[12px] uppercase tracking-[0.35em] md:tracking-[0.5em] font-light px-4">
-                Roast editorial brutal, Runway Index compartilhavel e, no premium, a correcao real do look para voce voltar melhor vestida e menos humilhada.
-              </p>
-            </div>
-
-            {isBlocked ? (
-              <div className="max-w-2xl mx-auto p-8 md:p-12 bg-[#160707] border border-[#D32F2F]/30 text-center space-y-8 animate-in mt-12 shadow-[0_0_120px_rgba(211,47,47,0.12)]">
-                <div className="space-y-4">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 border border-[#D32F2F]/40 bg-[#2A0505] text-[#FFD6D6] uppercase tracking-[0.35em] text-[9px] font-black">
-                    Runway Season Premium
-                  </span>
-                  <h3 className="text-3xl md:text-4xl font-serif italic text-white/90">O roast gratis acabou. A correcao premium comeca aqui.</h3>
-                </div>
-                <p className="text-sm font-light leading-relaxed text-white/70 max-w-xl mx-auto">
-                  O plano pago deixa de apenas humilhar: ele explica o que manter, o que tirar, o que substituir e como reconstruir o look com mais elegancia, versao acessivel e opcao mais ousada.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-                  <div className="border border-white/10 bg-black/20 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-2">Premium Corrige</p>
-                    <p className="text-sm text-white/70 leading-relaxed">Diagnostico real de silhueta, cor, tecido e contexto.</p>
-                  </div>
-                  <div className="border border-white/10 bg-black/20 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-2">Mais Volume</p>
-                    <p className="text-sm text-white/70 leading-relaxed">20 analises por dia para testar variacoes sem depender da sorte.</p>
-                  </div>
-                  <div className="border border-white/10 bg-black/20 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-2">Mais Compartilhavel</p>
-                    <p className="text-sm text-white/70 leading-relaxed">Cards prontos para story com cara de capa e branding discreto.</p>
-                  </div>
-                </div>
-                <p className="text-[10px] uppercase tracking-[0.35em] text-white/35 font-bold">
-                  Gratis: roast e urgencia. Premium: recuperacao de reputacao.
-                </p>
-                <a 
-                  href="https://pay.kiwify.com.br/xxxxx" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block px-12 py-5 bg-[#D32F2F] text-white font-black uppercase tracking-[0.4em] text-[10px] transition-all hover:bg-[#B32626] w-full mb-4 text-center"
-                >
-                  Desbloquear Correcao Premium
-                </a>
-                <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-white/40 italic">
-                  Use o mesmo email da compra para liberar o acesso editorial.
-                </p>
-                <button onClick={() => { localStorage.setItem('miranda_usage_count', '0'); window.location.reload(); }} className="px-4 py-2 border border-white/10 text-white/40 hover:text-white text-[9px] uppercase tracking-[0.5em] transition-all font-black mt-2 inline-block">Resetar Limite (Dev)</button>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-6 w-full">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl">
-                  <div className="border border-white/10 bg-white/[0.02] p-5 md:p-6 text-left">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#FFB0B0] font-black mb-3">Roast Editorial</p>
-                    <p className="text-sm text-white/65 leading-relaxed">Receba um veredito cruel, visualmente forte e pronto para print.</p>
-                  </div>
-                  <div className="border border-white/10 bg-white/[0.02] p-5 md:p-6 text-left">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#FFB0B0] font-black mb-3">Runway Season</p>
-                    <p className="text-sm text-white/65 leading-relaxed">Temporada especial de lancamento com countdown, selo e acabamento de campanha.</p>
-                  </div>
-                  <div className="border border-white/10 bg-white/[0.02] p-5 md:p-6 text-left">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#FFB0B0] font-black mb-3">Premium Corrige</p>
-                    <p className="text-sm text-white/65 leading-relaxed">Nao apenas humilha: mostra como salvar o look com intencao e criterio.</p>
-                  </div>
+          <div className="px-4 pb-24 md:pb-32 animate-in fade-in duration-1000">
+            <div
+              id="landing-hero"
+              className="max-w-6xl mx-auto mt-4 md:mt-6 rounded-[2.5rem] border border-white/10 overflow-hidden bg-[#050505] shadow-[0_30px_120px_rgba(0,0,0,0.35)]"
+            >
+              <div
+                className="relative px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20 min-h-[760px] md:min-h-[860px]"
+                style={{
+                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.78) 68%, rgba(0,0,0,0.96) 100%), url("${EDITORIAL_HERO_BACKGROUND}")`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.82),rgba(0,0,0,0.42)_45%,rgba(0,0,0,0.78))] pointer-events-none" />
+                <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.22) 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
+                <div className="absolute top-10 right-8 md:right-14 text-[5rem] md:text-[9rem] lg:text-[12rem] font-serif italic tracking-tighter text-white/[0.05] pointer-events-none select-none">
+                  RUNWAY
                 </div>
 
-                <div className="w-full max-w-5xl space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3 text-left">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/35 font-black">Escolha o desafio</p>
-                    <p className="text-[10px] uppercase tracking-[0.28em] text-[#FFB0B0]/70 font-bold">
-                      Premium entrega: {selectedChallenge.premiumAngle}
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="inline-flex flex-wrap items-center justify-center gap-3 px-4 py-2 rounded-full border border-white/15 bg-white/10 text-white uppercase tracking-[0.32em] text-[9px] md:text-[10px] font-black backdrop-blur-md">
+                      <span>Runway Season</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
+                      <span>{campaignState.countdownLabel}</span>
+                    </div>
+                    <p className="max-w-xl text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-white/45">
+                      {campaignState.sublabel}
                     </p>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                    {CHALLENGE_OPTIONS.map((challenge) => (
-                      <button
-                        key={challenge.key}
-                        onClick={() => setSelectedChallengeKey(challenge.key)}
-                        className={`text-left p-4 border transition-all ${selectedChallenge.key === challenge.key ? 'border-[#D32F2F] bg-[#240303]/70 shadow-[0_0_40px_rgba(211,47,47,0.12)]' : 'border-white/10 bg-white/[0.02] hover:border-white/25'}`}
-                      >
-                        <p className="text-[10px] uppercase tracking-[0.3em] font-black text-[#FFD6D6]">{challenge.label}</p>
-                        <p className="mt-3 text-xs text-white/50 leading-relaxed">{challenge.teaser}</p>
-                      </button>
-                    ))}
+
+                  <div className="mt-8 md:mt-10 max-w-4xl space-y-6">
+                    <h2 className="text-5xl md:text-7xl lg:text-[5.8rem] font-serif italic tracking-tighter leading-[0.88] text-white">
+                      Julgue o look. Poste o estrago.
+                    </h2>
+                    <p className="max-w-2xl mx-auto text-base md:text-xl text-white/72 leading-relaxed">
+                      Um hero mais forte, um fundo editorial em preto, branco e vermelho, e a mesma persona cruel da Runway para transformar o primeiro clique em upload.
+                    </p>
                   </div>
+
+                  <div className="mt-8 inline-flex items-center gap-3 rounded-[1.5rem] border border-white/12 bg-white/8 px-5 py-4 backdrop-blur-md text-left shadow-[0_18px_60px_rgba(0,0,0,0.22)]">
+                    <div className="w-10 h-10 rounded-full bg-[#D32F2F]/85 flex items-center justify-center text-[10px] uppercase tracking-[0.2em] font-black text-white">Hot</div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.28em] text-white/55 font-black">Veredito Compartilhavel</p>
+                      <p className="text-sm text-white/72">Roast gratis na frente. Correcao premium logo depois.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-10 w-full max-w-4xl">
+                    <div className="rounded-[2rem] border border-white/10 bg-white/[0.08] backdrop-blur-md p-4 md:p-5 shadow-[0_18px_80px_rgba(0,0,0,0.18)]">
+                      <div className="flex flex-col gap-3 text-left">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                          <p className="text-[10px] uppercase tracking-[0.35em] text-white/68 font-black">Escolha o desafio</p>
+                          <p className="text-sm text-white/60">{selectedChallenge.teaser}</p>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-2.5">
+                          {CHALLENGE_OPTIONS.map((challenge) => (
+                            <button
+                              key={challenge.key}
+                              onClick={() => setSelectedChallengeKey(challenge.key)}
+                              className={`rounded-[1.25rem] border px-3 py-3 text-left transition-all ${
+                                selectedChallenge.key === challenge.key
+                                  ? 'border-[#D32F2F]/45 bg-white text-[#111111] shadow-[0_12px_40px_rgba(0,0,0,0.18)]'
+                                  : 'border-white/10 bg-black/20 text-white/75 hover:bg-white/[0.06]'
+                              }`}
+                            >
+                              <span className="block text-[10px] uppercase tracking-[0.2em] font-black">
+                                {challenge.label}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {isBlocked ? (
+                    <div className="mt-10 w-full max-w-3xl rounded-[2rem] border border-[#D32F2F]/25 bg-[#170707]/88 p-6 md:p-8 text-left shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
+                      <div className="space-y-4">
+                        <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Correcao Premium</p>
+                        <h3 className="text-3xl md:text-4xl font-serif italic text-white">
+                          O roast gratis acabou. A solucao comeca aqui.
+                        </h3>
+                        <p className="text-white/65 leading-relaxed">
+                          Desbloqueie mais analises, diagnostico por contexto e o plano de reabilitacao com o que manter, tirar e substituir.
+                        </p>
+                      </div>
+                      <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-center">
+                        <a
+                          href="https://pay.kiwify.com.br/xxxxx"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-full bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626]"
+                        >
+                          Desbloquear Correcao Premium <ArrowRight size={14} />
+                        </a>
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-white/35 font-bold">
+                          Use o mesmo email da compra para liberar o acesso.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-10 flex flex-col items-center gap-5 w-full">
+                      <div className="flex flex-col md:flex-row gap-4 w-full max-w-2xl justify-center">
+                        <button
+                          onClick={startCamera}
+                          className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 rounded-full bg-white text-[#111111] font-black uppercase tracking-[0.28em] text-[10px] md:text-[11px] transition-all hover:bg-[#f1f1f1] shadow-[0_18px_60px_rgba(0,0,0,0.22)] w-full"
+                        >
+                          Ser Julgada Agora
+                        </button>
+                        <label className="cursor-pointer inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 rounded-full border border-[#D32F2F]/50 bg-[#120404] text-white font-black uppercase tracking-[0.28em] text-[10px] md:text-[11px] transition-all hover:bg-[#1b0707] w-full">
+                          Importar Look
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileUpload}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+                      <div className="flex flex-col items-center gap-2">
+                        <p className="text-[10px] uppercase tracking-[0.32em] text-[#f1d7cb]/70 font-black">
+                          Premium entrega: {selectedChallenge.premiumAngle}
+                        </p>
+                        <span className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold text-center">
+                          {isPremium ? `${remainingUses} Analises Premium Restantes Hoje` : `${remainingUses} Avaliacoes Gratuitas Restantes`}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-
-                <div className="flex flex-col md:flex-row gap-4 w-full md:max-w-[680px] justify-center">
-                  <button 
-                    onClick={startCamera}
-                    className="group relative px-6 md:px-12 py-6 md:py-10 bg-[#D32F2F] text-white font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-[#B32626] active:scale-95 shadow-[0_0_80px_rgba(211,47,47,0.18)] w-full text-center leading-relaxed"
-                  >
-                    Ser Julgada Agora
-                  </button>
-                  <label 
-                    className="cursor-pointer group relative px-6 md:px-12 py-6 md:py-10 bg-transparent border border-white text-white font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-[11px] transition-all hover:bg-white/10 active:scale-95 shadow-[0_0_80px_rgba(255,255,255,0.05)] w-full text-center leading-relaxed flex items-center justify-center gap-2 m-0"
-                  >
-                    Importar E Enfrentar Miranda
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={handleFileUpload} 
-                      className="hidden" 
-                    />
-                  </label>
-                </div>
-                <span className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold text-center px-4">
-                  {isPremium ? `${remainingUses} Analises Premium Restantes Hoje` : `${remainingUses} Avaliacoes Gratuitas Restantes`}
-                </span>
-              </div>
-            )}
-
-            {error && (
-              <div className="max-w-md mx-auto p-6 md:p-12 bg-red-950/5 border border-red-500/10 text-red-300 text-xs text-center font-serif italic rounded-sm flex flex-col items-center gap-6 md:gap-8 animate-in shake duration-500">
-                {error.includes("reunião") ? <Clock className="text-red-500/20" size={48} /> : <CameraOff className="text-red-500/20" size={48} />}
-                <p className="tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase text-[9px] md:text-[10px] font-black text-red-400/60">{error}</p>
-                <button onClick={() => setError(null)} className="px-8 md:px-12 py-3 md:py-4 border border-white/10 text-white/40 hover:text-white text-[8px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all font-black">Dispensar</button>
-              </div>
-            )}
-
-            <div className="pt-16 md:pt-24 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10 border-t border-white/5 w-full text-left">
-              <div className="space-y-4 md:space-y-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Campanha</span>
-                <h4 className="font-serif text-2xl md:text-3xl italic">Look feito para virar story</h4>
-                <p className="text-xs text-white/40 leading-relaxed font-light">Cada analise precisa parecer um meme premium, nao um print tecnico. O objetivo e postar antes da dignidade voltar.</p>
-              </div>
-              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-10 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Resultado</span>
-                <h4 className="font-serif text-2xl md:text-3xl italic">Veredito colecionavel</h4>
-                <p className="text-xs text-white/40 leading-relaxed font-light">Aprovada com severo desgosto, demitida antes do cafe, ceruleo sem salvacao. O resultado agora tem personalidade memoravel.</p>
-              </div>
-              <div className="space-y-4 md:space-y-6 md:border-l md:border-white/5 md:pl-10 pt-8 md:pt-0 border-t border-white/5 md:border-t-0">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20">Premium</span>
-                <h4 className="font-serif text-3xl italic">Humilhar e corrigir</h4>
-                <p className="text-xs text-white/40 leading-relaxed font-light">A versao paga vende melhora concreta do look, nao apenas mais tentativas de ser aprovada pela propria sorte.</p>
               </div>
             </div>
+
+            {error && (
+              <div className="max-w-md mx-auto mt-8 p-6 md:p-10 bg-red-950/5 border border-red-500/10 text-red-300 text-xs text-center font-serif italic rounded-[1.5rem] flex flex-col items-center gap-6 animate-in shake duration-500">
+                {error.includes("reunião") ? <Clock className="text-red-500/20" size={48} /> : <CameraOff className="text-red-500/20" size={48} />}
+                <p className="tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase text-[9px] md:text-[10px] font-black text-red-400/60">{error}</p>
+                <button onClick={() => setError(null)} className="px-8 py-3 border border-white/10 text-white/40 hover:text-white text-[8px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all font-black rounded-full">Dispensar</button>
+              </div>
+            )}
+
+            <section id="landing-benefits" className="max-w-6xl mx-auto mt-10 md:mt-16">
+              <div className="rounded-[2.5rem] border border-black/8 bg-[#ffffff] text-[#111111] px-6 py-10 md:px-10 md:py-14 shadow-[0_24px_90px_rgba(0,0,0,0.12)]">
+                <div className="max-w-2xl mx-auto text-center space-y-4">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#7f1d1d] font-black">Por Que Funciona</p>
+                  <h3 className="text-4xl md:text-5xl font-serif italic tracking-tight">Tudo o que importa, sem poluicao.</h3>
+                  <p className="text-[#16110f]/65 text-base md:text-lg leading-relaxed">
+                    A landing agora resume a experiencia em poucos sinais fortes: curiosidade, compartilhamento e correcao.
+                  </p>
+                </div>
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+                  {LANDING_PILLARS.map((pillar) => (
+                    <div key={pillar.title} className="rounded-[1.8rem] border border-black/8 bg-[#fbfbfb] p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.04)]">
+                      <span className="inline-flex w-12 h-12 items-center justify-center rounded-2xl bg-[#111111] text-[#fff2eb] text-[10px] uppercase tracking-[0.2em] font-black">
+                        Run
+                      </span>
+                      <h4 className="mt-6 text-2xl font-serif italic">{pillar.title}</h4>
+                      <p className="mt-4 text-[#16110f]/65 leading-relaxed">{pillar.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section id="landing-flow" className="max-w-6xl mx-auto mt-10 md:mt-16">
+              <div className="rounded-[2.5rem] border border-black/8 bg-[#fafafa] px-6 py-10 md:px-10 md:py-14 shadow-[0_24px_90px_rgba(0,0,0,0.08)]">
+                <div className="max-w-2xl mx-auto text-center space-y-4">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#7f1d1d] font-black">Como Funciona</p>
+                  <h3 className="text-4xl md:text-5xl font-serif italic text-[#111111] tracking-tight">Uma home mais limpa, um hero muito melhor.</h3>
+                  <p className="text-[#111111]/62 text-base md:text-lg leading-relaxed">
+                    Menos ruído na primeira dobra. Mais clareza para levar a pessoa do clique ao upload.
+                  </p>
+                </div>
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                  {LANDING_FLOW.map((item, index) => (
+                    <div key={item.step} className="text-center md:text-left">
+                      <div className={`mx-auto md:mx-0 flex h-16 w-16 items-center justify-center rounded-full text-2xl font-black ${index === 1 ? 'bg-[#D32F2F] text-white' : 'bg-[#111111] text-white'}`}>
+                        {item.step}
+                      </div>
+                      <h4 className="mt-6 text-3xl font-serif italic text-[#111111]">{item.title}</h4>
+                      <p className="mt-4 text-[#111111]/58 leading-relaxed">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section className="max-w-6xl mx-auto mt-10 md:mt-16">
+              <div className="rounded-[2.5rem] border border-[#D32F2F]/16 bg-[linear-gradient(135deg,rgba(8,8,8,1),rgba(28,5,5,0.98))] px-6 py-10 md:px-10 md:py-14 text-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#D32F2F 1px, transparent 1px)', backgroundSize: '22px 22px' }} />
+                <p className="relative text-[10px] uppercase tracking-[0.35em] text-[#f1d7cb]/70 font-black">Chamada Final</p>
+                <h3 className="mt-4 text-4xl md:text-6xl font-serif italic text-white tracking-tight">
+                  Compartilhe a humilhacao ou corrija o look.
+                </h3>
+                <p className="relative mt-4 max-w-3xl mx-auto text-white/62 text-base md:text-lg leading-relaxed">
+                  O app continua com a mesma personalidade, mas a entrada agora ficou mais clara, mais editorial e mais proxima do layout que você imaginou.
+                </p>
+                <div className="relative mt-8">
+                  <button
+                    onClick={startCamera}
+                    className="inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 rounded-full bg-white text-[#111111] font-black uppercase tracking-[0.28em] text-[10px] md:text-[11px] transition-all hover:bg-[#f1f1f1]"
+                  >
+                    Abrir A Audiencia <ArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
+            </section>
           </div>
         )}
 
