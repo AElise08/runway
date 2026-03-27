@@ -204,9 +204,10 @@ const App: React.FC = () => {
       if (dataUrl) {
         const img = new Image();
         img.onload = () => {
+          // Mantém o tamanho original máximo para exportação (qualidade máxima, até 4K)
           let width = img.width;
           let height = img.height;
-          const MAX_DIMENSION = 512;
+          const MAX_DIMENSION = 3840; 
 
           if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
             const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
@@ -223,7 +224,7 @@ const App: React.FC = () => {
             ctx.drawImage(img, 0, 0, width, height);
             
             // Alta qualidade para a interface (tela e exportação final)
-            const hqDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+            const hqDataUrl = canvas.toDataURL('image/jpeg', 1.0);
             setImage(hqDataUrl);
             
             // Baixa qualidade APENAS para enviar para a inteligência artificial (evitar sobrecarga)
@@ -643,14 +644,11 @@ const App: React.FC = () => {
 
             {/* Background Image / Photography */}
             <div className="absolute inset-0 z-0">
-              <div 
-                className="w-full h-full"
-                style={{ 
-                  backgroundImage: `url(${image})`, 
-                  backgroundSize: 'cover', 
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
+              <img 
+                src={image} 
+                crossOrigin="anonymous" 
+                className="w-full h-full object-cover" 
+                alt="Background" 
               />
               {/* Rich saturated contrast mapping - Vogue meets street culture */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#1A1A1A] z-10"></div>
@@ -666,7 +664,7 @@ const App: React.FC = () => {
             </div>
 
             {/* Additional Magazine Headers */}
-            <div className="absolute top-44 left-16 z-20 flex flex-col items-start uppercase">
+            <div className="absolute top-[280px] left-16 z-20 flex flex-col items-start uppercase">
                <span className="text-white/80 tracking-[0.6em] text-sm font-bold border-b border-[#D32F2F] pb-2 mb-2">Issue No. 4</span>
                <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
             </div>
