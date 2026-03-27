@@ -1,0 +1,7 @@
+{
+  "name": "RUNWAY - Miranda AI",
+  "description": "A high-fashion critique app inspired by The Devil Wears Prada. Upload your look and let the AI Editor-in-Chief judge your style with cold, sharp, and professional precision.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
