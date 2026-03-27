@@ -5,7 +5,7 @@ export interface EditorialSection {
 }
 
 export interface CritiqueResult {
-  verdict: 'The Nod' | 'The Lip Purse' | 'The Purse Drop';
+  verdict: 'The Nod' | 'The Purse Drop';
   rating: number; // 0 to 100
   lead: string;
   sections: EditorialSection[];

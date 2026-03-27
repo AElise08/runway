@@ -9,6 +9,20 @@ import { analyzeLook } from './services/mistralService';
 import { CritiqueResult, AppState, Profile } from './types';
 import { RefreshCw, Quote, Sparkles, X, ChevronDown, CameraOff, Clock, Download } from 'lucide-react';
 
+const renderBoldText = (text: string) => {
+  if (!text) return text;
+  const parts = text.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i} className="font-bold text-white/90">{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith('*') && part.endsWith('*')) {
+      return <strong key={i} className="font-bold text-white/90">{part.slice(1, -1)}</strong>;
+    }
+    return part;
+  });
+};
+
 const App: React.FC = () => {
   const [state, setState] = useState<AppState | 'camera'>('idle');
   const [image, setImage] = useState<string | null>(null);
@@ -485,7 +499,7 @@ const App: React.FC = () => {
                 <div className="relative pb-12 md:pb-16 border-b border-white/5">
                   <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
                   <p className="text-3xl md:text-6xl font-serif italic leading-[1.4] md:leading-[1.3] text-white/90 selection:bg-white selection:text-black">
-                    {result.lead}
+                    {renderBoldText(result.lead)}
                   </p>
                 </div>
 
@@ -493,12 +507,12 @@ const App: React.FC = () => {
                   {result.sections.map((section, idx) => (
                     <div key={idx} className="space-y-6 md:space-y-8 group">
                       <div className="flex items-center gap-4">
-                        <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {section.title}</span>
+                        <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {renderBoldText(section.title)}</span>
                         <div className="flex-1 h-[0.5px] bg-white/5 group-hover:bg-white/10 transition-colors"></div>
                       </div>
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-white/80 break-words">{section.title}</h3>
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-white/80 break-words">{renderBoldText(section.title)}</h3>
                       <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black break-words">
-                        {section.content}
+                        {renderBoldText(section.content)}
                       </p>
                     </div>
                   ))}
@@ -511,7 +525,7 @@ const App: React.FC = () => {
                       <li key={i} className="flex items-start gap-12 group">
                         <span className="text-5xl font-serif italic text-white/5 group-hover:text-white/20 transition-all">0{i+1}</span>
                         <div className="pt-2">
-                          <span className="text-white/70 text-lg md:text-2xl font-light leading-relaxed group-hover:text-white transition-colors block">{tip}</span>
+                          <span className="text-white/70 text-lg md:text-2xl font-light leading-relaxed group-hover:text-white transition-colors block">{renderBoldText(tip)}</span>
                         </div>
                       </li>
                     ))}
@@ -542,7 +556,7 @@ const App: React.FC = () => {
                       {result.suggestedAccessories.map((item, i) => (
                         <div key={i} className="group flex flex-col gap-2">
                           <span className="text-[10px] uppercase tracking-[0.3em] text-white/20 block font-bold">Essencial 0{i+1}</span>
-                          <span className="text-xl md:text-2xl font-serif italic text-white/40 group-hover:text-white transition-all">{item}</span>
+                          <span className="text-xl md:text-2xl font-serif italic text-white/40 group-hover:text-white transition-all">{renderBoldText(item)}</span>
                         </div>
                       ))}
                     </div>
@@ -551,7 +565,7 @@ const App: React.FC = () => {
                   <div className="pt-12 border-t border-white/5 space-y-8">
                     <h4 className="text-[10px] xl:text-[12px] uppercase tracking-[0.3em] xl:tracking-[0.5em] text-white/30 font-black break-words">Status de Publicação</h4>
                     <div className="flex items-center gap-4 xl:gap-6">
-                       <div className={`w-6 h-6 rounded-full ${result.verdict === 'The Nod' ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : result.verdict === 'The Lip Purse' ? 'bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.4)]' : 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.4)]'}`} />
+                       <div className={`w-6 h-6 rounded-full ${result.verdict === 'The Nod' ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.4)]'}`} />
                        <span className="text-xs md:text-sm uppercase tracking-[0.4em] font-black text-white/80">{result.verdict}</span>
                     </div>
                     <p className="text-[11px] text-white/20 italic leading-loose uppercase tracking-[0.2em]">
@@ -605,10 +619,10 @@ const App: React.FC = () => {
               <div className="absolute inset-0 opacity-10 mix-blend-overlay z-[11]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
             </div>
 
-            {/* Masthead: "PROJECT MIRANDA" */}
+            {/* Masthead: "RUNWAY" */}
             <div className="absolute top-12 left-0 right-0 z-20 flex justify-center w-full px-12">
-              <h1 className="text-[7.5rem] font-bold tracking-tighter leading-none text-white drop-shadow-2xl mix-blend-difference opacity-90 uppercase" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}>
-                PROJECT MIRANDA
+              <h1 className="text-[10rem] font-serif tracking-tighter leading-none text-white drop-shadow-2xl mix-blend-difference opacity-90 uppercase" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>
+                RUNWAY
               </h1>
             </div>
 
@@ -618,59 +632,63 @@ const App: React.FC = () => {
                <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
             </div>
 
-            {/* Primary Headlines */}
+            {/* Primary Headlines & Asymmetrical Grid */}
             <div className="absolute top-[380px] left-16 z-30 max-w-[500px]">
-              <div className="space-y-2">
-                <p className="text-white/80 text-[10px] uppercase tracking-[0.8em] font-bold">Avaliação Oficial</p>
-                <div className="w-12 h-[2px] bg-[#D32F2F]"></div>
-                <p className="text-white text-4xl font-serif italic leading-tight drop-shadow-lg pt-4">
-                  A Autópsia Editorial de <br />
-                  <span className="text-[#D32F2F] font-bold not-italic text-5xl uppercase tracking-tighter">Miranda</span>
+              <div className="space-y-1">
+                <p className="text-white text-3xl font-bold uppercase tracking-[0.2em] mix-blend-difference">
+                  THE INDEX OF FASHION
                 </p>
+                <div className="w-16 h-1 bg-[#D32F2F] mt-2 mb-2"></div>
+                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">WHAT YOU NEED TO KNOW NOW.</p>
               </div>
             </div>
 
-            {/* Score Element - Refined Circular */}
-            <div className="absolute top-[380px] right-16 z-30">
-              <div className="w-40 h-40 rounded-full border border-white/20 bg-black/40 backdrop-blur-xl flex flex-col justify-center items-center shadow-[0_0_50px_rgba(211,47,47,0.3)]">
-                <p className="text-white/60 text-[10px] font-bold uppercase tracking-[0.4em] mb-1">INDEX</p>
-                <p className="text-white text-6xl font-serif italic text-[#D32F2F] font-bold leading-none">{result.rating}</p>
+            {/* Score Element - Selo Miranda */}
+            <div className="absolute top-[400px] right-16 z-30">
+              <div className="w-56 h-56 rounded-full bg-black/80 backdrop-blur-sm flex flex-col justify-center items-center shadow-2xl border-[3px] border-white/80 p-2 relative overflow-hidden group">
+                <div className="absolute inset-2 rounded-full border border-white/30 dashed outline-dashed outline-1 outline-white/20"></div>
+                <div className="z-10 flex flex-col items-center">
+                  <p className="text-white/90 text-[11px] font-bold uppercase tracking-[0.4em] mb-1 text-center">
+                    SELO MIRANDA<br/>DE AVALIAÇÃO
+                  </p>
+                  <p className="text-white text-7xl font-serif italic font-black leading-none my-2 drop-shadow-lg">{result.rating}%</p>
+                  <div className="flex gap-1 items-center justify-center">
+                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
+                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
+                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Critical Commentary Box */}
-            <div className="absolute bottom-[260px] left-16 right-16 z-30 bg-black/60 backdrop-blur-xl border border-white/10 p-10 shadow-2xl relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-2 h-full bg-[#D32F2F]"></div>
-               <h3 className="text-white text-3xl font-serif italic leading-[1.4] opacity-95 relative z-10">
-                 "{result.lead}"
+            <div className="absolute bottom-[280px] left-16 right-16 z-30 bg-[#1A1A1A]/80 backdrop-blur-md border-l-8 border-[#D32F2F] p-8 shadow-2xl">
+               <h3 className="text-white text-[28px] font-serif italic leading-[1.5] text-left opacity-95">
+                 &ldquo;{result.lead}&rdquo;
                </h3>
             </div>
 
-            {/* Bottom Elements: Selo Miranda & Barcode */}
-            <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-8">
+            {/* Section Labels & Secondary Info */}
+            <div className="absolute bottom-[140px] left-16 z-30 max-w-[600px] flex gap-4 items-start">
+               <div className="w-2 h-16 bg-[#D32F2F] flex-shrink-0 mt-1"></div>
+               <div>
+                  <h4 className="text-white text-xl font-bold uppercase tracking-[0.2em] mb-1 shadow-black drop-shadow-md">{result.sections[0]?.title}</h4>
+                  <p className="text-white/80 text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+               </div>
+            </div>
+
+            {/* Bottom Elements: Verdict & Barcode */}
+            <div className="absolute bottom-12 left-16 right-16 z-40 flex justify-between items-end border-t border-white/20 pt-6">
               
-              <div className="flex items-center gap-6">
-                {/* Selo Miranda */}
-                <div className="w-24 h-24 rounded-full border-4 border-[#D32F2F] flex items-center justify-center p-1 relative">
-                  <div className="absolute inset-0 rounded-full border border-white/20 animate-[spin_10s_linear_infinite]"></div>
-                  <div className="w-full h-full rounded-full border-2 border-[#D32F2F] flex items-center justify-center bg-[#D32F2F]/20 backdrop-blur-sm">
-                    <div className="text-center flex flex-col items-center">
-                      <span className="block text-white text-[8px] font-black tracking-[0.4em] uppercase mb-1">Selo</span>
-                      <span className="block text-[#D32F2F] text-xl font-serif italic font-bold leading-none">M</span>
-                      <span className="block text-white/50 text-[6px] font-black tracking-[0.2em] uppercase mt-1">Genuíno</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <p className="text-[#D32F2F] text-[10px] font-bold uppercase tracking-[0.5em] mb-2">CERTIFICADO EDITORIAL</p>
-                  <h4 className="text-white text-2xl font-black uppercase tracking-widest">
-                    VISTO & AVALIADO
-                  </h4>
-                </div>
+              <div className="flex flex-col">
+                <p className="text-white/60 text-xs font-bold uppercase tracking-[0.5em] mb-2">OFFICIAL VERDICT</p>
+                <h4 className="text-white text-3xl font-black uppercase tracking-tight">
+                  <span className="text-[#D32F2F]">THE </span> {result.verdict.replace(/The /i, '').toUpperCase()}
+                </h4>
               </div>
 
               <div className="flex flex-col items-end gap-2">
-                <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">PROJECT MIRANDA</p>
+                <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">RUNWAY INFO</p>
                 <div className="bg-white p-3 shadow-xl">
                   <div className="flex flex-col items-center">
                     <div className="w-40 h-12 flex gap-[2px] items-end justify-between px-1">

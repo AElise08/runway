@@ -52,7 +52,7 @@ REGRAS DE RESPOSTA:
 4. Finalização: Termine OBRIGATORIAMENTE com: "Isso é tudo."
 
 FORMATO DE RESPOSTA (JSON):
-- verdict: 'The Nod' | 'The Lip Purse' | 'The Purse Drop'
+- verdict: 'The Nod' | 'The Purse Drop'
 - rating: número de 0 a 100.
 - lead: Uma citação inicial curta, fria e devastadora.
 - sections: Lista de objetos com { "title": "Nome do Tópico", "content": "Texto crítico técnico e extremamente grosso" }.
@@ -92,7 +92,7 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
         properties: {
           verdict: {
             type: Type.STRING,
-            enum: ["The Nod", "The Lip Purse", "The Purse Drop"],
+            enum: ["The Nod", "The Purse Drop"],
           },
           rating: {
             type: Type.NUMBER,
