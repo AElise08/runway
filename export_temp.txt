@@ -1,0 +1,101 @@
+526:      {/* Export Template - Hidden from view */}
+527-      {result && image && (
+528-        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1920px', pointerEvents: 'none' }}>
+529-          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-black">
+530-
+531-            {/* Background Image */}
+532-            <div className="absolute inset-0 z-0 bg-black">
+533-              <div 
+534-                className="w-full h-full"
+535-                style={{ 
+536-                  backgroundImage: `url(${image})`, 
+537-                  backgroundSize: 'cover', 
+538-                  backgroundPosition: 'center',
+539-                  backgroundRepeat: 'no-repeat'
+540-                }}
+541-              />
+542-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/90 z-10"></div>
+543-            </div>
+544-
+545-            {/* Header - Magazine Title */}
+546-            <div className="w-full text-center z-20 pt-16 px-12 flex flex-col items-center">
+547-              <h1 className="text-[14rem] font-serif tracking-tighter leading-[0.75] text-[#d91921] drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] scale-y-110">RUNWAY</h1>
+548-              <div className="w-[900px] flex justify-between items-center mt-8 text-white font-bold uppercase tracking-[0.8em] text-2xl drop-shadow-lg">
+549-                <span>W E S T <span className="text-[#d91921]">E N D</span></span>
+550-                <span>I S S U E</span>
+551-              </div>
+552-            </div>
+553-
+554-            {/* Left Side Headlines */}
+555-            <div className="absolute top-[420px] left-16 max-w-[420px] z-30 flex flex-col gap-6">
+556-              <p className="text-white text-5xl font-bold uppercase italic leading-tight drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">
+557-                HELL ON <br/>
+558-                <span className="text-[#d91921]">HEELS!</span>
+559-              </p>
+560-
+561-              <div className="space-y-2 mt-6">
+562-                <p className="text-[#d91921] text-3xl font-black uppercase tracking-wider drop-shadow-lg">THE INDEX OF</p>
+563-                <p className="text-white text-4xl font-light uppercase tracking-[0.15em] drop-shadow-lg">FASHION:</p>
+564-                <p className="text-white text-xl uppercase tracking-widest font-light mt-2 drop-shadow-lg">WHAT YOU NEED TO KNOW NOW.</p>
+565-              </div>
+566-
+567-              {/* Score Badge */}
+568-              <div className="mt-8 bg-[#d91921] text-white py-6 px-10 rounded-sm shadow-2xl inline-block -rotate-2 transform self-start">
+569-                <p className="text-2xl uppercase tracking-[0.5em] font-black text-center mb-2">SCORE</p>
+570-                <p className="text-8xl font-serif italic font-bold leading-none">{result.rating}%</p>
+571-              </div>
+572-            </div>
+573-
+574-            {/* Right Side Info */}
+575-            <div className="absolute top-[520px] right-16 max-w-[380px] z-30 text-right space-y-10">
+576-               <div className="space-y-3">
+577-                 <p className="text-white text-3xl font-serif drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">HOW TO</p>
+578-                 <p className="text-[#d91921] text-6xl font-black uppercase tracking-tight drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">SURVIVE</p>
+579-                 <p className="text-white text-2xl font-light uppercase tracking-widest drop-shadow-[0_6px_8px_rgba(0,0,0,0.9)]">THE BOSS FROM HELL!</p>
+580-               </div>
+581-            </div>
+582-
+583-            {/* Main Quote */}
+584-            <div className="absolute top-[950px] left-20 right-20 z-30">
+585-               <h3 className="text-white/95 text-[2.2rem] font-serif italic leading-[1.4] drop-shadow-[0_8px_12px_rgba(0,0,0,0.95)] text-center px-12" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+586-                 &ldquo;{result.lead}&rdquo;
+587-               </h3>
+588-            </div>
+589-
+590-            {/* Analysis Section */}
+591-            <div className="absolute bottom-[280px] left-20 right-20 z-30 flex gap-12">
+592-              {/* Left Analysis */}
+593-              <div className="flex-1 border-l-[4px] border-[#d91921] pl-6">
+594-                <p className="text-[#d91921] text-lg font-black uppercase tracking-[0.3em] drop-shadow-lg mb-2">{result.sections[0]?.title}</p>
+595-                <p className="text-white/90 text-xl font-serif italic drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)] leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
+596-              </div>
+597-              {/* Right Verdict */}
+598-              <div className="w-[320px] flex-shrink-0 text-right flex flex-col justify-end">
+599-                <p className="text-white/80 text-lg uppercase tracking-[0.4em] font-light drop-shadow-lg mb-2">OFFICIAL VERDICT</p>
+600-                <h4 className="text-[#d91921] text-3xl font-black uppercase drop-shadow-lg">{result.verdict}</h4>
+601-              </div>
+602-            </div>
+603-
+604-            {/* Footer with Barcode */}
+605-            <div className="absolute bottom-12 left-20 right-20 z-40 flex justify-between items-end">
+606-              <div className="text-xl uppercase tracking-[0.7em] font-black text-white/60 drop-shadow-lg">
+607-                PROJECT MIRANDA
+608-              </div>
+609-              <div className="bg-white p-4 shadow-2xl">
+610-                <div className="flex flex-col items-center">
+611-                  <div className="w-56 h-16 flex gap-[2px] items-end justify-between px-2">
+612-                     {[...Array(42)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 4 + 1.5 + 'px'}}></div>)}
+613-                  </div>
+614-                  <div className="w-full flex justify-between text-[14px] font-mono tracking-widest pt-2 font-bold text-black border-t-2 border-black/20 mt-2 px-1">
+615-                    <span>ISSN 0921</span>
+616-                    <span>MIRANDA</span>
+617-                  </div>
+618-                </div>
+619-              </div>
+620-            </div>
+621-          </div>
+622-        </div>
+623-      )}
+624-
+625-      <footer className="mt-40 py-24 px-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-16 opacity-10 hover:opacity-100 transition-all duration-1000">
+626-        <div className="text-[10px] uppercase tracking-[1em] font-light">
