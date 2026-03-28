@@ -961,8 +961,19 @@ const App: React.FC = () => {
         )}
 
         {state === 'camera' && (
-          <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-8 lg:py-6 flex flex-col items-center space-y-6 animate-in zoom-in-95 duration-500">
-            <div className="relative w-full max-w-sm md:max-w-[380px] aspect-[3/4] bg-neutral-900 overflow-hidden border border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.05)] rounded-sm group">
+          <div className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center animate-in fade-in duration-500">
+            {/* Minimalist Top Nav for Camera */}
+            <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50">
+               <div className="border border-white/10 bg-black/50 backdrop-blur-md px-4 py-2 uppercase tracking-[0.3em] text-[10px] font-black text-white/90">
+                  {selectedChallenge.label}
+               </div>
+               <button onClick={reset} className="p-3 bg-black/40 backdrop-blur-3xl rounded-full hover:bg-white hover:text-black transition-all border border-white/10">
+                 <X size={20} />
+               </button>
+            </div>
+
+            {/* Viewfinder Container */}
+            <div className="relative w-full h-full md:w-auto md:h-[85vh] md:aspect-[3/4] bg-neutral-950 overflow-hidden border-0 md:border md:border-white/10 shadow-[0_0_150px_rgba(255,255,255,0.02)] md:rounded-2xl flex-shrink-0">
               <video 
                 ref={videoRef} 
                 autoPlay 
@@ -972,39 +983,41 @@ const App: React.FC = () => {
               />
               
               {!isCameraReady && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center space-y-6 bg-black">
+                <div className="absolute inset-0 flex flex-col items-center justify-center space-y-6 bg-[#050505]">
                    <div className="w-10 h-10 border-[0.5px] border-white/10 border-t-white rounded-full animate-spin"></div>
-                   <span className="text-[10px] uppercase tracking-[0.6em] text-white/20 font-black">Sincronizando Lente Editorial...</span>
+                   <span className="text-[10px] uppercase tracking-[0.6em] text-white/20 font-black">Sincronizando Lente...</span>
                 </div>
               )}
 
-              <div className="absolute inset-0 border-[20px] md:border-[60px] border-black/40 pointer-events-none group-hover:border-black/20 transition-all duration-1000"></div>
+              {/* DSLR Frame Guides */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] border border-white/10 pointer-events-none hidden md:block">
+                 <div className="absolute -top-1 -left-1 w-4 h-4 border-t-[1.5px] border-l-[1.5px] border-white/50"></div>
+                 <div className="absolute -top-1 -right-1 w-4 h-4 border-t-[1.5px] border-r-[1.5px] border-white/50"></div>
+                 <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-[1.5px] border-l-[1.5px] border-white/50"></div>
+                 <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-[1.5px] border-r-[1.5px] border-white/50"></div>
+                 {/* Center crosshair */}
+                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center group/cross">
+                    <div className="w-[1px] h-full bg-white/20"></div>
+                    <div className="w-full h-[1px] bg-white/20 absolute"></div>
+                 </div>
+              </div>
 
-              <div className="absolute top-4 left-4 md:top-8 md:left-8 flex flex-col gap-2">
-                <div className="border border-[#D32F2F]/40 bg-[#240303]/70 px-3 py-2 uppercase tracking-[0.35em] text-[8px] font-black text-[#FFD6D6]">
-                  Runway Season
-                </div>
-                <div className="border border-white/10 bg-black/50 px-3 py-2 uppercase tracking-[0.32em] text-[8px] font-black text-white/70">
-                  {selectedChallenge.label}
-                </div>
-              </div>
-              
-              <div className="absolute top-4 right-4 md:top-10 md:right-10">
-                <button onClick={reset} className="p-4 bg-black/40 backdrop-blur-3xl rounded-full hover:bg-white hover:text-black transition-all border border-white/5">
-                  <X size={24} />
-                </button>
-              </div>
-              
-              <div className="absolute bottom-8 md:bottom-16 left-0 right-0 flex justify-center">
+              {/* Shutter Component */}
+              <div className="absolute bottom-10 left-0 right-0 flex justify-center pb-8 md:pb-4 z-50">
                 <button 
                   onClick={capturePhoto}
                   disabled={!isCameraReady}
-                  className={`w-28 h-28 rounded-full border border-white/40 flex items-center justify-center bg-transparent group/btn active:scale-90 transition-all ${!isCameraReady ? 'opacity-20 pointer-events-none grayscale' : 'opacity-100 scale-100'}`}
+                  className={`relative w-24 h-24 rounded-full flex items-center justify-center bg-transparent group/btn active:scale-95 transition-all outline-none ${!isCameraReady ? 'opacity-20 pointer-events-none grayscale' : 'opacity-100 scale-100'}`}
                 >
-                  <div className="w-24 h-24 rounded-full bg-white/5 group-hover/btn:bg-white/20 transition-colors border border-white/5 flex items-center justify-center">
-                    <div className="w-5 h-5 bg-white rounded-full shadow-[0_0_30px_rgba(255,255,255,0.8)]" />
+                  <div className="absolute inset-0 rounded-full border border-white/40 scale-100 transition-transform group-hover/btn:scale-105"></div>
+                  <div className="w-20 h-20 rounded-full bg-white group-hover/btn:bg-neutral-200 transition-colors shadow-[0_0_40px_rgba(255,255,255,0.2)] flex items-center justify-center">
+                    <div className="w-5 h-5 bg-[#050505] rounded-full shadow-inner" />
                   </div>
                 </button>
+              </div>
+
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] font-black text-white/30 hidden md:block">
+                 Runway Editor
               </div>
             </div>
           </div>
