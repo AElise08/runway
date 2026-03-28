@@ -707,7 +707,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black transition-colors duration-1000 relative w-full">
+    <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-[#ffffff] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
       <Header user={user} setShowAuth={setShowAuth} />
       
       {showAuth && !user && (
@@ -726,211 +726,186 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {state === 'idle' && (
-          <div className="px-4 pb-24 md:pb-32 animate-in fade-in duration-1000">
+          <div className="px-4 pb-0 md:pb-0 animate-in fade-in duration-1000">
             <div
               id="landing-hero"
-              className="max-w-6xl mx-auto mt-4 md:mt-6 rounded-[2.5rem] border border-white/10 overflow-hidden bg-[#050505] shadow-[0_30px_120px_rgba(0,0,0,0.35)]"
+              className="max-w-6xl mx-auto mt-4 md:mt-6 rounded-[2.5rem] border border-black/5 overflow-hidden bg-white shadow-[0_24px_80px_rgba(0,0,0,0.06)]"
             >
-              <div
-                className="relative px-6 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20 min-h-[760px] md:min-h-[860px]"
-                style={{
-                  backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.78) 68%, rgba(0,0,0,0.96) 100%), url("${EDITORIAL_HERO_BACKGROUND}")`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              >
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.82),rgba(0,0,0,0.42)_45%,rgba(0,0,0,0.78))] pointer-events-none" />
-                <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.22) 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
-                <div className="absolute top-10 right-8 md:right-14 text-[5rem] md:text-[9rem] lg:text-[12rem] font-serif italic tracking-tighter text-white/[0.05] pointer-events-none select-none">
-                  RUNWAY
+              <div className="relative px-6 py-16 md:px-12 md:py-20 lg:px-16 lg:py-24 min-h-[600px] md:min-h-[700px] flex flex-col items-center justify-center text-center">
+                
+                <div className="flex flex-col items-center gap-4">
+                  <div className="inline-flex flex-wrap items-center justify-center gap-3 px-4 py-2 rounded-full border border-black/10 bg-[#f4f4f4] text-[#111111] uppercase tracking-[0.32em] text-[9px] md:text-[10px] font-bold">
+                    <span>Runway Season</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#111111]"></span>
+                    <span>{campaignState.countdownLabel}</span>
+                  </div>
                 </div>
 
-                <div className="relative flex flex-col items-center text-center">
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="inline-flex flex-wrap items-center justify-center gap-3 px-4 py-2 rounded-full border border-white/15 bg-white/10 text-white uppercase tracking-[0.32em] text-[9px] md:text-[10px] font-black backdrop-blur-md">
-                      <span>Runway Season</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
-                      <span>{campaignState.countdownLabel}</span>
-                    </div>
-                    <p className="max-w-xl text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-white/45">
-                      {campaignState.sublabel}
-                    </p>
-                  </div>
+                <div className="mt-8 md:mt-12 max-w-4xl space-y-6 animate-in slide-in-from-bottom-8 duration-700 delay-100 fill-mode-forwards opacity-0">
+                  <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] text-[#111111] font-bold tracking-tight leading-[1.05]">
+                    O seu estilo, <br className="hidden md:block"/>no piloto automático.
+                  </h2>
+                  <p className="max-w-2xl mx-auto text-base md:text-xl text-[#666666] leading-relaxed">
+                    A primeira impressão é a que fica. Nossa inteligência artificial analisa seu look com rigor cirúrgico. Descubra agora se seu visual merece confiança ou correção.
+                  </p>
+                </div>
 
-                  <div className="mt-8 md:mt-10 max-w-4xl space-y-6">
-                    <h2 className="text-5xl md:text-7xl lg:text-[5.8rem] font-serif italic tracking-tighter leading-[0.88] text-white">
-                      Julgue o look. Poste o estrago.
-                    </h2>
-                    <p className="max-w-2xl mx-auto text-base md:text-xl text-white/72 leading-relaxed">
-                      Um hero mais forte, um fundo editorial em preto, branco e vermelho, e a mesma persona cruel da Runway para transformar o primeiro clique em upload.
-                    </p>
-                  </div>
-
-                  <div className="mt-8 inline-flex items-center gap-3 rounded-[1.5rem] border border-white/12 bg-white/8 px-5 py-4 backdrop-blur-md text-left shadow-[0_18px_60px_rgba(0,0,0,0.22)]">
-                    <div className="w-10 h-10 rounded-full bg-[#D32F2F]/85 flex items-center justify-center text-[10px] uppercase tracking-[0.2em] font-black text-white">Hot</div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-[0.28em] text-white/55 font-black">Veredito Compartilhavel</p>
-                      <p className="text-sm text-white/72">Roast gratis na frente. Correcao premium logo depois.</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-10 w-full max-w-4xl">
-                    <div className="rounded-[2rem] border border-white/10 bg-white/[0.08] backdrop-blur-md p-4 md:p-5 shadow-[0_18px_80px_rgba(0,0,0,0.18)]">
-                      <div className="flex flex-col gap-3 text-left">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                          <p className="text-[10px] uppercase tracking-[0.35em] text-white/68 font-black">Escolha o desafio</p>
-                          <p className="text-sm text-white/60">{selectedChallenge.teaser}</p>
-                        </div>
-                        <div className="grid grid-cols-2 md:grid-cols-5 gap-2.5">
-                          {CHALLENGE_OPTIONS.map((challenge) => (
-                            <button
-                              key={challenge.key}
-                              onClick={() => setSelectedChallengeKey(challenge.key)}
-                              className={`rounded-[1.25rem] border px-3 py-3 text-left transition-all ${
-                                selectedChallenge.key === challenge.key
-                                  ? 'border-[#D32F2F]/45 bg-white text-[#111111] shadow-[0_12px_40px_rgba(0,0,0,0.18)]'
-                                  : 'border-white/10 bg-black/20 text-white/75 hover:bg-white/[0.06]'
-                              }`}
-                            >
-                              <span className="block text-[10px] uppercase tracking-[0.2em] font-black">
-                                {challenge.label}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {isBlocked ? (
-                    <div className="mt-10 w-full max-w-3xl rounded-[2rem] border border-[#D32F2F]/25 bg-[#170707]/88 p-6 md:p-8 text-left shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
-                      <div className="space-y-4">
-                        <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Correcao Premium</p>
-                        <h3 className="text-3xl md:text-4xl font-serif italic text-white">
-                          O roast gratis acabou. A solucao comeca aqui.
-                        </h3>
-                        <p className="text-white/65 leading-relaxed">
-                          Desbloqueie mais analises, diagnostico por contexto e o plano de reabilitacao com o que manter, tirar e substituir.
-                        </p>
-                      </div>
-                      <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-center">
-                        <a
-                          href="https://pay.kiwify.com.br/xxxxx"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-full bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626]"
-                        >
-                          Desbloquear Correcao Premium <ArrowRight size={14} />
-                        </a>
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-white/35 font-bold">
-                          Use o mesmo email da compra para liberar o acesso.
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="mt-10 flex flex-col items-center gap-5 w-full">
-                      <div className="flex flex-col md:flex-row gap-4 w-full max-w-2xl justify-center">
+                <div className="mt-10 w-full max-w-4xl animate-in fade-in duration-1000 delay-300 fill-mode-forwards opacity-0">
+                  <div className="flex flex-col gap-4 text-center">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#888888] font-bold">Escolha o seu contexto de avaliação</p>
+                    <div className="flex flex-wrap justify-center gap-3">
+                      {CHALLENGE_OPTIONS.map((challenge) => (
                         <button
-                          onClick={startCamera}
-                          className="inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 rounded-full bg-white text-[#111111] font-black uppercase tracking-[0.28em] text-[10px] md:text-[11px] transition-all hover:bg-[#f1f1f1] shadow-[0_18px_60px_rgba(0,0,0,0.22)] w-full"
+                          key={challenge.key}
+                          onClick={() => setSelectedChallengeKey(challenge.key)}
+                          className={`rounded-full border px-5 py-3 transition-all ${
+                            selectedChallenge.key === challenge.key
+                              ? 'border-black bg-black text-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] scale-105'
+                              : 'border-black/10 bg-white text-[#444444] hover:bg-[#f4f4f4]'
+                          }`}
                         >
-                          Ser Julgada Agora
+                          <span className="block text-[10px] uppercase tracking-[0.2em] font-bold">
+                            {challenge.label}
+                          </span>
                         </button>
-                        <label className="cursor-pointer inline-flex items-center justify-center gap-3 px-6 md:px-10 py-5 rounded-full border border-[#D32F2F]/50 bg-[#120404] text-white font-black uppercase tracking-[0.28em] text-[10px] md:text-[11px] transition-all hover:bg-[#1b0707] w-full">
-                          Importar Look
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileUpload}
-                            className="hidden"
-                          />
-                        </label>
-                      </div>
-                      <div className="flex flex-col items-center gap-2">
-                        <p className="text-[10px] uppercase tracking-[0.32em] text-[#f1d7cb]/70 font-black">
-                          Premium entrega: {selectedChallenge.premiumAngle}
-                        </p>
-                        <span className="text-[9px] md:text-[10px] text-white/40 uppercase tracking-[0.3em] font-bold text-center">
-                          {isPremium ? `${remainingUses} Analises Premium Restantes Hoje` : `${remainingUses} Avaliacoes Gratuitas Restantes`}
-                        </span>
-                      </div>
+                      ))}
                     </div>
-                  )}
+                  </div>
                 </div>
+
+                {isBlocked ? (
+                   <div className="mt-12 w-full max-w-3xl rounded-[2rem] border border-black/5 bg-[#fafafa] p-6 md:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.04)] animate-in slide-in-from-bottom-4 duration-500">
+                     <div className="space-y-4">
+                       <p className="text-[10px] uppercase tracking-[0.35em] text-[#111111] font-bold">Correção Premium</p>
+                       <h3 className="text-3xl md:text-4xl text-[#111111] font-bold tracking-tight">
+                         O limite da amostra gratuita atingido.
+                       </h3>
+                       <p className="text-[#666666] leading-relaxed">
+                         Desbloqueie análises ilimitadas, diagnósticos detalhados e um plano exclusivo com substituições inteligentes para refinar o seu estilo completamente.
+                       </p>
+                     </div>
+                     <div className="mt-8 flex flex-col md:flex-row gap-4 md:items-center justify-center">
+                       <a
+                         href="https://pay.kiwify.com.br/xxxxx"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#111111] text-white font-bold uppercase tracking-[0.2em] text-[10px] transition-all hover:bg-black"
+                       >
+                         Desbloquear Premium <ArrowRight size={14} />
+                       </a>
+                       <p className="text-[10px] uppercase tracking-[0.2em] text-[#888] font-bold">
+                         Use o mesmo email da compra.
+                       </p>
+                     </div>
+                   </div>
+                ) : (
+                   <div className="mt-12 flex flex-col items-center gap-5 w-full animate-in fade-in duration-500 delay-500 fill-mode-forwards opacity-0">
+                     <div className="flex flex-col md:flex-row gap-4 w-full max-w-xl justify-center">
+                       <button
+                         onClick={startCamera}
+                         className="inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 rounded-full bg-[#111111] text-white font-bold uppercase tracking-[0.2em] text-[10px] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] shadow-[0_8px_30px_rgba(0,0,0,0.15)] w-full"
+                       >
+                         Avaliar Agora
+                       </button>
+                       <label className="cursor-pointer inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 rounded-full border border-black/10 bg-white text-[#111111] font-bold uppercase tracking-[0.2em] text-[10px] transition-all hover:bg-[#fafafa] hover:-translate-y-0.5 w-full">
+                         Importar Foto
+                         <input
+                           type="file"
+                           accept="image/*"
+                           onChange={handleFileUpload}
+                           className="hidden"
+                         />
+                       </label>
+                     </div>
+                     <div className="flex flex-col items-center gap-2 mt-4">
+                       <p className="text-[10px] uppercase tracking-[0.32em] text-[#666] font-bold">
+                         Diferencial premium: {selectedChallenge.premiumAngle}
+                       </p>
+                       <span className="text-[9px] md:text-[10px] text-[#999] uppercase tracking-[0.3em] font-bold text-center">
+                         {isPremium ? `${remainingUses} Análises Premium Restantes Hoje` : `${remainingUses} Análises Gratuitas Restantes`}
+                       </span>
+                     </div>
+                   </div>
+                )}
               </div>
             </div>
 
             {error && (
-              <div className="max-w-md mx-auto mt-8 p-6 md:p-10 bg-red-950/5 border border-red-500/10 text-red-300 text-xs text-center font-serif italic rounded-[1.5rem] flex flex-col items-center gap-6 animate-in shake duration-500">
-                {error.includes("reunião") ? <Clock className="text-red-500/20" size={48} /> : <CameraOff className="text-red-500/20" size={48} />}
-                <p className="tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase text-[9px] md:text-[10px] font-black text-red-400/60">{error}</p>
-                <button onClick={() => setError(null)} className="px-8 py-3 border border-white/10 text-white/40 hover:text-white text-[8px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all font-black rounded-full">Dispensar</button>
+              <div className="max-w-md mx-auto mt-8 p-6 md:p-8 bg-black border border-red-500 text-white rounded-[1.5rem] flex flex-col items-center gap-6 animate-in zoom-in-95 duration-300 shadow-[0_20px_60px_rgba(200,0,0,0.2)]">
+                {error.includes("reunião") ? <Clock className="text-red-500" size={40} /> : <CameraOff className="text-red-500" size={40} />}
+                <p className="tracking-[0.1em] text-center text-[13px] font-bold ">{error}</p>
+                <button onClick={() => setError(null)} className="px-8 py-3 bg-white text-black text-[9px] uppercase tracking-[0.3em] font-black hover:bg-red-50 transition-colors rounded-full">OK</button>
               </div>
             )}
 
             <section id="landing-benefits" className="max-w-6xl mx-auto mt-10 md:mt-16">
-              <div className="rounded-[2.5rem] border border-black/8 bg-[#ffffff] text-[#111111] px-6 py-10 md:px-10 md:py-14 shadow-[0_24px_90px_rgba(0,0,0,0.12)]">
+              <div className="rounded-[2.5rem] bg-[#f9f9f9] border border-black/5 px-6 py-12 md:px-12 md:py-20 shadow-none">
                 <div className="max-w-2xl mx-auto text-center space-y-4">
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#7f1d1d] font-black">Por Que Funciona</p>
-                  <h3 className="text-4xl md:text-5xl font-serif italic tracking-tight">Tudo o que importa, sem poluicao.</h3>
-                  <p className="text-[#16110f]/65 text-base md:text-lg leading-relaxed">
-                    A landing agora resume a experiencia em poucos sinais fortes: curiosidade, compartilhamento e correcao.
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#888] font-bold">Por Dentro</p>
+                  <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-[#111]">Simplifique sua rotina financeira de imagem.</h3>
+                  <p className="text-[#666] text-base md:text-lg leading-relaxed">
+                    Ferramentas inteligentes ao seu alcance para garantir que sua estética sempre passe a mensagem ideal, focando apenas no que realmente importa.
                   </p>
                 </div>
-                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-                  {LANDING_PILLARS.map((pillar) => (
-                    <div key={pillar.title} className="rounded-[1.8rem] border border-black/8 bg-[#fbfbfb] p-6 md:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.04)]">
-                      <span className="inline-flex w-12 h-12 items-center justify-center rounded-2xl bg-[#111111] text-[#fff2eb] text-[10px] uppercase tracking-[0.2em] font-black">
-                        Run
+                <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                  {LANDING_PILLARS.map((pillar, idx) => (
+                     <div key={pillar.title} className="rounded-[2rem] border border-black/5 bg-white p-8 md:p-10 shadow-[0_4px_25px_rgba(0,0,0,0.02)] text-left flex flex-col items-start transition-all hover:-translate-y-1 hover:shadow-[0_12px_45px_rgba(0,0,0,0.06)]">
+                      <span className="inline-flex w-14 h-14 items-center justify-center rounded-[1rem] bg-[#f4f4f4] text-[#111] text-[16px] font-black border border-black/5 mb-6">
+                        {idx === 0 ? <CameraOff size={22} className="opacity-80" /> : idx === 1 ? <RefreshCw size={22} className="opacity-80" /> : <Sparkles size={22} className="opacity-80" />}
                       </span>
-                      <h4 className="mt-6 text-2xl font-serif italic">{pillar.title}</h4>
-                      <p className="mt-4 text-[#16110f]/65 leading-relaxed">{pillar.body}</p>
+                      <h4 className="text-xl font-bold text-[#111]">{pillar.title}</h4>
+                      <p className="mt-3 text-[#666] leading-relaxed text-sm lg:text-base">{pillar.body}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </section>
 
-            <section id="landing-flow" className="max-w-6xl mx-auto mt-10 md:mt-16">
-              <div className="rounded-[2.5rem] border border-black/8 bg-[#fafafa] px-6 py-10 md:px-10 md:py-14 shadow-[0_24px_90px_rgba(0,0,0,0.08)]">
+            <section id="landing-flow" className="max-w-6xl mx-auto mt-10 md:mt-20">
+              <div className="px-6 py-10 md:px-10 md:py-14">
                 <div className="max-w-2xl mx-auto text-center space-y-4">
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#7f1d1d] font-black">Como Funciona</p>
-                  <h3 className="text-4xl md:text-5xl font-serif italic text-[#111111] tracking-tight">Uma home mais limpa, um hero muito melhor.</h3>
-                  <p className="text-[#111111]/62 text-base md:text-lg leading-relaxed">
-                    Menos ruído na primeira dobra. Mais clareza para levar a pessoa do clique ao upload.
+                  <h3 className="text-4xl md:text-5xl font-bold text-[#111] tracking-tight">Como Funciona</h3>
+                  <p className="text-[#666] text-base md:text-lg leading-relaxed">
+                    Comece a controlar o efeito das suas escolhas em três passos simples.
                   </p>
                 </div>
-                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                  {LANDING_FLOW.map((item, index) => (
-                    <div key={item.step} className="text-center md:text-left">
-                      <div className={`mx-auto md:mx-0 flex h-16 w-16 items-center justify-center rounded-full text-2xl font-black ${index === 1 ? 'bg-[#D32F2F] text-white' : 'bg-[#111111] text-white'}`}>
-                        {item.step}
+                <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
+                  {LANDING_FLOW.map((item) => (
+                    <div key={item.step} className="text-center flex flex-col items-center">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#111] text-white text-xl font-bold font-sans shadow-[0_8px_30px_rgba(0,0,0,0.15)]">
+                        {parseInt(item.step, 10)}
                       </div>
-                      <h4 className="mt-6 text-3xl font-serif italic text-[#111111]">{item.title}</h4>
-                      <p className="mt-4 text-[#111111]/58 leading-relaxed">{item.body}</p>
+                      <h4 className="mt-6 text-xl font-bold text-[#111]">{item.title}</h4>
+                      <p className="mt-3 text-[#666] leading-relaxed text-sm md:text-base max-w-[280px] mx-auto">{item.body}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </section>
 
-            <section className="max-w-6xl mx-auto mt-10 md:mt-16">
-              <div className="rounded-[2.5rem] border border-[#D32F2F]/16 bg-[linear-gradient(135deg,rgba(8,8,8,1),rgba(28,5,5,0.98))] px-6 py-10 md:px-10 md:py-14 text-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#D32F2F 1px, transparent 1px)', backgroundSize: '22px 22px' }} />
-                <p className="relative text-[10px] uppercase tracking-[0.35em] text-[#f1d7cb]/70 font-black">Chamada Final</p>
-                <h3 className="mt-4 text-4xl md:text-6xl font-serif italic text-white tracking-tight">
-                  Compartilhe a humilhacao ou corrija o look.
+            <section id="landing-cta" className="mt-16 md:mt-24 w-[100vw] ml-[calc(-50vw+50%)]">
+              <div className="bg-[#0f0f0f] px-6 py-24 md:py-32 text-center flex flex-col items-center border-t border-black">
+                <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+                  Pronto para assumir o controle?
                 </h3>
-                <p className="relative mt-4 max-w-3xl mx-auto text-white/62 text-base md:text-lg leading-relaxed">
-                  O app continua com a mesma personalidade, mas a entrada agora ficou mais clara, mais editorial e mais proxima do layout que você imaginou.
+                <p className="mt-6 max-w-2xl mx-auto text-[#a1a1a1] text-lg leading-relaxed">
+                  Junte-se a milhares de pessoas que já transformaram a maneira como lidam com a autoconfiança. Comece de graça hoje mesmo.
                 </p>
-                <div className="relative mt-8">
+                <div className="mt-10">
                   <button
-                    onClick={startCamera}
-                    className="inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 rounded-full bg-white text-[#111111] font-black uppercase tracking-[0.28em] text-[10px] md:text-[11px] transition-all hover:bg-[#f1f1f1]"
+                    onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center justify-center gap-3 px-8 py-5 rounded-full bg-white text-[#111] font-bold uppercase tracking-[0.2em] text-[11px] transition-all hover:bg-[#eaeaea] hover:scale-105"
                   >
-                    Abrir A Audiencia <ArrowRight size={14} />
+                    Criar Análise Grátis
                   </button>
+                </div>
+                
+                <div className="mt-32 w-full max-w-6xl mx-auto border-t border-white/10 pt-10 text-center flex flex-col items-center">
+                   <h2 className="text-xl font-serif tracking-[0.25em] uppercase text-white">Runway</h2>
+                   <p className="mt-2 text-[#666] text-xs">A primeira impressão no piloto automático.</p>
+                   <p className="mt-8 text-[#555] text-[11px] font-bold">© 2026 Runway Finance & Image. Todos os direitos reservados.</p>
                 </div>
               </div>
             </section>
