@@ -4,24 +4,44 @@
 > **Quem executa:** Mel Fernandes (@_melfnds)
 > **Canais:** TikTok, Instagram (conta pessoal) e Substack (3.5k leitores)
 > **URL do app:** miranda.lumes.works *(ajustar se mudar)*
-> **Data de início sugerida:** segunda-feira mais próxima
-> **Meta:** 50k+ impressões combinadas e 500+ usuários únicos no app em 7 dias
+> **INÍCIO:** Sábado, 28 de março de 2026
+> **META FINANCEIRA:** R$300 em 7 dias = 60 assinantes premium (R$5 líquido/cada)
+> **META DE TRÁFEGO:** 3.000+ usuários únicos no app (conversão 2% = 60 assinantes)
+
+---
+
+## MATH DA META
+
+```
+R$300 ÷ R$5/assinante = 60 assinantes premium
+60 assinantes ÷ 2% conversão = 3.000 usuários que testam o app
+3.000 usuários ÷ 5% CTR do link = 60.000 impressões totais necessárias
+
+Distribuição ideal por canal:
+- TikTok: 40.000 views (principal motor de descoberta)
+- Instagram: 15.000 impressões (stories + reels)
+- Substack: 5.000 impressões (3.5k leitores × open rate + shares)
+```
+
+Para garantir os 60 assinantes, o funil precisa fazer 3 coisas:
+1. **Volume** — muita gente precisa VER o conteúdo
+2. **Clique** — o gancho precisa ser irresistível pra clicar no link
+3. **Conversão** — o app precisa ser viciante o suficiente pra esgotar as 3 gratuitas e querer mais
 
 ---
 
 ## ÍNDICE
 
 1. [Estratégia Geral](#1-estratégia-geral)
-2. [Preparação (Dia 0)](#2-preparação-dia-0)
-3. [Calendário Dia a Dia](#3-calendário-dia-a-dia)
-4. [Banco de Roteiros Prontos](#4-banco-de-roteiros-prontos)
-5. [Estratégia Substack](#5-estratégia-substack)
-6. [Perfis de Referência](#6-perfis-de-referência)
-7. [Hashtags e SEO Social](#7-hashtags-e-seo-social)
-8. [Automações e Ferramentas Gratuitas](#8-automações-e-ferramentas-gratuitas)
-9. [Métricas e Ajustes](#9-métricas-e-ajustes)
-10. [Templates de Legenda](#10-templates-de-legenda)
-11. [Regras de Ouro](#11-regras-de-ouro)
+2. [Calendário Real (Sáb 28/03 → Sex 03/04)](#3-calendário-dia-a-dia)
+3. [Banco de Roteiros Prontos](#4-banco-de-roteiros-prontos)
+4. [Estratégia Substack](#5-estratégia-substack)
+5. [Perfis de Referência](#6-perfis-de-referência)
+6. [Hashtags e SEO Social](#7-hashtags-e-seo-social)
+7. [Automações e Ferramentas Gratuitas](#8-automações-e-ferramentas-gratuitas)
+8. [Métricas e Ajustes](#9-métricas-e-ajustes)
+9. [Templates de Legenda](#10-templates-de-legenda)
+10. [Regras de Ouro](#11-regras-de-ouro)
 
 ---
 
@@ -33,7 +53,7 @@ O Projeto Miranda NÃO é "mais um app de IA". É uma **experiência social comp
 ### O funil orgânico
 
 ```
-CURIOSIDADE (TikTok/Reels) → TESTE (link no bio) → RESULTADO ENGRAÇADO → SHARE (Stories/TikTok) → AMIGA VÊ → REPETE O CICLO
+CURIOSIDADE (TikTok/Reels) → TESTE (link no bio) → RESULTADO ENGRAÇADO → ESGOTA 3 GRÁTIS → QUER MAIS → PREMIUM (R$9,90)
 ```
 
 ### Os 3 ganchos que viralizam
@@ -44,44 +64,36 @@ CURIOSIDADE (TikTok/Reels) → TESTE (link no bio) → RESULTADO ENGRAÇADO → 
 | **Curiosidade pessoal** | "Qual nota eu tiraria?" é irresistível | Stories, CTA |
 | **Referência cultural** | O Diabo Veste Prada 2 estreia em 01/05/2026 | Todos os canais |
 
-### Por que vai funcionar pra você
-- Você aparece no vídeo = autenticidade (algoritmo favorece creators reais)
-- Substack com 3.5k = base quente pra primeira onda de tráfego
-- O app GERA o conteúdo sozinho (o card de resultado É o post)
-- Preço baixo (R$9,90) = conversão por impulso
+### Alavanca de conversão premium
+O roast GRATUITO vicia. Mas 3 avaliações acabam rápido. O paywall vende a CORREÇÃO: "ok, você foi destruída. Agora quer saber como melhorar?" — isso é o que converte. **Não empurre o premium. Deixe a curiosidade e a escassez (3 usos) fazerem o trabalho.**
 
 ---
 
-## 2. PREPARAÇÃO (DIA 0)
+## 2. PREPARAÇÃO (Hoje à noite, Sáb 28/03, 00h-02h)
 
-### Checklist obrigatório antes de postar qualquer coisa
+Antes de dormir, resolva isso:
 
-**Instagram (@_melfnds):**
-- [ ] Atualizar bio: `criadora · construindo um app que julga seu look com a crueldade da Miranda Priestly 🔪 link abaixo`
-- [ ] Adicionar link na bio usando Linktree (grátis) ou link direto: miranda.lumes.works
-- [ ] Criar um Highlight chamado "MIRANDA" (ícone preto minimal)
-- [ ] Preparar 3 stories de aquecimento (ver roteiros abaixo)
+### Instagram (@_melfnds)
+- [ ] Atualizar bio: `criadora · construí um app que julga seu look como a Miranda Priestly 🔪 link ↓`
+- [ ] Adicionar link na bio: miranda.lumes.works (link direto, sem Linktree por enquanto)
+- [ ] Criar um Highlight chamado "MIRANDA" (ícone preto minimal — crie no Canva em 2 min)
 
-**TikTok (@_melfnds):**
-- [ ] Criar conta se ainda não tem (mesmo @)
+### TikTok (@_melfnds)
 - [ ] Bio: `deixei uma IA me julgar como a Miranda Priestly 🔪 app no link`
-- [ ] Adicionar link do app na bio (TikTok libera link com 1k seguidores; até lá, usar "link nos comentários")
-- [ ] Assistir 30 min de TikToks de moda/humor para treinar o algoritmo no seu feed
+- [ ] Adicionar link do app na bio (TikTok libera link com 1k seguidores; até lá, fixar nos comentários)
+- [ ] Assistir 15 min de TikToks de moda/humor pra treinar o algoritmo do seu feed (buscar: "outfit check", "roast my outfit", "Miranda Priestly")
 
-**Substack (@melfnds):**
-- [ ] Rascunhar a newsletter de lançamento (ver seção 5)
-- [ ] Preparar o agendamento para o Dia 2
+### Técnico
+- [ ] Testar o app no celular (Safari + Chrome) — fluxo completo: link → foto → resultado
+- [ ] Fazer 3 screen recordings do app funcionando no celular (15-20s cada)
+- [ ] Baixar CapCut se ainda não tem
+- [ ] Separar 2-3 looks pra filmar amanhã (inclusive o look de "pior" e "melhor")
 
-**Conteúdo:**
-- [ ] Gravar os vídeos dos Dias 1 e 2 (batch filming — grava tudo de uma vez)
-- [ ] Fazer 5 screen recordings do app: abrir → escolher desafio → enviar foto → ver resultado
-- [ ] Separar 3-4 looks diferentes para usar nos vídeos
-- [ ] Baixar CapCut (grátis) e explorar templates de "reveal"
+### Substack
+- [ ] Rascunhar a newsletter de lançamento (texto completo na seção 5)
 
-**Técnico:**
-- [ ] Testar o app em mobile (80% do tráfego via social)
-- [ ] Garantir que o link na bio funciona
-- [ ] Testar o fluxo completo: link → app → foto → resultado → share card
+### Mindset
+Você tá lançando amanhã. Não precisa ser perfeito. Precisa ser rápido, autêntico e consistente. O algoritmo recompensa velocidade e volume nos primeiros dias.
 
 ---
 
@@ -89,279 +101,266 @@ CURIOSIDADE (TikTok/Reels) → TESTE (link no bio) → RESULTADO ENGRAÇADO → 
 
 ---
 
-### 📅 DIA 1 (Segunda) — IMPACTO INICIAL
+### 📅 DIA 1 — SÁBADO 28/03 — LANÇAMENTO DUPLO
 
-**Objetivo:** Plantar a semente. Gerar curiosidade sem revelar tudo.
+**Por que sábado é bom:** Pico de consumo de conteúdo. Pessoas rolando TikTok o dia todo. Melhor dia da semana pra viralizar.
 
-#### TikTok — 2 posts
+**Objetivo:** Lançar em todos os canais. Gerar os primeiros 200+ acessos ao app.
 
-**Post 1 (manhã, 11h):** "Construí um app que julga seu look como a Miranda Priestly"
-- Formato: talking head + screen recording
-- Duração: 15-30 segundos
-- Roteiro completo na seção 4 (Roteiro T1)
-- Som: trending sound ou áudio original
+#### MANHÃ (10h-13h) — GRAVAR TUDO
 
-**Post 2 (noite, 19h):** "Testei meu próprio look e a nota foi..."
-- Formato: reveal/reação
-- Duração: 15-20 segundos
-- Roteiro completo na seção 4 (Roteiro T2)
+Gravar todos os vídeos do dia de uma vez (batch filming):
 
-#### Instagram — 3 stories + 1 Reel
+1. **Vídeo 1:** "Construí um app que te julga como a Miranda Priestly" (Roteiro T1)
+2. **Vídeo 2:** "Testei meu look e a nota foi..." (Roteiro T2)
+3. **Vídeo 3 (bônus):** "Meu pior look vs meu melhor look" (Roteiro T8)
+4. Screen recordings adicionais se precisar
 
-**Stories (ao longo do dia):**
-1. Story 1 (texto em fundo preto): "vocês sabem aquele projeto que eu tava construindo? amanhã eu conto tudo" 
-2. Story 2 (selfie com texto): "deixei uma IA me avaliar como a Miranda Priestly faria e o resultado foi humilhante" + enquete "vocês querem testar?"
-3. Story 3 (screen recording rápido): gravação de 10s do app rodando, cortado no suspense antes da nota + "amanhã libero o link"
+Editar no CapCut — adicionar textos na tela, cortes rápidos. Não precisa de efeitos mirabolantes.
 
-**Reel (noite, 20h):** Repost do TikTok Post 1 (ajustar formato se necessário)
+#### TARDE — POSTAR
 
-#### Substack
-- Nada ainda. Só fazer o teaser nos stories.
+**TikTok (14h):** Post 1 → Roteiro T1
+- Fixar comentário: "o app é de graça pra testar: miranda.lumes.works"
+- Responder os primeiros comentários rápido (algoritmo favorece engajamento precoce)
 
-#### Engajamento obrigatório (15 min)
-- Comentar em 10 posts de moda/estilo no TikTok
-- Responder TODOS os comentários nos seus posts
-- Seguir 5 perfis de moda/lifestyle que seu público-alvo segue
+**TikTok (20h):** Post 2 → Roteiro T2
+- Fixar comentário com link
 
----
+**Instagram (15h) — Reel:** Repost do TikTok Post 1 (adaptar se necessário)
 
-### 📅 DIA 2 (Terça) — LANÇAMENTO DO LINK
+**Instagram Stories (ao longo do dia):**
+1. "eu construí um app que julga seu look como a Miranda Priestly e hoje ele tá no ar" (texto + selfie)
+2. Screen recording de 15s do app funcionando → "link na bio pra testar"
+3. Print do SEU resultado com nota + frase → enquete: "vocês sobreviveriam?"
+4. "manda teu look por DM que eu testo ao vivo nos stories amanhã" (caixa de perguntas)
 
-**Objetivo:** Revelar o app, gerar os primeiros acessos, disparar Substack.
+#### NOITE — SUBSTACK
 
-#### TikTok — 2 posts
+**Enviar newsletter #1** (21h — boa hora pra sábado à noite).
+Texto completo na seção 5.
 
-**Post 1 (12h):** "O app que julga seu look como a Miranda Priestly — agora vocês podem testar"
-- Formato: talking head rápido + screen recording do app inteiro
-- Mostrar: escolha do desafio → foto → loading ("Miranda está verificando...") → nota + frase
-- CTA: "link na bio, vai lá testar e me marca"
-- Roteiro: seção 4 (Roteiro T3)
-
-**Post 2 (20h):** "Julguei looks de [pessoa/personagem] e olha essa nota"
-- Testar com foto de outfit de personagem famosa ou foto genérica de street style
-- Formato: reação ao vivo
-- Roteiro: seção 4 (Roteiro T4)
-
-#### Instagram — 5 stories + 1 Reel
-
-**Stories:**
-1. "O link tá no ar" + swipe up / link na bio
-2. Screen recording do app mostrando resultado completo
-3. Print do card de resultado com sua nota + "e vocês, sobrevivem?"
-4. Enquete: "qual desafio vocês querem que eu teste?" (Look de trabalho / Date Night / Fashion Week)
-5. Caixa de perguntas: "manda teu look que eu testo ao vivo"
-
-**Reel (20h):** Repost adaptado do TikTok Post 1 do dia
-
-#### Substack — NEWSLETTER DE LANÇAMENTO
-
-Enviar a newsletter (ver seção 5 para o texto completo). Incluir:
-- O que é o Projeto Miranda
-- Link direto para o app
-- CTA para testar e compartilhar
-- Menção ao TikTok e Instagram
-
-#### Engajamento (20 min)
+#### Engajamento (20 min distribuídos no dia)
 - Responder TODOS os comentários
-- Fixar comentário no TikTok: "link do app: miranda.lumes.works"
-- Comentar em posts de moda trends com algo como "a Miranda Priestly daria nota 3 pra isso"
-- No Substack, responder replies dos leitores
+- Comentar em 10 TikToks de moda/outfit com frases como:
+  - "a Miranda daria nota 4 pra isso 💀"
+  - "testei isso no app que julga looks como a Miranda Priestly, a nota foi trágica"
+- Responder DMs com link do app
+
+**Meta do dia:** 500+ views no TikTok, 100+ acessos ao app, newsletter enviada
 
 ---
 
-### 📅 DIA 3 (Quarta) — PROVA SOCIAL + UGC
+### 📅 DIA 2 — DOMINGO 29/03 — PROVA SOCIAL + VOLUME
 
-**Objetivo:** Mostrar que outras pessoas estão usando. Gerar FOMO.
+**Objetivo:** Mostrar que pessoas estão usando. Gerar FOMO. Acelerar TikTok (2º dia consecutivo é crucial pro algoritmo).
 
 #### TikTok — 2 posts
 
-**Post 1 (12h):** "Notas que a Miranda deu hoje" (compilado)
-- Juntar 4-5 resultados diferentes (seus ou de amigos que testaram)
+**Post 1 (12h):** "Notas que a Miranda deu este fim de semana" (Roteiro T5)
+- Compilar 4-5 resultados diferentes (seus + de amigas que testaram)
 - Formato: montagem rápida com transições
-- Mostrar: nota, frase principal, reação
-- Roteiro: seção 4 (Roteiro T5)
 
-**Post 2 (20h):** "Testando look de TRABALHO — será que sobrevivo?"
-- Escolher o desafio "Look de Trabalho" no app
-- Mostrar o processo inteiro
-- Roupa realista do dia a dia
-- Roteiro: seção 4 (Roteiro T6)
+**Post 2 (19h):** "Julguei personagens de filme" (Roteiro T10)
+- ALTO potencial viral — todo mundo tem opinião sobre personagens
+- Andy Sachs, Elle Woods, Blair Waldorf, Rachel Green
+- Fixar comentário com link
 
 #### Instagram — Stories + Reel
 
-**Stories (ao longo do dia):**
-1. Repost de resultados que recebeu por DM (se tiver) — sempre marcar a pessoa
-2. Print com a melhor/pior nota do dia
+**Stories:**
+1. Repost de resultados que recebeu por DM (com permissão) — marcar a pessoa
+2. Print: "a nota mais baixa que alguém tirou até agora" (gera curiosidade)
 3. "Quem mais tirou abaixo de 30?" + enquete
-4. Testar um look e filmar a reação em tempo real (story de 15s)
+4. Testar um look ao vivo em story (filmar em tempo real: abrir app → resultado → reação)
 
-**Reel (21h):** "POV: você pediu pra Miranda Priestly julgar seu look de trabalho"
-- Versão polida do TikTok Post 2
+**Reel (20h):** Versão polida do TikTok de personagens OU repost do melhor TikTok do dia 1
 
-#### Substack
-- Nada. Deixar a newsletter do dia 2 performar.
+#### Engajamento (25 min)
+- Responder TUDO
+- Procurar quem postou resultado do app nos stories e repostar
+- Pedir pra 5 amigas testarem e postarem marcando você (DM direta)
+- Comentar em TikToks de moda
+
+**Meta do dia:** 2k+ views acumuladas TikTok, 300+ acessos app, primeiros reposts de seguidores
+
+---
+
+### 📅 DIA 3 — SEGUNDA 30/03 — CONTEÚDO DE TRABALHO
+
+**Objetivo:** Nicho "look de trabalho" = altíssima identificação. Segunda-feira todo mundo se arruma pro trabalho.
+
+#### TikTok — 2 posts
+
+**Post 1 (7h30 — antes do trabalho):** "Testando meu look de trabalho de segunda" (Roteiro T6)
+- Horário cedo = atinge quem tá no transporte/se arrumando
+- Formato: rápido, 15-20s
+
+**Post 2 (19h):** "5 erros que sempre derrubam sua nota" (Roteiro T9)
+- Formato educativo — prende por mais tempo (bom pra TikTok)
+
+#### Instagram — Stories + Reel
+
+**Stories:**
+1. "segunda-feira é dia de julgamento" + foto do seu look + nota
+2. "vocês testaram o look de trabalho?" + enquete
+3. Print da melhor nota de look de trabalho do fim de semana
+
+**Reel (20h):** Repost do melhor TikTok
 
 #### Engajamento (20 min)
 - Responder tudo
-- Procurar pessoas que postaram sobre moda e comentar "testa no app da Miranda, quero ver a nota"
-- Buscar no TikTok por "diabo veste prada" e comentar em vídeos relevantes
+- Buscar no TikTok "look de trabalho" e comentar em 10 vídeos
+- DMs para microinfluenciadoras de moda (5 DMs): "oi! criei um app que julga looks como a Miranda Priestly — queria que você testasse e desse sua opinião sincera. é de graça: miranda.lumes.works"
+
+**Meta do dia:** 5k+ views acumuladas TikTok, 600+ acessos app
 
 ---
 
-### 📅 DIA 4 (Quinta) — CONTEÚDO POLÊMICO/OPINIÃO
+### 📅 DIA 4 — TERÇA 31/03 — POLÊMICA + TRENDS
 
-**Objetivo:** Gerar debate e comentários. Algoritmo ama polêmica leve.
+**Objetivo:** Gerar debate. Comentários = combustível do algoritmo.
 
 #### TikTok — 2 posts
 
-**Post 1 (11h):** "Looks que a internet AMA mas a Miranda DESTRUIRIA"
-- Pegar 3-4 trends de moda populares (ex: "coastal grandmother", "quiet luxury", "mob wife")
-- Testar cada uma no app
-- Mostrar notas contrastantes
-- Roteiro: seção 4 (Roteiro T7)
+**Post 1 (12h):** "Trends que a Miranda destruiria" (Roteiro T7)
+- Testar: quiet luxury, mob wife, old money, coquette
+- Formato polêmico — pessoas vão discordar nos comentários (BOM)
 
-**Post 2 (19h):** "Meu pior look vs meu melhor look — qual nota cada um tirou?"
-- Antes/depois pessoal
-- Formato: transição de look + reveal da nota
-- Roteiro: seção 4 (Roteiro T8)
+**Post 2 (20h):** Resposta a comentário viral (se houver) OU "antes vs depois" (Roteiro T8)
 
 #### Instagram — Stories + Reel
 
 **Stories:**
-1. "Vocês acham que essa trend merece nota alta?" + enquete
-2. Resultado do app pra trend analisada
-3. Caixa de perguntas: "qual trend vocês querem que eu julgue?"
-4. Behind the scenes filmando o TikTok (humaniza)
+1. "Vocês acham que quiet luxury merece nota alta?" + enquete
+2. Resultado do app pra cada trend
+3. "Qual trend vocês querem que eu julgue?" (caixa de perguntas)
+4. Behind the scenes filmando conteúdo (humaniza)
 
-**Reel (20h):** Repost do melhor TikTok do dia (o que mais performou)
-
-#### Substack
-- Nada. Guardar para o Dia 5.
+**Reel (20h):** Repost do melhor TikTok do dia
 
 #### Engajamento (20 min)
-- Responder cada comentário com uma pergunta para gerar mais replies
+- Responder cada comentário COM UMA PERGUNTA (gera mais replies)
 - Ex: "nota 42, você concorda ou acha que mereceu mais?"
-- Duet/stitch com algum vídeo de moda se fizer sentido
+- Duet/stitch com algum TikTok de moda se fizer sentido
+
+**Meta do dia:** 10k+ views acumuladas TikTok, 1.000+ acessos app, primeiros assinantes premium
 
 ---
 
-### 📅 DIA 5 (Sexta) — SUBSTACK + PROFUNDIDADE
+### 📅 DIA 5 — QUARTA 01/04 — SUBSTACK + AUTORIDADE
 
-**Objetivo:** Feed de autoridade no Substack. Empurrar leitores pro app.
+**Objetivo:** Newsletter #2 no Substack. Converter leitores intelectuais em usuários e assinantes.
 
 #### TikTok — 2 posts
 
-**Post 1 (12h):** "5 erros de estilo que sempre derrubam sua nota"
-- Formato: talking head educativo
-- Listar erros comuns que o app identifica
-- Posicionar como "dica de stylist"
-- CTA: "testa teu look e vê se você comete algum desses"
-- Roteiro: seção 4 (Roteiro T9)
+**Post 1 (12h):** "O app que TODO MUNDO tá testando essa semana" (social proof)
+- Mostrar prints de DMs, comentários, resultados recebidos
+- Formato: "o que aconteceu quando eu lancei..."
+- Narrativa de crescimento = as pessoas se engajam com a jornada
 
-**Post 2 (20h):** "Resposta a comentário" ou "Stitch com seguidor"
-- Pegar o comentário mais engraçado ou polêmico da semana
-- Fazer um vídeo de resposta testando algo que pediram
+**Post 2 (20h):** Resposta a comentário OU novo look testado
 
 #### Instagram — Stories + Reel
 
 **Stories:**
-1. "Saiu post novo na minha newsletter" + link
-2. Print da nota mais engraçada da semana
-3. "Ranking das piores notas dessa semana" (fazer um top 3 visual)
-4. "Amanhã vem conteúdo especial" (teaser do sábado)
+1. "Saiu newsletter nova" + link do Substack
+2. Print de notas engraçadas da semana
+3. "Ranking dos piores resultados" — top 3 visual
+4. CTA: "quem quer versão premium? mês inteiro por 9,90"
 
-**Reel:** Melhor performance da semana repostado, ou conteúdo novo do Roteiro T9
+**Reel:** Melhor performance da semana repostado
 
 #### Substack — NEWSLETTER #2
 
-Tema: "O que a IA que julga moda me ensinou sobre como nos vestimos"
-- Reflexão intelectual sobre imagem pessoal, estereótipos e automação
-- Inserir resultados reais do app como exemplos
-- Link do app no meio e no final
-- CTA: "testa e me conta no reply"
-- Tom: match com seu Substack intelectual/lifestyle
+Tema: "O que uma IA de moda me ensinou sobre como nos vestimos"
+(texto completo na seção 5)
 
 #### Engajamento (25 min)
-- Responder Substack replies
+- Responder replies do Substack (CRUCIAL — gera deliverability)
 - Responder TikTok e Instagram
-- Comentar em 10 posts de moda/cultura pop no TikTok
+- Mandar DM pra 5 novas microinfluenciadoras
+
+**Meta do dia:** 20k+ views acumuladas, 1.500+ acessos app, 15+ assinantes
 
 ---
 
-### 📅 DIA 6 (Sábado) — CONTEÚDO DE ALTO POTENCIAL VIRAL
+### 📅 DIA 6 — QUINTA 02/04 — PUSH DE CONVERSÃO
 
-**Objetivo:** Postar o vídeo com maior chance de estourar. Final de semana = pico de consumo.
+**Objetivo:** Empurrar conversão premium sem parecer vendedora. Mostrar o VALOR do modo premium.
 
-#### TikTok — 3 posts (sábado é dia de volume)
+#### TikTok — 2 posts
 
-**Post 1 (10h):** "Fiz a Miranda Priestly julgar looks de personagens de filme"
-- Usar fotos de personagens icônicos (Andy Sachs, Elle Woods, Rachel Green, Blair Waldorf)
-- Mostrar a nota de cada uma
-- ALTO potencial de compartilhamento e comentários
-- Roteiro: seção 4 (Roteiro T10)
+**Post 1 (12h):** "Grátis vs Premium — a diferença que ninguém esperava"
+- Mostrar: roast (grátis) → diagnóstico + correção (premium)
+- Formato: antes/depois do resultado
+- NÃO falar de preço no vídeo — deixar a curiosidade levar pro app
+- CTA: "a versão premium conserta tudo. link na bio"
 
-**Post 2 (15h):** "Julguei meu look de hoje em tempo real" (casual, autêntico)
-- Formato: POV natural, sem roteiro pesado
-- Mostrar o app sendo usado de verdade no dia a dia
-
-**Post 3 (21h):** "A nota mais alta que já consegui vs a mais baixa"
-- Compilar os extremos da semana
-- Formato: suspense + reveal
-
-#### Instagram — Stories + Reel + Carrossel
-
-**Stories (ao longo do dia):**
-1. Repost do TikTok de personagens
-2. "Vocês concordam com a nota da [personagem]?"
-3. DMs de pessoas reagindo (com permissão)
-4. "Semana 1 usando o app que eu criei — um resumo"
-
-**Reel (20h):** Versão polida do TikTok de personagens (esse é o aposta da semana)
-
-**Carrossel (opcional mas forte):**
-- "5 looks analisados pela Miranda Priestly — swipe para ver as notas"
-- Cada slide: foto + nota + frase do app
-- Última slide: CTA + link
-
-#### Substack
-- Nada. Deixar as newsletters anteriores trabalharem.
-
-#### Engajamento (20 min)
-- Responder tudo, focar em replies que geram mais conversa
-- Postar replies engraçados nos comentários do TikTok
-
----
-
-### 📅 DIA 7 (Domingo) — CONSOLIDAÇÃO + PLANTIO
-
-**Objetivo:** Fazer balanço, agradecer, plantar sementes para a semana 2.
-
-#### TikTok — 1 post
-
-**Post 1 (17h):** "Uma semana depois: o que aconteceu quando eu lancei um app irresponsável de moda com IA"
-- Formato: storytelling pessoal
-- Compartilhar números reais (usuários, notas mais comuns, comentários engraçados)
-- Mostrar vulnerabilidade: "não esperava essa reação"
-- CTA: "semana que vem vai ter novidade"
-- Roteiro: seção 4 (Roteiro T11)
+**Post 2 (20h):** Melhor formato da semana (replicar o que mais deu views)
 
 #### Instagram — Stories + Reel
 
 **Stories:**
-1. "Resumo da semana — obrigada por todo mundo que testou"
-2. Print dos números (se forem bons)
-3. "Vocês querem mais desafios?" + enquete
-4. Teaser para semana 2
+1. "Vocês pediram pra ver o modo premium — olha isso" + screen recording da correção
+2. "O que ele me disse pra MUDAR no look" (listar 3 dicas que recebeu)
+3. Enquete: "vale R$9,90 por mês?" (gera conversa)
+4. Link direto pro checkout premium
 
-**Reel:** Repost do TikTok de storytelling
+**Reel (20h):** Conteúdo premium showcase
 
-#### Substack
-- Nada ou breve nota na newsletter regular se coincidir
+#### Engajamento (20 min)
+- Focar em responder quem perguntou sobre premium
+- Responder "como funciona o premium?" com explicação curta e link
+
+**Meta do dia:** 30k+ views acumuladas, 2.000+ acessos app, 30+ assinantes
+
+---
+
+### 📅 DIA 7 — SEXTA 03/04 — CONSOLIDAÇÃO + STORYTELLING
+
+**Objetivo:** Storytelling da jornada. Plantar sementes pra semana 2.
+
+#### TikTok — 2 posts
+
+**Post 1 (12h):** "Uma semana depois: o que aconteceu quando lancei um app irresponsável de moda com IA" (Roteiro T11)
+- Compartilhar números reais
+- Mostrar vulnerabilidade: "não esperava isso"
+- Formato storytelling — esses vídeos performam muito bem
+
+**Post 2 (20h):** Compilado final das melhores notas/frases da semana
+
+#### Instagram — Stories + Reel
+
+**Stories:**
+1. "Resumo da semana — obrigada a todo mundo que testou"
+2. Print dos números (se forem bons — views, acessos, assinantes)
+3. "O que vocês querem que mude no app?" (feedback = engajamento)
+4. "Semana que vem: [teaser]"
+
+**Reel:** Storytelling pessoal (repost do TikTok)
 
 #### Engajamento (15 min)
-- Agradecer seguidores novos por DM (5-10)
-- Responder comentários pendentes
+- Agradecer seguidores novos por DM (10)
+- Responder pendentes
 - Planejar semana 2
+
+**Meta do dia:** 40k+ views acumuladas, 3.000+ acessos app, 60 assinantes = **R$300 ✅**
+
+---
+
+## RESUMO DO CALENDÁRIO
+
+| Dia | Data | Foco | TikToks | Substack | Meta assinantes |
+|-----|------|------|---------|----------|-----------------|
+| 1 | Sáb 28/03 | LANÇAMENTO | 2 | Newsletter #1 | 0-5 |
+| 2 | Dom 29/03 | Prova social | 2 | — | 5-10 |
+| 3 | Seg 30/03 | Look trabalho | 2 | — | 10-15 |
+| 4 | Ter 31/03 | Polêmica | 2 | — | 15-25 |
+| 5 | Qua 01/04 | Substack #2 | 2 | Newsletter #2 | 25-35 |
+| 6 | Qui 02/04 | Push premium | 2 | — | 35-50 |
+| 7 | Sex 03/04 | Storytelling | 2 | — | 50-60 |
+| **Total** | | | **14 vídeos** | **2 newsletters** | **60 = R$300** |
 
 ---
 
@@ -387,8 +386,12 @@ as suas escolhas de vida."
 
 [CORTE: olhar de choque pra câmera]
 
-"Link tá na bio. Boa sorte."
+"Link nos comentários. Boa sorte."
 ```
+**Tempo alvo:** 15-25 segundos
+**Som:** trending sound OU áudio original (sua voz)
+
+---
 
 ### Roteiro T2 — "Testei meu próprio look e a nota foi..."
 ```
@@ -408,46 +411,12 @@ tem o direito de respirar..."]
 
 "Gente... [ler o lead do resultado]"
 
-[TEXTO FINAL: "link na bio — testem"]
+[TEXTO FINAL: "link nos comentários — testem"]
 ```
+**Tempo alvo:** 15-20 segundos
+**Dica:** A reação genuína é TUDO nesse formato. Não finja.
 
-### Roteiro T3 — "Agora vocês podem testar"
-```
-[CÂMERA: direta, energética]
-
-"Eu lancei. O app que julga seu look como a Miranda Priestly 
-ESTÁ no ar. Funciona assim:"
-
-[SCREEN RECORDING RÁPIDO — 10s mostrando o fluxo completo]
-
-"Você escolhe o contexto — trabalho, date night, fashion week —
-manda a foto e recebe o veredito editorial."
-
-[MOSTRAR 2-3 resultados diferentes rapidamente]
-
-"As notas variam de 0 a 100. Ninguém tá sobrevivendo."
-
-[OLHAR PRA CÂMERA]
-"Link na bio. Me marca quando testar."
-```
-
-### Roteiro T4 — "Julguei looks famosos"
-```
-[TEXTO NA TELA: "testando looks de [pessoa/personagem] 
-no app da Miranda Priestly"]
-
-[MOSTRAR FOTO 1] → [RESULTADO + NOTA]
-"Ela deu [nota] e disse: [frase]"
-
-[MOSTRAR FOTO 2] → [RESULTADO + NOTA]  
-"Aqui foi pior: [nota]. [frase]"
-
-[MOSTRAR FOTO 3] → [RESULTADO + NOTA]
-"E essa? [nota]! [frase]"
-
-[REAÇÃO FINAL]
-"Ninguém tá seguro. Link na bio."
-```
+---
 
 ### Roteiro T5 — "Notas que a Miranda deu hoje"
 ```
@@ -458,10 +427,14 @@ Nota 47 — "Sob revisão hostil"
 Nota 73 — "Sobreviveu à reunião"
 Nota 8 — "Cerúleo sem salvação"
 
-[CADA UM COM: foto + nota + frase, 2-3 segundos cada]
+[CADA UM COM: tela do app com nota + frase, 2-3 segundos cada]
 
-[FINAL: "qual seria a SUA nota? link na bio"]
+[FINAL: "qual seria a SUA nota? link nos comentários"]
 ```
+**Tempo alvo:** 12-18 segundos
+**Dica:** Quanto mais curto, mais loops = mais views
+
+---
 
 ### Roteiro T6 — "Testando look de trabalho"
 ```
@@ -480,8 +453,10 @@ trabalho. Hoje vou deixar a Miranda decidir."
 [SE FOR RUIM]: "Talvez eu mereça ser demitida mesmo."
 [SE FOR BOA]: "Primeiro dia que a Miranda me respeitou."
 
-"Testem o de vocês, link na bio."
+"Testem o de vocês, link nos comentários."
 ```
+
+---
 
 ### Roteiro T7 — "Trends que a Miranda destruiria"
 ```
@@ -502,6 +477,8 @@ literalmente demite."
 eu teste amanhã?"
 ```
 
+---
+
 ### Roteiro T8 — "Pior vs Melhor look"
 ```
 [CÂMERA: look "pior" (conjuntinho de pijama, roupa relaxada)]
@@ -519,11 +496,13 @@ meu look de domingo e meu look de sair."
 meu esforço."
 ```
 
+---
+
 ### Roteiro T9 — "5 erros que derrubam sua nota"
 ```
 [CÂMERA: tom de quem dá dica]
 
-"Depois de semanas usando o app da Miranda, identifiquei 
+"Depois de uma semana usando o app da Miranda, identifiquei 
 5 erros que SEMPRE derrubam a nota:"
 
 "1 — Proporções. Tudo oversize ou tudo justo sem equilíbrio."
@@ -532,8 +511,10 @@ meu esforço."
 "4 — Excesso de acessórios sem curadoria."
 "5 — Look sem finalização — como se tivesse desistido no meio."
 
-"O app diagnostica cada um desses. Link na bio."
+"O app diagnostica cada um desses. Link nos comentários."
 ```
+
+---
 
 ### Roteiro T10 — "Personagens de filme julgadas pela Miranda"
 ```
@@ -547,8 +528,11 @@ Blair Waldorf: [nota] — "[frase]"
 Rachel Green: [nota] — "[frase]"
 
 "A Miranda não poupa ninguém. Nem ficção."
-"Link na bio — testa o seu."
+"Link nos comentários — testa o seu."
 ```
+**ALTO potencial viral.** Todo mundo tem opinião sobre esses personagens.
+
+---
 
 ### Roteiro T11 — "Uma semana depois"
 ```
@@ -572,32 +556,30 @@ testar. Aconteceu o seguinte:"
 
 ## 5. ESTRATÉGIA SUBSTACK
 
-### Newsletter #1 — Dia 2 (Lançamento)
+### Newsletter #1 — Sábado 28/03 (hoje à noite)
 
 **Assunto:** "Eu deixei uma IA me avaliar como a Miranda Priestly faria"
-
-**Estrutura:**
 
 ```
 Oi,
 
 Nas últimas semanas eu construí uma coisa irresponsável: 
 um app que analisa seu look usando inteligência artificial 
-com a persona e a crueldade da Miranda Priestly.
+com a personalidade e a crueldade da Miranda Priestly.
 
 Você tira uma foto do outfit. A IA avalia silhueta, cores, 
 proporções, contexto — e devolve um "Runway Index" de 0 a 100 
-com um comentário editorial que provavelmente vai destruir 
-seu dia.
+com um comentário editorial que vai provavelmente destruir o 
+resto do seu dia.
 
 A minha primeira nota foi [X]. Ela disse: "[frase]".
 
-O nome do projeto é Miranda. Tá no ar aqui:
+O nome do projeto é Miranda. Tá no ar agora:
 👉 miranda.lumes.works
 
-Tem versão gratuita (3 avaliações) e uma versão premium 
-(R$9,90/mês) que não só julga — corrige. Ela diz o que 
-manter, o que tirar e o que substituir.
+Tem versão gratuita (3 avaliações por dia) e uma versão 
+premium (R$9,90/mês) que não só julga — corrige. Ela diz 
+o que manter, o que tirar e o que substituir no look.
 
 Testa e me conta:
 Qual foi sua nota e o que ela disse?
@@ -607,216 +589,209 @@ Responde esse email. Eu quero saber.
 Mel
 ```
 
-**Regras:**
-- Tom pessoal, como se estivesse contando pra uma amiga
-- Incluir o link 2-3 vezes ao longo do email
-- Terminar com pergunta para gerar replies (engajamento no Substack = mais entrega)
-
-### Newsletter #2 — Dia 5
+### Newsletter #2 — Quarta 01/04
 
 **Assunto:** "O que uma IA de moda me ensinou sobre como nos vestimos"
 
-**Estrutura:**
-- Reflexão mais profunda sobre imagem pessoal na era digital
-- Como IA pode ser honesta de formas que humanos não são
-- Exemplos de notas e frases que geraram reflexão
-- Inserir link do app no meio e no final
-- Perguntar: "vocês acham que precisamos de honestidade brutal sobre como nos vestimos?"
+```
+Oi,
+
+Essa semana eu lancei aquele app que julga looks como 
+a Miranda Priestly. A resposta foi maior do que eu esperava.
+
+Mas o que me chamou atenção não foram as notas — foram as 
+reações.
+
+[1 parágrafo sobre como as pessoas reagiram diferente do 
+esperado — usar dados reais da semana]
+
+[1 parágrafo reflexivo sobre imagem pessoal, julgamento e 
+como a IA consegue ser honesta de uma forma que pessoas não 
+são — match com o tom intelectual do seu Substack]
+
+[1 parágrafo sobre o que você aprendeu construindo isso]
+
+Se você ainda não testou: miranda.lumes.works
+
+Se já testou: responde esse email com sua nota. Eu leio 
+todos.
+
+Mel
+```
+
+**Regras pro Substack:**
+- Tom pessoal e intelectual — match com seus 3.5k leitores
+- Link do app aparece 2-3 vezes
+- Terminar SEMPRE com pergunta — replies no Substack melhoram a entrega
+- Não parecer propaganda — parecer "estou compartilhando algo que fiz"
 
 ---
 
 ## 6. PERFIS DE REFERÊNCIA
 
-### TikTok — Estudar o formato, não copiar
+### TikTok — Estudar o formato
 
-| Perfil | Por quê estudar | O que absorver |
-|--------|----------------|----------------|
-| **@sarfinaa** | Moda + humor ácido | Tom direto, cortes rápidos, sem frescura |
-| **@oldloserinbrooklyn** | Roasts de outfit | Estrutura de reveal, timing cômico |
-| **@stylewme_** | Análise de looks | Como falar de moda sem ser técnica demais |
-| **@wishuponawardrobe** | Trends de moda com opinião | Ganchos de abertura que prendem |
-| **@averagefashion** | Moda acessível | Linguagem que conecta com público não-fashion |
-| **@mirandapriestly.archive** (ou similares) | Fandom Miranda | Ver que tipo de conteúdo Miranda engaja |
+| Perfil | O que absorver |
+|--------|----------------|
+| **@sarfinaa** | Tom direto, cortes rápidos, humor de moda |
+| **@oldloserinbrooklyn** | Roasts de outfit — timing cômico |
+| **@stylewme_** | Análise de looks acessível |
+| **@wishuponawardrobe** | Ganchos de abertura que prendem |
+| **@averagefashion** | Moda pra público não-fashion |
 
 ### Instagram — Referência visual
 
 | Perfil | O que absorver |
 |--------|----------------|
-| **@lookiero** | Cards visuais de estilo |
-| **@modices** | Moda brasileira acessível, tom casual |
-| **@fashionmagazine** | Estética editorial premium |
+| **@modices** | Moda brasileira, tom casual |
+| **@fashionmagazine** | Estética editorial |
 | **@stylebop** | Carrosséis de looks com texto |
 
-### Substack — Tom e formato
+### Substack — Tom
 
 | Newsletter | O que absorver |
 |-----------|----------------|
-| **Ana Andjelic** | Como transformar pop culture em análise intelectual |
-| **The Sociology of Business** | Reflexão cultural sobre consumo |
-| **Blackbird Spyplane** | Tom irreverente + utilidade real |
+| **Ana Andjelic** | Pop culture → análise intelectual |
+| **Blackbird Spyplane** | Tom irreverente + utilidade |
 
 ---
 
 ## 7. HASHTAGS E SEO SOCIAL
 
-### TikTok — Conjuntos de hashtags (rotacionar)
+### TikTok — Rotacionar esses sets
 
-**Set A — Moda + IA:**
+**Set A (Moda + IA):**
 ```
-#mirandapriestly #diabovesteprada #devilwearsprada #fashionai 
-#outfitcheck #fashionroast #outfitrating #aifashion
+#mirandapriestly #diabovesteprada #fashionai #outfitcheck 
+#fashionroast #outfitrating
 ```
 
-**Set B — Entretenimento + Viral:**
+**Set B (Entretenimento):**
 ```
 #modatiktok #fashiontok #lookdodia #ootd #outfitcritique 
-#fashiontrends #stylecheck #modabrasileira
+#stylecheck #modabrasileira
 ```
 
-**Set C — Cultural:**
+**Set C (Cultural):**
 ```
-#runwayseason #devilwearsprada2 #merrylstreep #fashioneditor
-#fashionjudge #roastmyoutfit #outfitoftheday
-```
-
-**Regra:** usar 4-6 hashtags por post. Misturar alta competição (milhões de views) com nicho (milhares).
-
-### Instagram
-
-Mesmos sets, mas adicionar:
-```
-#reelsbrasileiros #dicasdemoda #consultoriademoda #looktrabalho 
-#modafeminina #estilopessoal #imagemdodia
+#devilwearsprada2 #runwayseason #roastmyoutfit 
+#outfitoftheday #fashiontrends
 ```
 
-### Palavras-chave para SEO no TikTok (colocar na legenda e falando no vídeo)
+**Regra:** 4-6 hashtags por post. Misturar sets.
+
+### Palavras-chave pra falar no vídeo (SEO do TikTok)
+O algoritmo do TikTok usa reconhecimento de fala. **Fale essas palavras em voz alta nos vídeos:**
 - "app que julga seu look"
-- "Miranda Priestly IA"
-- "nota do meu outfit"
-- "roast de moda"
-- "diabo veste prada app"
+- "Miranda Priestly"
+- "nota do outfit"
+- "avaliação de moda"
+- "inteligência artificial"
 
 ---
 
 ## 8. AUTOMAÇÕES E FERRAMENTAS GRATUITAS
 
-### Ferramentas essenciais (todas gratuitas)
+### Ferramentas essenciais (todas free)
 
-| Ferramenta | Uso | Link |
-|-----------|-----|------|
-| **CapCut** | Edição de vídeo (TikTok + Reels) | App Store / capcut.com |
-| **Canva** | Cards, carrosséis, thumbnails | canva.com |
-| **Notion** | Calendário de conteúdo, checklist diário | notion.so |
-| **Later** (free tier) | Agendar posts Instagram (até 5/mês) | later.com |
-| **TikTok Studio** | Agendar posts TikTok direto na plataforma | Dentro do TikTok |
-| **Substack** | Newsletter — já usa | substack.com |
-| **Google Analytics** | Medir tráfego da URL | analytics.google.com |
-| **Vercel Analytics** | Medir acessos ao app | painel Vercel |
+| Ferramenta | Uso |
+|-----------|-----|
+| **CapCut** | Edição de vídeo (TikTok + Reels) |
+| **Canva** | Cards, thumbnails, highlight cover |
+| **TikTok Studio** | Agendar posts direto na plataforma |
+| **Vercel Analytics** | Medir acessos ao app |
+| **Substack** | Newsletter (já usa) |
 
-### Automações que uma IA (ou você) pode executar
+### Prompts de automação — usar com qualquer IA
 
-**1. Geração de legendas:**
-Prompt para qualquer IA:
+**Gerar legendas:**
 ```
 Crie 5 legendas para TikTok sobre um app que analisa looks 
 com a crueldade da Miranda Priestly. Tom: humor ácido, 
-direto, curto. Incluir CTA para "link na bio". Público: 
-mulheres 18-34 que gostam de moda e cultura pop.
+direto, curto. Incluir CTA para "link nos comentários". 
+Público: mulheres 18-34 que gostam de moda e cultura pop.
 ```
 
-**2. Geração de ideias de conteúdo semanal:**
+**Gerar ideias de conteúdo:**
 ```
-Me dê 7 ideias de vídeos de TikTok sobre um app de análise 
-de looks com IA inspirado na Miranda Priestly. Formatos 
-variados: talking head, react, tutorial, compilado, 
-storytelling, polêmica, trend.
+Me dê 7 ideias de vídeos de TikTok sobre um app de IA que 
+julga seu look como a Miranda Priestly. Formatos variados: 
+talking head, react, tutorial, compilado, storytelling, 
+polêmica, trend. Para cada ideia, dê o gancho de abertura.
 ```
 
-**3. Respostas a comentários:**
+**Gerar respostas a comentários:**
 ```
 Gere 10 respostas engraçadas e curtas para comentários em 
-posts sobre um app que julga looks. Tom: sarcástico, leve, 
-convidativo para testar. Exemplo de comentário: "adorei, 
-quero testar!" / "meu look com certeza é nota 100" / 
-"cadê o link?"
+posts sobre um app que julga looks. Tom: sarcástico mas 
+convidativo. Exemplos de comentários: "adorei!", "meu look 
+é nota 100 com certeza", "cadê o link?", "faz com meu look"
 ```
 
-**4. Planejamento de Substack:**
+**Escrever newsletter Substack:**
 ```
 Escreva uma newsletter em tom pessoal e intelectual sobre 
-[tema da semana]. Conecte com o app Projeto Miranda 
-(miranda.lumes.works). Máximo 600 palavras. Terminar 
-com pergunta para gerar replies.
+[tema]. Conecte com o app Projeto Miranda (miranda.lumes.works). 
+Máximo 500 palavras. Terminar com pergunta para gerar replies.
 ```
 
-### Workflow semi-automatizado (modelo semanal)
+### Workflow semanal
 
 ```
-DOMINGO: 
-→ Usar IA para gerar 7 ideias de conteúdo da semana
-→ Organizar no Notion com data e formato
-→ Pré-escrever legendas
+SÁBADO/DOMINGO: 
+→ IA gera 7 ideias + legendas da semana
+→ Batch filming: gravar 4-6 vídeos de uma vez
+→ Editar e agendar tudo
 
-SEGUNDA/TERÇA: 
-→ Batch filming: gravar 3-4 vídeos de uma vez
-→ Editar no CapCut
-→ Agendar no TikTok Studio e Later
+SEGUNDA a QUINTA:
+→ Postar 2 TikToks/dia (agendados ou manual)
+→ 3-5 stories Instagram/dia
+→ Engajar 15-20 min/dia
 
-QUARTA/QUINTA:
-→ Gravar respostas a comentários (se houver) 
-→ Postar stories de engajamento
-→ Monitorar métricas
+QUARTA:
+→ Newsletter Substack
 
 SEXTA:
-→ Enviar newsletter Substack
-→ Repostar melhor conteúdo da semana
-
-SÁBADO:
-→ Post de maior aposta (maior esforço de edição)
-→ Engajamento pesado
+→ Analisar métricas
+→ Identificar formato que mais funcionou
+→ Planejar semana seguinte
 ```
 
 ---
 
 ## 9. MÉTRICAS E AJUSTES
 
-### O que medir todo dia (5 min)
+### Dashboard diário (5 min toda noite)
 
 | Métrica | Onde | Meta semana 1 |
 |---------|------|--------------|
-| Views por vídeo (TikTok) | TikTok Analytics | 1k+ por vídeo |
-| Engajamento (TikTok) | Curtidas + comentários + shares | >5% do views |
-| Profile visits (TikTok) | Analytics | 100+/dia |
-| Link clicks (bio) | Linktree ou analytics | 50+/dia |
-| Novos seguidores (TikTok) | Analytics | 100+/semana |
-| Reach dos Reels | Instagram Insights | 500+ por reel |
-| Story views | Instagram Insights | 30%+ dos seguidores |
-| Acessos ao app | Vercel Analytics | 500+ na semana |
-| Newsletter open rate | Substack dashboard | 40%+ |
-| Newsletter clicks | Substack dashboard | 10%+ |
+| Views totais TikTok | TikTok Analytics | 40k+ total |
+| Melhor vídeo (views) | TikTok Analytics | 10k+ num vídeo |
+| Engajamento TikTok | Curtidas+comentários+shares | >5% |
+| Link clicks | Vercel Analytics | 3.000+ |
+| Story views | IG Insights | 30%+ dos seguidores |
+| Newsletter open rate | Substack | 40%+ |
+| Newsletter clicks | Substack | 10%+ |
+| **Assinantes premium** | **Kiwify/Supabase** | **60** |
 
-### Como ajustar em tempo real
+### Ajustes em tempo real
 
-**Se TikTok não performar:**
-- Mudar o gancho dos primeiros 2 segundos (é onde 90% das pessoas abandonam)
-- Testar horários diferentes (8h, 12h, 18h, 22h)
+**TikTok não performa?**
+- Mudar gancho dos primeiros 2 segundos
+- Testar horários: 8h, 12h, 18h, 22h
 - Usar som trending em vez de áudio original
-- Tornar o vídeo mais curto (7-15 segundos)
+- Encurtar pra 7-15 segundos
+- Adicionar mais texto na tela
 
-**Se Instagram não performar:**
-- Focar mais em stories (maior entrega para seguidores existentes)
-- Usar mais enquetes e caixas de pergunta (Instagram premia interação)
-- Reels com texto na tela performam melhor que talking head no IG
+**Views altas mas poucos cliques?**
+- CTA não tá claro — reforçar "link nos comentários"
+- Fixar comentário com o link
+- Adicionar texto na tela com a URL
 
-**Se Substack converter pouco:**
-- Mudar o assunto do email (testar curiosidade vs clareza)
-- Colocar o link mais cedo no texto
-- Adicionar imagem do resultado do app
-
-**Se o app não converter (acessos mas poucos usos):**
-- Problema de UX — o fluxo mobile pode ter atrito
-- Testar em 3 dispositivos diferentes
-- Pedir feedback por DM
+**Cliques mas poucos assinantes?**
+- O app pode ter atrito no mobile — testar
+- As 3 avaliações grátis acabam rápido? Se sim, tá funcionando
+- O paywall pode não estar vendendo bem — ajustar texto do paywall
 
 ---
 
@@ -824,138 +799,133 @@ SÁBADO:
 
 ### TikTok
 
-**Modelo 1 (Curiosidade):**
+**Curiosidade:**
 ```
 Construí um app que te julga como a Miranda Priestly. 
-A nota do meu look de hoje vai te chocar 💀 
-#mirandapriestly #fashionroast #outfitcheck
+Minha nota vai te chocar 💀 #mirandapriestly #outfitcheck
 ```
 
-**Modelo 2 (Polêmica):**
+**Polêmica:**
 ```
-Testei [trend/look] no app da Miranda Priestly e ela deu 
-nota [X]. Vocês concordam? 😭
-#outfitrating #fashiontok #modatiktok
+Testei [trend] no app da Miranda Priestly e ela deu nota [X]. 
+Vocês concordam? 😭 #fashionroast #modatiktok
 ```
 
-**Modelo 3 (Desafio):**
+**Desafio:**
 ```
 POV: você pediu pra Miranda Priestly avaliar seu look de 
-[ocasião] e ela não poupou ninguém 🔪
-Link na bio — testa o seu
-#fashionai #roastmyoutfit #lookdodia
+[ocasião] 🔪 link nos comentários
+#fashionai #lookdodia
 ```
 
-**Modelo 4 (UGC/Compilado):**
+**Compilado:**
 ```
-As notas mais brutais que a Miranda já deu essa semana.
-Nenhum look sobreviveu. ☠️
-#diabovesteprada #outfitcritique #runwayseason
+As notas mais brutais da Miranda essa semana. 
+Nenhum look sobreviveu ☠️ #diabovesteprada #outfitrating
 ```
 
-### Instagram (Reels)
+### Instagram Reels
 
-**Modelo 1:**
 ```
 "Meu look sobreviveria à Runway?" 🤔
 
-Testei com IA. O veredito da Miranda Priestly foi impiedoso.
-
+Testei com IA. O veredito foi impiedoso.
 Nota: [X]/100
-Diagnóstico: [frase principal]
 
-Link na bio pra testar o seu → miranda.lumes.works
+Link na bio → miranda.lumes.works
 
-#modafeminina #consultoriademoda #lookdodia #outfitoftheday
+#modafeminina #lookdodia #outfitoftheday
 ```
 
-**Modelo 2 (Carrossel):**
-```
-5 looks analisados pela Miranda Priestly ← swipe
+### Instagram Stories
 
-Qual nota VOCÊ daria pra cada um? 
+**Enquete:** "Você acha que seu look de hoje tiraria mais de 50?"
+- Com certeza
+- Não quero saber
 
-Testa o seu look: miranda.lumes.works 🔗
+**Caixa de pergunta:** "Manda foto do seu look que eu testo ao vivo 👀"
 
-#estilopessoal #moda2026 #fashionai #looktrabalho
-```
-
-### Instagram (Stories)
-
-**Enquete:**
-"Você acha que seu look de hoje tiraria mais de 50 no Runway Index?"
-☐ Com certeza
-☐ Não quero saber
-
-**Caixa de pergunta:**
-"Manda uma foto do seu look que eu testo ao vivo amanhã 👀"
-
-**Slider:**
-"Quão confiante você tá no look de hoje?"
-😰 ————————————— 💅
+**Slider:** "Quão confiante você tá no look de hoje?"
+😰 ————————— 💅
 
 ---
 
 ## 11. REGRAS DE OURO
 
-### O que FAZER
+### FAZER
 
-1. **Postar todo dia.** O algoritmo do TikTok recompensa consistência acima de tudo.
-2. **Primeiros 2 segundos são TUDO.** Se não prender ali, ninguém assiste.
-3. **Mostrar o rosto.** O algoritmo do TikTok e do Instagram favorece rostos humanos.
-4. **Responder comentários com vídeo.** Isso gera conteúdo extra E o algoritmo empurra.
-5. **Usar CTA claro e sempre o mesmo.** "Link na bio" toda vez, sem variação.
-6. **Filmar vertical (9:16).** Sempre. Sem exceção.
-7. **Manter o app como protagonista visual.** O screen recording do resultado é o "hero content".
-8. **Repostar results de seguidores.** UGC é o combustível mais poderoso.
-9. **Ser genuína.** Sua reação real à nota é mais viral que qualquer roteiro perfeito.
-10. **Tratar cada comentário como oportunidade.** Cada reply é um mini-conteúdo.
+1. **Postar todo dia.** Sem exceção. 2 TikToks + stories.
+2. **Primeiros 2 segundos são TUDO.** Gancho forte ou ninguém assiste.
+3. **Mostrar o rosto.** Algoritmo favorece rostos reais.
+4. **Responder comentários rápido.** Dentro da primeira hora = boost de alcance.
+5. **CTA sempre igual:** "link nos comentários" (TikTok) / "link na bio" (IG).
+6. **Filmar vertical (9:16).** Sempre.
+7. **Screen recording do resultado é o hero content.** A nota + frase É o post.
+8. **Repostar resultados de seguidores.** UGC é combustível.
+9. **Ser genuína.** Sua reação real > roteiro perfeito.
+10. **Fixar comentário com link no TikTok.** Todo. Santo. Vídeo.
 
-### O que NÃO fazer
+### NÃO FAZER
 
-1. **Não usar linguagem de marketing.** Nada de "conheça nosso produto inovador de IA". Fale como gente.
-2. **Não postar sem gancho.** Primeiro planejar o que vai prender; depois gravar.
-3. **Não ignorar comentários.** Isso mata o alcance.
-4. **Não deletar vídeos que flopparam.** Isso reseta o algoritmo. Deixe lá.
-5. **Não usar hashtags irrelevantes.** #fyp #viral #trending não funcionam mais.
-6. **Não esperar perfeição.** Vídeo bom publicado > vídeo perfeito no rascunho.
-7. **Não postar horizontal.** Nunca. Jamais.
-8. **Não falar de tecnologia.** Ninguém quer saber que é Gemini ou Mistral. Fale da experiência.
-9. **Não focar em vender premium cedo demais.** Primeiro viralizar o roast grátis.
-10. **Não comparar com criadores com 1M de seguidores.** Seu benchmark é você ontem.
+1. **Não usar linguagem de marketing.** Nada de "produto inovador". Fale como gente.
+2. **Não deletar vídeos que flopparam.** Reseta o algoritmo.
+3. **Não usar #fyp #viral.** Não funciona mais.
+4. **Não esperar perfeição.** Vídeo bom publicado > perfeito no rascunho.
+5. **Não falar de tecnologia.** Ninguém quer saber que é Gemini ou Mistral.
+6. **Não empurrar premium cedo.** Primeiro viralizar o roast grátis (dias 1-3), depois converter (dias 4-7).
+7. **Não postar horizontal.** Nunca.
+8. **Não ignorar comentários.** Mata o alcance.
 
 ---
 
-## CHECKLIST RÁPIDO DIÁRIO
-
-Copie e cole esse checklist todo dia:
+## CHECKLIST DIÁRIO (copiar e usar todo dia)
 
 ```
-☐ Postar no TikTok (pelo menos 1 vídeo)
-☐ Postar stories no Instagram (pelo menos 3)
-☐ Responder TODOS os comentários no TikTok
-☐ Responder TODOS os comentários no Instagram
-☐ Engajar em 5-10 posts de outros perfis de moda
-☐ Verificar métricas (5 min)
-☐ Anotar o que funcionou e o que não funcionou
-☐ Ajustar o plano de amanhã baseado nos dados de hoje
+☐ Postar TikTok #1
+☐ Postar TikTok #2
+☐ Fixar comentário com link nos 2 TikToks
+☐ 3-5 stories no Instagram
+☐ Responder TODOS os comentários (TikTok + IG)
+☐ Engajar em 5-10 posts de moda de outros perfis
+☐ Verificar métricas (5 min à noite)
+☐ Anotar: o que funcionou hoje?
 ```
 
 ---
 
 ## PLANO DE ESCALA (Semana 2+)
 
-Se a semana 1 funcionar, na semana 2:
+Se a semana 1 bater a meta:
 
-1. **Dobrar no formato que mais viralizou** — se compilado funcionou, fazer 3x por semana
-2. **Acionar microinfluenciadoras** — mandar DM com screenshot do app + "testa e posta"
-3. **Criar challenge** — "#MirandaMeJulgou" — pedir pra seguidores postarem o resultado
-4. **Lançar modo premium com mais força** — agora que tem base, empurrar conversão
-5. **Newsletter semanal fixa no Substack** — criar série "Runway Report" com análises culturais
-6. **Explorar Twitter/X** — frases curtas da Miranda + prints de notas = alto share
+1. **Dobrar no formato que mais viralizou**
+2. **DM em massa pra microinfluenciadoras** (10/dia)
+3. **Challenge: #MirandaMeJulgou** — pedir pra seguidores postarem resultado
+4. **Newsletter semanal fixa** — série "Runway Report"
+5. **Twitter/X** — frases da Miranda + prints de notas = alto share
+6. **Pinterest** — conteúdo evergreen: "erros de estilo", "looks aprovados"
+
+Se NÃO bater:
+1. Analisar qual etapa do funil falhou (views? cliques? conversão?)
+2. Ajustar conforme seção 9
+3. Considerar 1 micro-publi paga (R$50-100) pra boost inicial
 
 ---
 
-*Última atualização: 28 de março de 2026*
-*Criado como guia executável para crescimento orgânico do Projeto Miranda*
-*Adaptável para execução por humano ou IA*
+## AÇÃO IMEDIATA — PRÓXIMAS 2 HORAS (Sáb 28/03, 00h-02h)
+
+```
+1. [ ] Atualizar bio do Instagram
+2. [ ] Atualizar bio do TikTok  
+3. [ ] Colocar link do app nas bios
+4. [ ] Fazer 3 screen recordings do app no celular
+5. [ ] Rascunhar newsletter #1 no Substack (agendar pra 21h de hoje)
+6. [ ] Separar 2-3 looks pra filmar amanhã de manhã
+7. [ ] Baixar CapCut
+8. [ ] Dormir. Amanhã às 10h começa o batch filming.
+```
+
+---
+
+*Atualizado: 28 de março de 2026, 00:36*
+*Meta: R$300 em 7 dias = 60 assinantes × R$5*
+*Início: HOJE*
