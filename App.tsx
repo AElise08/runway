@@ -366,7 +366,8 @@ const App: React.FC = () => {
   const [result, setResult] = useState<CritiqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
-  
+  const [socialPercentile, setSocialPercentile] = useState<number | null>(null);
+
   // Auth & Profile State
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -374,7 +375,15 @@ const App: React.FC = () => {
   const [selectedChallengeKey, setSelectedChallengeKey] = useState<ChallengeKey>('none');
   const [activeChallengeKey, setActiveChallengeKey] = useState<ChallengeKey>('none');
 
+  // Rate limiting with daily reset
   const [usageCount, setUsageCount] = useState<number>(() => {
+    const today = new Date().toDateString();
+    const savedDate = localStorage.getItem('miranda_usage_date');
+    if (savedDate !== today) {
+      localStorage.setItem('miranda_usage_date', today);
+      localStorage.setItem('miranda_usage_count', '0');
+      return 0;
+    }
     const saved = localStorage.getItem('miranda_usage_count');
     return saved ? parseInt(saved, 10) : 0;
   });
@@ -602,18 +611,52 @@ const App: React.FC = () => {
         jsonStr = await analyzeLookMistral(base64, isPremium, challengeContext);
       }
 
-      const parsed: CritiqueResult = JSON.parse(jsonStr);
+      // JSON parse seguro — evita tela branca silenciosa se a IA retornar algo inesperado
+      let parsed: CritiqueResult;
+      try {
+        parsed = JSON.parse(jsonStr);
+        // Garantir campos obrigatórios mínimos
+        if (!parsed.verdict) parsed.verdict = 'The Purse Drop';
+        if (typeof parsed.rating !== 'number') parsed.rating = 0;
+        if (!parsed.lead) parsed.lead = 'Miranda escolheu o silêncio como resposta.';
+        if (!Array.isArray(parsed.sections)) parsed.sections = [];
+        if (!Array.isArray(parsed.fashionTips)) parsed.fashionTips = [];
+        if (!Array.isArray(parsed.suggestedAccessories)) parsed.suggestedAccessories = [];
+      } catch (_parseErr) {
+        console.error('JSON inválido da IA:', jsonStr);
+        throw new Error('Miranda teve um surto e a resposta saiu incoerente. Tente novamente.');
+      }
+
       setResult(parsed);
-      
+
       const newCount = usageCount + 1;
       setUsageCount(newCount);
       localStorage.setItem('miranda_usage_count', newCount.toString());
-      
+
       if (user && profile) {
          await supabase.from('profiles').update({ daily_looks: profile.daily_looks + 1 }).eq('id', user.id);
          setProfile({...profile, daily_looks: profile.daily_looks + 1});
       }
-      
+
+      // Comparação social — busca quantas análises ficaram abaixo desta nota
+      try {
+        const { count: below } = await supabase
+          .from('profiles')
+          .select('*', { count: 'exact', head: true })
+          .lt('last_score', parsed.rating);
+        const { count: total } = await supabase
+          .from('profiles')
+          .select('*', { count: 'exact', head: true })
+          .not('last_score', 'is', null);
+        if (below !== null && total !== null && total > 0) {
+          setSocialPercentile(Math.round((below / total) * 100));
+        }
+        // Salva a nota no perfil para futuras comparações
+        if (user) {
+          await supabase.from('profiles').update({ last_score: parsed.rating }).eq('id', user.id);
+        }
+      } catch (_) { /* comparação social é non-critical */ }
+
       setState('result');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {
@@ -687,6 +730,10 @@ const App: React.FC = () => {
       const shareText = result.shareCaption
         ? `${result.shareCaption} ${activeChallenge.label !== 'Julgamento Livre' ? `Desafio: ${activeChallenge.label}. ` : ''}Runway Index: ${result.rating}%.`
         : `${editorialVerdict.shareHook} ${activeChallenge.label !== 'Julgamento Livre' ? `Desafio: ${activeChallenge.label}. ` : ''}Runway Index: ${result.rating}%.`;
+
+      // Copia o texto para a área de transferência antes de compartilhar
+      try { await navigator.clipboard.writeText(shareText); } catch (_) {}
+
       const blob = await dataUrlToBlob(dataUrl);
       const file = new File([blob], 'runway-season.png', { type: 'image/png' });
 
@@ -703,7 +750,7 @@ const App: React.FC = () => {
       link.download = 'runway-season-share.png';
       link.href = dataUrl;
       link.click();
-      setError('A capa foi baixada. Poste nos Stories, Reels, TikTok ou Status.');
+      setError('Capa baixada + legenda copiada! Cole nos Stories, Reels ou TikTok.');
     } catch (e) {
       console.error(e);
       setError('Nao foi possivel compartilhar agora. A capa pode ser exportada manualmente.');
@@ -900,7 +947,7 @@ const App: React.FC = () => {
             <section id="landing-pricing" className="max-w-5xl mx-auto mt-20 md:mt-32 mb-10 px-4">
               <div className="text-center space-y-4 mb-16">
                 <h3 className="text-3xl md:text-5xl font-serif font-bold text-black tracking-tight">Assuma o Controle</h3>
-                <p className="text-black/50 text-base md:text-lg">Junte-se às milhares de pessoas que já transformaram a maneira como lidam com o próprio estilo.</p>
+                <p className="text-black/50 text-base md:text-lg">Seja das primeiras a ter acesso. Edição de lançamento com vagas limitadas.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -1051,16 +1098,21 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {state === 'result' && result && image && (
+        {state === 'result' && result && (
           <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000">
             <div className="relative w-full h-[75vh] md:h-[80vh] lg:h-[85vh] bg-[#0a0a0a] border-b border-white/10 overflow-hidden flex flex-col justify-end">
-              <img 
-                src={image} 
-                alt="Editorial Shot" 
-                className="w-full h-full object-cover absolute inset-0 grayscale-[0.05] contrast-[1.1]"
-              />
+              {/* Hero image — ou fundo sólido se a imagem não existir */}
+              {image ? (
+                <img
+                  src={image}
+                  alt="Editorial Shot"
+                  className="w-full h-full object-cover absolute inset-0 grayscale-[0.05] contrast-[1.1]"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1a0505] via-[#0a0a0a] to-[#0a0a0a]" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 pointer-events-none"></div>
-              
+
               {/* Floating Result Info */}
               <div className="absolute bottom-8 md:bottom-20 lg:bottom-24 left-4 md:left-12 lg:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-6 lg:space-y-8 z-20">
                 <div className="border border-[#D32F2F]/45 bg-[#240303]/75 px-4 py-2 uppercase tracking-[0.35em] text-[8px] md:text-[9px] font-black text-[#FFD8D8]">
@@ -1099,6 +1151,31 @@ const App: React.FC = () => {
 
             <div className="w-full md:max-w-7xl xl:max-w-[90rem] mx-auto px-4 md:px-8 lg:px-12 xl:px-24 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 xl:gap-24 pb-40">
               <div className="lg:col-span-8 space-y-12 md:space-y-16 lg:space-y-20 min-w-0">
+
+                {/* ── MOMENTO UAU: Share imediato + comparação social ── */}
+                <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center border border-white/8 bg-white/[0.03] p-5 md:p-6 rounded-[1.5rem] animate-in fade-in duration-700">
+                  <div className="flex-1 space-y-1">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Veredito Pronto</p>
+                    <p className="text-white/80 text-sm md:text-base font-medium leading-snug">
+                      {result.shareCaption || editorialVerdict?.shareHook || `${editorialVerdict?.title} — Runway Index ${result.rating}`}
+                    </p>
+                    {socialPercentile !== null && (
+                      <p className="text-white/40 text-xs pt-1">
+                        Você ficou acima de <span className="text-white font-bold">{socialPercentile}%</span> das usuárias desta semana.
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={shareVerdict}
+                    disabled={isExporting}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.25em] text-[10px] rounded-full hover:bg-[#B32626] transition-all flex-shrink-0"
+                  >
+                    <Share2 size={14} />
+                    {isExporting ? 'Gerando...' : 'Publicar Agora'}
+                  </button>
+                </div>
+                {/* ───────────────────────────────────────────────────── */}
+
                 <div className="relative pb-12 md:pb-16 border-b border-white/5">
                   <Quote size={80} className="absolute -top-6 md:-top-12 -left-6 md:-left-12 text-white/[0.03] fill-white/[0.03]" />
                   <p className="text-3xl md:text-6xl font-serif italic leading-[1.4] md:leading-[1.3] text-white/90 selection:bg-white selection:text-black">

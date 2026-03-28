@@ -91,7 +91,6 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
     config: {
       systemInstruction: getSystemInstruction(isPremium, context),
       responseMimeType: "application/json",
-      thinkingConfig: { thinkingBudget: 0 },
       responseSchema: {
         type: Type.OBJECT,
         properties: {
