@@ -36,18 +36,18 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
             </button>
           ) : (
             <>
-              <button
-                onClick={() => setShowAuth(true)}
+              <a
+                href="#landing-pricing"
                 className="hidden md:block px-4 py-2.5 text-[11px] font-semibold text-[#111111]/70 hover:text-black transition-colors"
               >
-                Entrar
-              </button>
-              <button
-                onClick={() => setShowAuth(true)}
-                className="px-6 py-3 rounded-full bg-[#0d0d0d] text-white text-[11px] font-semibold hover:bg-black transition-colors shadow-md"
+                Planos
+              </a>
+              <a
+                href="#landing-pricing"
+                className="inline-block px-6 py-3 rounded-full bg-[#0d0d0d] text-white text-[11px] font-semibold hover:bg-black transition-colors shadow-md"
               >
-                Acesso Editorial
-              </button>
+                Ver Preços
+              </a>
             </>
           )}
         </div>

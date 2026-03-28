@@ -892,18 +892,66 @@ const App: React.FC = () => {
               </div>
             </section>
 
+            <section id="landing-pricing" className="max-w-5xl mx-auto mt-20 md:mt-32 mb-10 px-4">
+              <div className="text-center space-y-4 mb-16">
+                <h3 className="text-3xl md:text-5xl font-serif font-bold text-black tracking-tight">Assuma o Controle</h3>
+                <p className="text-black/50 text-base md:text-lg">Junte-se às milhares de pessoas que já transformaram a maneira como lidam com o próprio estilo.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="rounded-[2rem] border border-black/10 bg-white p-8 md:p-10 text-center flex flex-col items-center hover:shadow-lg transition-shadow">
+                  <h4 className="text-xl font-bold font-serif mb-2 text-black">Acesso Gratuito</h4>
+                  <div className="text-4xl font-black text-black mb-6">Grátis</div>
+                  <ul className="text-black/60 text-sm space-y-4 mb-8 text-center flex-1">
+                    <li>Até 3 avaliações básicas</li>
+                    <li>Score de viabilidade editorial</li>
+                    <li>Sem diagnóstico detalhado</li>
+                  </ul>
+                  <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full py-4 rounded-full border border-black text-black font-bold uppercase tracking-widest text-[10px] hover:bg-black hover:text-white transition-all">
+                    Iniciar Teste
+                  </button>
+                </div>
+
+                <div className="rounded-[2rem] border border-black bg-black p-8 md:p-10 text-center flex flex-col items-center shadow-2xl relative overflow-hidden transform md:scale-105">
+                  <div className="absolute top-0 right-0 border-b border-l border-white/20 bg-white/10 px-4 py-1 text-[8px] uppercase tracking-widest text-white rounded-bl-xl font-bold">
+                    Recomendado
+                  </div>
+                  <h4 className="text-xl font-bold font-serif mb-2 text-white">Correção Premium</h4>
+                  <div className="text-4xl font-black text-white mb-6">R$ 29<span className="text-lg text-white/50">/ano</span></div>
+                  <ul className="text-white/60 text-sm space-y-4 mb-8 text-center flex-1">
+                    <li>Avaliações ilimitadas</li>
+                    <li>Análise editorial pelo contexto da ocasião</li>
+                    <li>O que manter, tirar e substituir no look</li>
+                    <li className="text-white/40 italic mt-4 border-t border-white/10 pt-4">Sem renovação automática</li>
+                  </ul>
+                  <a href="https://pay.kiwify.com.br/xxxxx" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
+                    Criar Conta Premium
+                  </a>
+                </div>
+              </div>
+
+              <div className="mt-12 text-center">
+                <button
+                  onClick={() => setShowAuth(true)}
+                  className="text-black/50 hover:text-black font-semibold text-xs transition-colors underline underline-offset-4 decoration-black/20 hover:decoration-black"
+                >
+                  Já é premium? Entre na sua conta para acessar os benefícios.
+                </button>
+              </div>
+            </section>
+
             <section className="bg-[#050505] text-white py-24 md:py-32 rounded-t-[3rem] mt-24 text-center">
               <div className="max-w-3xl mx-auto px-6">
-                <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Pronto para a avaliação?</h3>
+                <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Sua imagem editorial no automático.</h3>
                 <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
-                  Junte-se às milhares de sessões editoriais diárias e veja em qual patamar o seu estilo está.
+                  A avaliação final está a um clique no botão abaixo.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="px-10 py-4 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:-translate-y-1 transition-transform"
                   >
-                    Usar Runway Index
+                    Abrir a Câmera
                   </button>
                 </div>
               </div>
