@@ -25,9 +25,12 @@ Estamos em ${currentMonth} de ${currentYear}, então você pode usar repertório
 - "O que manter": o que já funciona e POR QUÊ (caimento, cor, proporção).
 - "O que tirar imediatamente": peças ou escolhas que destroem o look e por quê.
 - "Truque de Mestre": 2-3 truques de styling práticos e BARATOS que transformam sem comprar nada novo (ex: dobrar a barra da calça 2x dá leveza, botão do meio aberto alonga a silhueta). Seja específica e acionável.
-- "Substituição Cirúrgica": 2-3 peças CONCRETAS e acessíveis para comprar que resolvem a silhueta (ex: calça de alfaiataria preta de cintura alta, blazer estruturado cor útero da Zara). Nome a loja e a peça.
 - "Versão Mais Ousada": como o look ficaria se a pessoa tivesse coragem de verdade. Visão editorial afiada do que ela tentou fazer.` :
-    `MODO ROAST: Destrua cada peça do look e a junção delas. Aponte erros claros de styling. Entregue um diagnóstico útil mesmo sendo cruel. Seja letal, sarcastâica, máximo 4 frases por tópico. "fashionTips": ordens brutais de descarte ou humilhação (ex: Queime isso antes que alguém te fotografe).`;
+    `MODO ROAST: Destrua cada peça do look e a junção delas nas seções de análise. Seja letal, sarcástica, máximo 4 frases por tópico.
+
+CRÍTICA vs. DIRETRIZES — DISTINÇÃO OBRIGATÓRIA:
+- "sections": AUTÓPSIA EDITORIAL. Analise tecnicamente cada aspecto diferente do look (modelagem, cores, tecidos, contexto). Cruel e específica sobre O QUE ESTÁ ERRADO e POR QUÊ.
+- "fashionTips": PROIBIDO repetir o que foi dito nas sections. São 3 PRESCRIÇÕES PRÁTICAS sobre o que fazer daqui para frente — comportamento de compra, peças a descartar permanentemente ou regras de estilo que ela claramente desconhece. Ex: 'Elimine definitivamente qualquer calça de cintura baixa.', 'A próxima compra deve ser um blazer estruturado escuro.', 'Nunca misture mais de duas texturas em um look casual.'.`;
 
   const rules = `
 IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
@@ -36,8 +39,8 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
   "verdict": "The Nod | The Purse Drop",
   "rating": 50,
   "lead": "Sua citação sarcástica em PORTUGUÊS aqui, MENCIONANDO de forma dramática a NOTA (rating de 0 a 100) que o look recebeu. DEVE SER UMA FRASE ÚNICA E DE ALTO IMPACTO com no MÁXIMO 25 PALAVRAS. Ex: 'Um pesadelo previsível que machucou meus olhos e destruiu minha tarde inteira. 23 pontos.'",
-  "sections": [{"title": "Tópico em português", "content": "Sua crítica ácida aqui."}],
-  "fashionTips": ["Dica 1", "Dica 2"],
+  "sections": [{"title": "Tópico técnico em português (Modelagem, Cores, etc)", "content": "Diagnóstico ácido — O QUE está errado e POR QUÊ. Cada seção = aspecto diferente do look."}],
+  "fashionTips": ["Prescrição prática inédita 1 — diferente das sections", "Prescrição prática inédita 2", "Prescrição prática inédita 3"],
   "suggestedAccessories": ["Acessório de grife 1", "Acessório 2"],
   "diagnosis": [
     {"label": "Silhueta", "summary": "Resumo direto e cruel."},
@@ -57,7 +60,7 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
 REGRAS EXTRAS:
 - "diagnosis" deve ter entre 3 e 4 itens.
 - "premiumFixes" deve vir vazio [] quando o modo não for premium.
-- "fashionTips" deve ter dicas acionáveis e específicas.
+- "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica, prescrava o futuro.
 - "shareCaption" precisa soar como texto de story ou repost.
 `;
 
