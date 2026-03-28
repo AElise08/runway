@@ -26,9 +26,14 @@ serve(async (req) => {
 
     // Verifique o tipo de evento (queremos saber quando a compra é aprovada)
     if (payload.order_status === 'paid' || payload.order_status === 'approved') {
-      const customerEmail = payload.Customer?.email;
+      const customerEmail = payload.Customer?.email || payload.customer?.email;
+
+      console.log(`Recebido webhook da Kiwify para o status: ${payload.order_status}`);
+      console.log(`Email do cliente: ${customerEmail}`);
+      console.log(`Payload completo:`, JSON.stringify(payload));
 
       if (!customerEmail) {
+        console.error("Missing Customer Email in Payload!");
         return new Response("Missing Customer Email", { status: 400 });
       }
 
