@@ -691,9 +691,9 @@ const App: React.FC = () => {
       backgroundColor: '#1A1A1A',
       scale: 2,
       width: 1080,
-      height: 1620,
+      height: 1920,
       windowWidth: 1080,
-      windowHeight: 1620,
+      windowHeight: 1920,
       scrollX: 0,
       scrollY: 0,
       x: 0,
@@ -1426,10 +1426,10 @@ const App: React.FC = () => {
 
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* Export Template - Hidden from view */}
+      {/* Export Template 1080x1920 (9:16 — formato story nativo) */}
       {result && exportImage && (
-        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1620px', pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-white bg-[#1A1A1A]">
+        <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1920px', pointerEvents: 'none' }}>
+          <div ref={exportRef} className="w-[1080px] h-[1920px] relative flex flex-col overflow-hidden font-sans text-white bg-[#1A1A1A]">
 
             {/* Background Image / Photography */}
             <div className="absolute inset-0 z-0">
@@ -1499,15 +1499,15 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Critical Commentary Box */}
-            <div className="absolute bottom-[280px] left-16 right-16 z-30 bg-[#1A1A1A]/80 backdrop-blur-md border-l-8 border-[#D32F2F] p-8 shadow-2xl">
+            {/* Critical Commentary Box — ajustado para a altura 1920 */}
+            <div className="absolute bottom-[400px] left-16 right-16 z-30 bg-[#1A1A1A]/80 backdrop-blur-md border-l-8 border-[#D32F2F] p-8 shadow-2xl">
                <h3 className="text-white text-[28px] font-serif italic leading-[1.5] text-left opacity-95">
                  &ldquo;{result.lead}&rdquo;
                </h3>
             </div>
 
-            {/* Section Labels & Secondary Info */}
-            <div className="absolute bottom-[80px] left-16 z-30 max-w-[700px] flex gap-4 items-stretch">
+            {/* Section Labels & Secondary Info — safe zone 1920 */}
+            <div className="absolute bottom-[220px] left-16 z-30 max-w-[700px] flex gap-4 items-stretch">
                <div className="w-2 bg-[#D32F2F] flex-shrink-0 mt-1"></div>
                <div className="py-1">
                   <h4 className="text-white text-xl font-bold uppercase tracking-[0.2em] mb-1 shadow-black drop-shadow-md">{result.sections[0]?.title}</h4>
@@ -1515,12 +1515,15 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            <div className="absolute bottom-[84px] right-16 z-30 text-right max-w-[250px]">
+            <div className="absolute bottom-[224px] right-16 z-30 text-right max-w-[250px]">
               <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Runway App</p>
               <p className="mt-2 text-white/75 text-sm leading-relaxed">
                 {result.shareCaption || `Miranda me deu ${result.rating}% e um ${editorialVerdict?.title.toLowerCase()}.`}
               </p>
             </div>
+
+            {/* Safe zone gradient — protege conteúdo do HUD das plataformas */}
+            <div className="absolute bottom-0 left-0 right-0 h-[180px] z-20 bg-gradient-to-t from-[#1A1A1A] to-transparent pointer-events-none" />
 
             {/* Bottom Elements: Barcode */}
             <div className="absolute bottom-12 right-16 z-40 flex flex-col items-end gap-2">
