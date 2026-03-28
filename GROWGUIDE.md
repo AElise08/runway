@@ -74,9 +74,8 @@ O roast GRATUITO vicia. Mas 3 avaliações acabam rápido. O paywall vende a COR
 Antes de dormir, resolva isso:
 
 ### Instagram (@_melfnds)
-- [ ] Atualizar bio: `criadora · construí um app que julga seu look como a Miranda Priestly 🔪 link ↓`
-- [ ] Adicionar link na bio: miranda.lumes.works (link direto, sem Linktree por enquanto)
-- [ ] Criar um Highlight chamado "MIRANDA" (ícone preto minimal — crie no Canva em 2 min)
+- [x] Adicionar link na bio: miranda.lumes.works (link direto, sem Linktree por enquanto)
+- [x] Criar um Highlight chamado "MIRANDA" (ícone preto minimal — crie no Canva em 2 min)
 
 ### TikTok (@_melfnds)
 - [ ] Bio: `deixei uma IA me julgar como a Miranda Priestly 🔪 app no link`

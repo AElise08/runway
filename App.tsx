@@ -750,7 +750,7 @@ const App: React.FC = () => {
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
-          title: 'Runway Season',
+          title: 'Runway Lumes',
           text: shareText,
           files: [file],
         });
@@ -1140,7 +1140,7 @@ const App: React.FC = () => {
               {/* Floating Result Info */}
               <div className="absolute bottom-8 md:bottom-20 lg:bottom-24 left-4 md:left-12 lg:left-24 right-4 md:right-8 flex flex-col items-start space-y-4 md:space-y-6 lg:space-y-8 z-20">
                 <div className="border border-[#D32F2F]/45 bg-[#240303]/75 px-4 py-2 uppercase tracking-[0.35em] text-[8px] md:text-[9px] font-black text-[#FFD8D8]">
-                  {campaignState.isLive ? 'Runway Season Ao Vivo' : `Runway Season · ${campaignState.countdownLabel}`}
+                  {campaignState.isLive ? 'Runway Lumes Ao Vivo' : `Runway Lumes · ${campaignState.countdownLabel}`}
                 </div>
                 <div className="flex flex-wrap items-center gap-4 md:gap-6">
                   <VerdictBadge verdict={result.verdict} />
@@ -1230,14 +1230,14 @@ const App: React.FC = () => {
 
                 <div className="border border-[#D32F2F]/20 bg-[#130505] px-6 md:px-8 py-5 md:py-6">
                   <div className="flex flex-wrap items-center gap-3 md:gap-4 text-[9px] md:text-[10px] uppercase tracking-[0.35em] font-black text-[#FFB0B0]">
-                    <span>Runway Season</span>
+                    <span>Runway Lumes</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
                     <span>{editorialVerdict?.title}</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#D32F2F]"></span>
                     <span>{campaignState.isLive ? 'janela cultural ativa' : campaignState.countdownLabel.toLowerCase()}</span>
                   </div>
                   <p className="mt-4 text-sm md:text-base text-white/60 leading-relaxed">
-                    Resultado preparado para compartilhar durante a temporada. Quando o veredito fica raro ou humilhante o suficiente, a Runway quer que isso vire story.
+                    Resultado preparado para compartilhar durante a temporada. Quando o veredito fica raro ou humilhante o suficiente, a Runway Lumes quer que isso vire story.
                   </p>
                 </div>
 
@@ -1482,7 +1482,7 @@ const App: React.FC = () => {
 
             <div className="absolute top-[276px] right-16 z-20">
               <div className="border border-[#D32F2F]/50 bg-[#240303]/80 px-5 py-3 uppercase tracking-[0.35em] text-[10px] font-black text-[#FFD8D8]">
-                {campaignState.isLive ? 'Runway Season Live' : `Runway Season · ${campaignState.countdownLabel}`}
+                {campaignState.isLive ? 'Runway Lumes Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
               </div>
               <p className="mt-3 text-right text-[10px] uppercase tracking-[0.35em] text-white/55 font-black">
                 {activeChallenge.label}
@@ -1538,7 +1538,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="absolute bottom-[84px] right-16 z-30 text-right max-w-[250px]">
-              <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Runway App</p>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Runway Lumes App</p>
               <p className="mt-2 text-white/75 text-sm leading-relaxed">
                 {result.shareCaption || `Miranda me deu ${result.rating}% e um ${editorialVerdict?.title.toLowerCase()}.`}
               </p>
@@ -1565,7 +1565,7 @@ const App: React.FC = () => {
 
       <footer className="w-full bg-[#050505] text-white/50 py-16 px-12 flex flex-col md:flex-row justify-between items-center gap-12 md:gap-16 transition-all duration-1000 z-50">
         <div className="text-[10px] uppercase tracking-[1em] font-light">
-          &copy; {new Date().getFullYear()} Runway International Group
+          &copy; {new Date().getFullYear()} Runway Lumes Group
         </div>
         <div className="flex flex-wrap justify-center gap-8 md:gap-20 text-[10px] uppercase tracking-[0.6em] font-black opacity-80">
           <a href="#" className="hover:text-white transition-colors">Paris</a>

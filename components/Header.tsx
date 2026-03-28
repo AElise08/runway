@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
         </nav>
 
         <div className="flex flex-col items-center justify-center flex-1">
-          <h1 className="text-2xl md:text-3xl font-serif tracking-[0.05em] font-bold text-black">Runway</h1>
+          <h1 className="text-2xl md:text-3xl font-serif tracking-[0.05em] font-bold text-black">Runway Lumes</h1>
           <span className="text-[7px] uppercase tracking-[0.3em] text-black/40 font-black">
             Season
           </span>
