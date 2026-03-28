@@ -1257,7 +1257,6 @@ const App: React.FC = () => {
                         <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {renderBoldText(section.title)}</span>
                         <div className="flex-1 h-[0.5px] bg-white/5 group-hover:bg-white/10 transition-colors"></div>
                       </div>
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-white/80 break-words">{renderBoldText(section.title)}</h3>
                       <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black break-words">
                         {renderBoldText(section.content)}
                       </p>
