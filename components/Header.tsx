@@ -42,12 +42,12 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
               >
                 Planos
               </a>
-              <a
-                href="#landing-pricing"
+              <button
+                onClick={() => setShowAuth(true)}
                 className="inline-block px-6 py-3 rounded-full bg-[#0d0d0d] text-white text-[11px] font-semibold hover:bg-black transition-colors shadow-md"
               >
                 Acessar Editorial
-              </a>
+              </button>
             </>
           )}
         </div>

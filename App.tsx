@@ -911,7 +911,7 @@ const App: React.FC = () => {
                     <li className="text-white/40 italic mt-4 border-t border-white/10 pt-4">Sem renovação automática</li>
                   </ul>
                   <a href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"} target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
-                    Acessar Editorial
+                    Assinar Premium
                   </a>
                 </div>
               </div>
