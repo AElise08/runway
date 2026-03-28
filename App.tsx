@@ -788,7 +788,7 @@ const App: React.FC = () => {
                     </div>
                     <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-center">
                       <a
-                        href="https://pay.kiwify.com.br/xxxxx"
+                        href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
@@ -903,15 +903,15 @@ const App: React.FC = () => {
                     Recomendado
                   </div>
                   <h4 className="text-xl font-bold font-serif mb-2 text-white">Correção Premium</h4>
-                  <div className="text-4xl font-black text-white mb-6">R$ 29<span className="text-lg text-white/50">/ano</span></div>
+                  <div className="text-4xl font-black text-white mb-6">R$ 9,90<span className="text-lg text-white/50">/mês</span></div>
                   <ul className="text-white/60 text-sm space-y-4 mb-8 text-center flex-1">
                     <li>Avaliações ilimitadas</li>
                     <li>Análise editorial pelo contexto da ocasião</li>
                     <li>O que manter, tirar e substituir no look</li>
                     <li className="text-white/40 italic mt-4 border-t border-white/10 pt-4">Sem renovação automática</li>
                   </ul>
-                  <a href="https://pay.kiwify.com.br/xxxxx" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
-                    Criar Conta Premium
+                  <a href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"} target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
+                    Acessar Editorial
                   </a>
                 </div>
               </div>
@@ -1165,7 +1165,7 @@ const App: React.FC = () => {
                         </div>
                       </div>
                       <a
-                        href="https://pay.kiwify.com.br/xxxxx"
+                        href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
