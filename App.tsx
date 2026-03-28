@@ -1300,25 +1300,52 @@ const App: React.FC = () => {
                   </div>
                 )}
 
-                {premiumFixGroups.length > 0 && (
-                  <div className="pt-16 md:pt-24 border-t border-white/5 space-y-10 md:space-y-12">
-                    <h4 className="text-[11px] md:text-[14px] uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">Plano Premium de Reabilitacao</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-                      {premiumFixGroups.map((group, index) => (
-                        <div key={`${group.title}-${index}`} className="border border-[#D32F2F]/18 bg-[#140505] p-5 md:p-6 space-y-4">
-                          <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">{group.title}</p>
-                          <div className="space-y-3">
-                            {group.items.map((item, itemIndex) => (
-                              <p key={`${group.title}-${itemIndex}`} className="text-sm md:text-base text-white/70 leading-relaxed">
-                                {renderBoldText(item)}
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
+                {premiumFixGroups.length > 0 && (() => {
+                  // Paleta visual por tipo de grupo
+                  const groupStyle: Record<string, { border: string; bg: string; label: string; bullet: string }> = {
+                    'O que manter':              { border: 'border-emerald-500/20', bg: 'bg-emerald-950/30',   label: 'text-emerald-400',  bullet: '→' },
+                    'O que tirar imediatamente': { border: 'border-[#D32F2F]/30',  bg: 'bg-[#140505]',        label: 'text-[#FF7070]',    bullet: '✕' },
+                    'O que tirar':               { border: 'border-[#D32F2F]/30',  bg: 'bg-[#140505]',        label: 'text-[#FF7070]',    bullet: '✕' },
+                    'Truque de Mestre':          { border: 'border-white/20',      bg: 'bg-white/[0.04]',     label: 'text-white',        bullet: '✦' },
+                    'Substituição Cirúrgica':    { border: 'border-amber-500/25',  bg: 'bg-amber-950/20',     label: 'text-amber-400',    bullet: '◎' },
+                    'Versão Mais Ousada':        { border: 'border-purple-500/20', bg: 'bg-purple-950/20',    label: 'text-purple-300',   bullet: '▶' },
+                  };
+                  const defaultStyle = { border: 'border-[#D32F2F]/18', bg: 'bg-[#140505]', label: 'text-[#FFB0B0]', bullet: '—' };
+
+                  return (
+                    <div className="pt-16 md:pt-24 border-t border-white/5 space-y-6 md:space-y-8">
+                      <div className="flex items-center gap-4">
+                        <h4 className="text-[11px] md:text-[13px] uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">Plano de Reabilitação Premium</h4>
+                        <div className="flex-1 h-px bg-white/5" />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                        {premiumFixGroups.map((group, index) => {
+                          const style = groupStyle[group.title] ?? defaultStyle;
+                          const isTruque = group.title === 'Truque de Mestre';
+                          return (
+                            <div
+                              key={`${group.title}-${index}`}
+                              className={`border ${style.border} ${style.bg} p-5 md:p-6 space-y-4 rounded-[1rem] ${isTruque ? 'md:col-span-2' : ''}`}
+                            >
+                              <p className={`text-[10px] uppercase tracking-[0.35em] font-black ${style.label}`}>{group.title}</p>
+                              <ul className="space-y-2.5">
+                                {group.items.map((item, itemIndex) => (
+                                  <li key={`${group.title}-${itemIndex}`} className="flex items-start gap-3">
+                                    <span className={`text-xs font-black mt-0.5 flex-shrink-0 ${style.label} opacity-60`}>{style.bullet}</span>
+                                    <span className={`text-sm md:text-base leading-relaxed ${isTruque ? 'text-white/85 font-medium' : 'text-white/70'}`}>
+                                      {renderBoldText(item)}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
+
               </div>
 
               <div className="lg:col-span-4 space-y-12 md:space-y-20">

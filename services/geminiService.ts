@@ -37,34 +37,42 @@ Você deve atribuir uma nota de 0 a 100.
 
   const premiumInstruction = `
 MODO STYLIST ELITE (PREMIUM ATIVADO):
-Embora você sinta nojo da completa falta de gosto do usuário, ele é agora um cliente premium da Runway ("Passe Front Row"). Portanto, além da sua crítica dolorosa e ácida de sempre, você *deve* oferecer curadorias e dicas construtivas de Stylist Elite em suas dicas:
-- Analise a colorimetria (se há paleta clara/escura, Inverno/Verão sugerido).
-- Forneça dicas construtivas sobre a proporção da silhueta e arquitetura das peças.
-- Ofereça substituições diretas por peças essenciais atemporais.
-- Mantenha o tom superior de quem dá uma consultoria dolorosamente cara, mas de fato resolva o look do cliente.
+Seu cliente pagou para ser salvo, não apenas humilhado. Você ainda é implacavelmente honesta — mas desta vez entrega a reabilitação de verdade, com a arrogância de quem cobra R$5.000 a hora.
+
+O campo "fashionTips" neste modo deve conter APENAS 2-3 observações SINTETICAS, curtas e devastadoras sobre os maiores erros visuais do look (max 15 palavras cada). Não dê soluções aqui. Guarde-as para o premiumFixes.
+
+O campo "premiumFixes" é o PRODUTO REAL do modo premium. Cada grupo deve ser único, acionável e cirurgicamente distinto:
+- "O que manter": lista do que já funciona e POR QUÊ (caimento, cor, proporção).
+- "O que tirar imediatamente": o que está destruindo o look e por quê.
+- "Truque de Mestre": 2-3 truques de styling práticos e baratos que transformam sem comprar nada novo (ex: “dobrar a barra da calça 2x dá leveza”, “botton do meio aberto alonga a silhueta”). Seja específica.
+- "Substituição Cirúrgica": 2-3 peças concretas e acessíveis para comprar (ex: “calça de alfaiataria preta de cintura alta”, “blazer estruturado cor útero da Zara ou Renner”) que resolvem a silhueta.
+- "Versão Mais Ousada": como o look ficaria se a pessoa tivesse coragem de verdade. Uma visão editorial mais afiada do que ela tentou fazer.
 `;
 
   const standardInstruction = `
 MODO ROAST (GRATUITO):
-O usuário não pagou pela sua mentoria de verdade. Apenas destrua a autoestima de estilo dele com humor ácido ("roast"). Não ofereça dicas muito construtivas ou análise premium de paleta; reserve isso para quem paga. Aponte apenas os defeitos monstruosos.
+O usuário não pagou pela sua mentoria de verdade. Apenas destrua a autoestima de estilo dele com humor ácido. Não ofereça construção real; reserve isso para quem paga.
+"fashionTips": 3-4 ordens brutais de descarte ou humilhação (ex: “Queime isso antes que alguém te fotografe”).
 `;
 
   const rules = `
 REGRAS DE RESPOSTA:
-1. Lead: Uma frase curta, mortal e decepcionada.
-2. Seções: Divida em tópicos técnicos (Modelagem, Grooming, Acessórios). ${isPremium ? "Inclua sua análise afiada de silhueta nos tópicos." : ""}
+1. Lead: Uma frase CURTA, mortal e decepcionada. Máximo 15 palavras.
+2. Seções: Divida em tópicos técnicos (Modelagem, Cores, Acessórios, etc).
 3. Vocabulário: Use 'démodé', 'silhouette manquée', 'pret-a-porter de quinta categoria'.
 4. Finalização: Termine OBRIGATORIAMENTE com: "Isso é tudo."
 
 FORMATO DE RESPOSTA (JSON):
 - verdict: 'The Nod' | 'The Purse Drop'
 - rating: número de 0 a 100.
-- lead: Uma citação inicial curta, fria e devastadora.
-- sections: Lista de objetos com { "title": "Nome do Tópico", "content": "Texto crítico técnico e extremamente grosso" }.
-- fashionTips: Lista de dicas. ${isPremium ? "Dicas reais, diretas e úteis de alta costura e proporções/cores." : "Ordens abusivas de descarte imediato das roupas."}
-- suggestedAccessories: Sugestões de luxo caríssimas e inalcançáveis para o povo comum.
+- lead: Frase inicial devastadora. Máximo 15 palavras.
+- sections: Lista de objetos com title + content. Crítica técnica profunda.
+- fashionTips: ${isPremium ? 'APENAS 2-3 observações sinteticas e brutais sobre os piores erros. SEM soluções — essas ficam no premiumFixes.' : 'Ordens humilhantes de descarte.'}
+- suggestedAccessories: Sugestões de luxo que o look desperdiçou.
+- premiumFixes: ${isPremium ? 'OBRIGATÓRIO. Array com os 5 grupos distintos: O que manter / O que tirar / Truque de Mestre / Substituição Cirúrgica / Versão Mais Ousada. Cada item deve ser específico, acionável e DIFERENTE dos fashionTips.' : 'Array vazio [].'}
+- shareCaption: Frase ultra-compartilhável, em português, máximo 12 palavras.
 
-Responda sempre em Português.
+Responda sempre em Português do Brasil.
 `;
 
   return baseInstruction + contextInstruction + (isPremium ? premiumInstruction : standardInstruction) + rules;
@@ -78,10 +86,12 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
     contents: [
       {
         parts: [
-          { text: "Analise esse desastre que eu ousei chamar de look. Seja tão cruel quanto a Miranda no dia em que a Andy chegou na Runway. Dê uma nota real no Runway Index." },
+          { text: isPremium
+              ? "Analise esse look. Seja cruel na critica mas entregue a reabilitacao completa. O usuario pagou pela salvacao."
+              : "Analise esse desastre. Seja tao cruel quanto Miranda no dia em que a Andy chegou. Destrua. De uma nota real." },
           {
             inlineData: {
-              mimeType: "image/png",
+              mimeType: "image/jpeg",
               data: imageBase64
             }
           }
@@ -94,18 +104,9 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
       responseSchema: {
         type: Type.OBJECT,
         properties: {
-          verdict: {
-            type: Type.STRING,
-            enum: ["The Nod", "The Purse Drop"],
-          },
-          rating: {
-            type: Type.NUMBER,
-            description: "Runway Index score from 0 to 100.",
-          },
-          lead: {
-            type: Type.STRING,
-            description: "A frase inicial devastadora.",
-          },
+          verdict: { type: Type.STRING, enum: ["The Nod", "The Purse Drop"] },
+          rating: { type: Type.NUMBER, description: "Runway Index de 0 a 100." },
+          lead: { type: Type.STRING, description: "Frase inicial devastadora, max 15 palavras." },
           sections: {
             type: Type.ARRAY,
             items: {
@@ -120,11 +121,43 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
           fashionTips: {
             type: Type.ARRAY,
             items: { type: Type.STRING },
+            description: isPremium
+              ? "2-3 observacoes sinteticas sobre os maiores erros. Sem solucoes — essas ficam em premiumFixes."
+              : "3-4 ordens brutais de descarte ou humilhacao.",
           },
           suggestedAccessories: {
             type: Type.ARRAY,
             items: { type: Type.STRING },
-          }
+          },
+          diagnosis: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                label: { type: Type.STRING },
+                summary: { type: Type.STRING },
+              },
+              required: ["label", "summary"],
+            },
+          },
+          premiumFixes: {
+            type: Type.ARRAY,
+            description: isPremium
+              ? "5 grupos: O que manter / O que tirar / Truque de Mestre / Substituicao Cirurgica / Versao Mais Ousada"
+              : "Array vazio quando nao for premium.",
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                title: { type: Type.STRING },
+                items: { type: Type.ARRAY, items: { type: Type.STRING } },
+              },
+              required: ["title", "items"],
+            },
+          },
+          shareCaption: {
+            type: Type.STRING,
+            description: "Frase ultra-compartilhavel, max 12 palavras.",
+          },
         },
         required: ["verdict", "rating", "lead", "sections", "fashionTips", "suggestedAccessories"]
       }

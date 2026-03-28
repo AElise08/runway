@@ -16,9 +16,18 @@ Estamos em ${currentMonth} de ${currentYear}, então você pode usar repertório
     ? `CONTEXTO DE JULGAMENTO: o look foi enviado para o desafio/ocasião "${context.label}". Avalie explicitamente se a roupa funciona para esse contexto e cite o contexto pelo menos uma vez no resultado. ${context.promptContext}`
     : `CONTEXTO DE JULGAMENTO: faça uma análise editorial geral, sem inventar ocasião específica.`;
 
-  const extraInstruction = isPremium ? 
-    `MODO PREMIUM: Ofereça conselhos reais e táticos de Stylist sobre como consertar ou melhorar o look. FOCO ABSOLUTO EM TRUQUES DE STYLING SIMPLES E BARATOS que revolucionam a silhueta (ex: dobrar uma manga, prender parte da blusa, adicionar um cinto básico, mudar a proporção). Ao sugerir peças substitutas, dê alternativas simples e acessíveis que quase todo mundo tem no guarda-roupa, sem exigir a compra de peças caríssimas. Monte uma reabilitação prática com o que manter, o que tirar, truques de styling ou peças acessíveis, e uma versão mais ousada.` : 
-    `MODO ROAST: Destrua cada peça do look e a junção delas. Aponte erros claros de styling (caimento errado, tecido ou silhueta malfeita). Entregue um diagnóstico útil mesmo sendo cruel. Seja letal, sarcástica e com textos curtos e impactantes de no máximo 4 frases por tópico.`;
+  const extraInstruction = isPremium ?
+    `MODO PREMIUM: Seu cliente pagou para ser salvo, não apenas humilhado. Você ainda é implacavelmente honesta — mas desta vez entrega a reabilitação de verdade, com a arrogância de quem cobra R$5.000 a hora.
+
+"fashionTips" NO MODO PREMIUM: APENAS 2-3 observações SINTÉTICAS e brutais sobre os maiores erros visuais (máx 15 palavras cada). NÃO dê soluções aqui. Guarde-as para o premiumFixes.
+
+"premiumFixes" É O PRODUTO REAL. Cada grupo DEVE ser único, cirurgicamente distinto e 100% diferente dos fashionTips:
+- "O que manter": o que já funciona e POR QUÊ (caimento, cor, proporção).
+- "O que tirar imediatamente": peças ou escolhas que destroem o look e por quê.
+- "Truque de Mestre": 2-3 truques de styling práticos e BARATOS que transformam sem comprar nada novo (ex: dobrar a barra da calça 2x dá leveza, botão do meio aberto alonga a silhueta). Seja específica e acionável.
+- "Substituição Cirúrgica": 2-3 peças CONCRETAS e acessíveis para comprar que resolvem a silhueta (ex: calça de alfaiataria preta de cintura alta, blazer estruturado cor útero da Zara). Nome a loja e a peça.
+- "Versão Mais Ousada": como o look ficaria se a pessoa tivesse coragem de verdade. Visão editorial afiada do que ela tentou fazer.` :
+    `MODO ROAST: Destrua cada peça do look e a junção delas. Aponte erros claros de styling. Entregue um diagnóstico útil mesmo sendo cruel. Seja letal, sarcastâica, máximo 4 frases por tópico. "fashionTips": ordens brutais de descarte ou humilhação (ex: Queime isso antes que alguém te fotografe).`;
 
   const rules = `
 IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
@@ -36,10 +45,11 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
     {"label": "Ocasião", "summary": "Diga se funciona para o desafio informado."}
   ],
   "premiumFixes": [
-    {"title": "O que manter", "items": ["Item 1", "Item 2"]},
-    {"title": "O que tirar", "items": ["Item 1"]},
-    {"title": "Truque de Mestre (Simples e Acessível)", "items": ["Truque de styling 1", "Peça básica substituta 2"]},
-    {"title": "Versão mais ousada", "items": ["Item 1"]}
+    {"title": "O que manter", "items": ["Peça + POR QUÊ funciona (caimento/cor/proporção)"]},
+    {"title": "O que tirar imediatamente", "items": ["Peça + o que está destruindo o look"]},
+    {"title": "Truque de Mestre", "items": ["Truque específico e prático sem comprar nada"]},
+    {"title": "Substituição Cirúrgica", "items": ["Peça concreta + loja acessível (ex: Zara, Renner)"]},
+    {"title": "Versão Mais Ousada", "items": ["Visão editorial de como o look poderia ser"]}
   ],
   "shareCaption": "Frase curta e altamente compartilhável, em português, com no máximo 12 palavras."
 }
