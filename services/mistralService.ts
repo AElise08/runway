@@ -41,9 +41,9 @@ Estamos em ${currentMonth} de ${currentYear}, então você pode usar repertório
 - "Versão Mais Ousada": como o look ficaria se a pessoa tivesse coragem de verdade. Visão editorial afiada do que ela tentou fazer.` :
     `MODO ROAST: Destrua cada peça do look e a junção delas nas seções de análise. Seja letal, sarcástica, máximo 4 frases por tópico.
 
-CRÍTICA vs. DIRETRIZES — DISTINÇÃO OBRIGATÓRIA:
-- "sections": AUTÓPSIA EDITORIAL. Analise tecnicamente cada aspecto diferente do look (modelagem, cores, tecidos, contexto). Cruel e específica sobre O QUE ESTÁ ERRADO e POR QUÊ.
-- "fashionTips": PROIBIDO repetir o que foi dito nas sections. São 3 PRESCRIÇÕES PRÁTICAS sobre o que fazer daqui para frente — comportamento de compra, peças a descartar permanentemente ou regras de estilo que ela claramente desconhece. Ex: 'Elimine definitivamente qualquer calça de cintura baixa.', 'A próxima compra deve ser um blazer estruturado escuro.', 'Nunca misture mais de duas texturas em um look casual.'.`;
+CRÍTICA vs. DIRETRIZES — DISTINÇÃO ESTRITA:
+- "sections": Análise técnica do AGORA. O que está errado com a modelagem, cores e tecidos desta foto. Seja cruel e técnica (ex: "Silhueta manquée", "proporção catastrófica").
+- "fashionTips": Ordens para o FUTURO. É TERMINANTEMENTE PROIBIDO falar do look atual aqui. Não mencione a blusa, a calça ou o acessório que ela está usando. Dê 3 ordens universais, regras de compras futuras ou leis de estilo que ela claramente ignora. Se a crítica foi sobre as cores, o tip deve ser "Passe a frequentar a Zara apenas em horários de pouca luz".`;
 
   const rules = `
 IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
