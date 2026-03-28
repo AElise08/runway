@@ -726,7 +726,7 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {state === 'idle' && (
-          <div className="pb-24 md:pb-32 animate-in fade-in duration-1000 w-full flex flex-col items-center">
+          <div className="animate-in fade-in duration-1000 w-full flex flex-col items-center">
             {/* Full-width seamless hero background */}
             <div className="absolute top-0 left-0 w-full h-[85vh] md:h-[95vh] z-0 pointer-events-none overflow-hidden">
                <img src="/fashion-bg.png" alt="Editorial Fashion Frame" className="w-full h-full object-cover object-top opacity-95" />
@@ -926,7 +926,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <section className="bg-[#050505] text-white py-24 md:py-32 rounded-t-[3rem] mt-24 text-center">
+            <section className="w-full bg-[#050505] text-white py-24 md:py-32 rounded-t-[3rem] mt-32 text-center">
               <div className="max-w-3xl mx-auto px-6">
                 <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Sua imagem editorial no automático.</h3>
                 <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
@@ -1390,11 +1390,11 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <footer className="mt-40 py-24 px-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-16 opacity-10 hover:opacity-100 transition-all duration-1000">
+      <footer className="w-full bg-[#050505] text-white/50 py-16 px-12 flex flex-col md:flex-row justify-between items-center gap-12 md:gap-16 transition-all duration-1000 z-50">
         <div className="text-[10px] uppercase tracking-[1em] font-light">
           &copy; {new Date().getFullYear()} Runway International Group
         </div>
-        <div className="flex gap-20 text-[10px] uppercase tracking-[0.6em] font-black">
+        <div className="flex flex-wrap justify-center gap-8 md:gap-20 text-[10px] uppercase tracking-[0.6em] font-black opacity-80">
           <a href="#" className="hover:text-white transition-colors">Paris</a>
           <a href="#" className="hover:text-white transition-colors">Milan</a>
           <a href="#" className="hover:text-white transition-colors">New York</a>
