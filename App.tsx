@@ -369,7 +369,7 @@ const App: React.FC = () => {
   // Auth & Profile State
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [showAuth, setShowAuth] = useState(false);
+  const [showAuth, setShowAuth] = useState<boolean | 'login' | 'signup'>(false);
   const [selectedChallengeKey, setSelectedChallengeKey] = useState<ChallengeKey>('none');
   const [activeChallengeKey, setActiveChallengeKey] = useState<ChallengeKey>('none');
 
@@ -719,7 +719,7 @@ const App: React.FC = () => {
             >
               <X size={24} />
             </button>
-            <Auth />
+            <Auth initialAction={showAuth === 'signup' ? 'signup' : 'login'} />
           </div>
         </div>
       )}
@@ -787,14 +787,23 @@ const App: React.FC = () => {
                       </p>
                     </div>
                     <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-center">
-                      <a
-                        href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
-                      >
-                        Tornar-se Premium <ArrowRight size={16} />
-                      </a>
+                      {user ? (
+                        <a
+                          href={`${import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}?email=${encodeURIComponent(user.email || "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
+                        >
+                          Tornar-se Premium <ArrowRight size={16} />
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => setShowAuth('signup')}
+                          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
+                        >
+                          Criar Conta para Assinar <ArrowRight size={16} />
+                        </button>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -910,9 +919,15 @@ const App: React.FC = () => {
                     <li>O que manter, tirar e substituir no look</li>
                     <li className="text-white/40 italic mt-4 border-t border-white/10 pt-4">Sem renovação automática</li>
                   </ul>
-                  <a href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"} target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
-                    Assinar Premium
-                  </a>
+                  {user ? (
+                    <a href={`${import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}?email=${encodeURIComponent(user.email || "")}`} target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
+                      Assinar Premium
+                    </a>
+                  ) : (
+                    <button onClick={() => setShowAuth('signup')} className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
+                      Criar Conta para Assinar
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -1164,14 +1179,23 @@ const App: React.FC = () => {
                           <p className="mt-3 text-sm text-white/70 leading-relaxed">Versoes mais elegantes, mais acessiveis ou mais ousadas do mesmo look.</p>
                         </div>
                       </div>
-                      <a
-                        href={import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
-                      >
-                        Desbloquear Correcao Premium <ArrowRight size={14} />
-                      </a>
+                      {user ? (
+                        <a
+                          href={`${import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}?email=${encodeURIComponent(user.email || "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
+                        >
+                          Desbloquear Correcao Premium <ArrowRight size={14} />
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => setShowAuth('signup')}
+                          className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
+                        >
+                          Criar Conta para Assinar <ArrowRight size={14} />
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}
