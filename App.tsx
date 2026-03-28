@@ -707,7 +707,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-[#ffffff] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
+    <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-[#FAFAFA] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
       <Header user={user} setShowAuth={setShowAuth} />
       
       {showAuth && !user && (
@@ -726,186 +726,185 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {state === 'idle' && (
-          <div className="px-4 pb-0 md:pb-0 animate-in fade-in duration-1000">
+          <div className="px-4 pb-24 md:pb-32 animate-in fade-in duration-1000">
             <div
               id="landing-hero"
-              className="max-w-6xl mx-auto mt-4 md:mt-6 rounded-[2.5rem] border border-black/5 overflow-hidden bg-white shadow-[0_24px_80px_rgba(0,0,0,0.06)]"
+              className="max-w-6xl mx-auto mt-28 md:mt-32 rounded-[2rem] overflow-hidden bg-white shadow-[0_20px_60px_rgba(0,0,0,0.06)] relative"
             >
-              <div className="relative px-6 py-16 md:px-12 md:py-20 lg:px-16 lg:py-24 min-h-[600px] md:min-h-[700px] flex flex-col items-center justify-center text-center">
-                
-                <div className="flex flex-col items-center gap-4">
-                  <div className="inline-flex flex-wrap items-center justify-center gap-3 px-4 py-2 rounded-full border border-black/10 bg-[#f4f4f4] text-[#111111] uppercase tracking-[0.32em] text-[9px] md:text-[10px] font-bold">
-                    <span>Runway Season</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#111111]"></span>
-                    <span>{campaignState.countdownLabel}</span>
-                  </div>
-                </div>
+              <div
+                className="relative px-6 py-16 md:px-12 md:py-24 lg:px-16 lg:py-32 min-h-[600px] md:min-h-[700px] flex items-center justify-center"
+                style={{
+                  backgroundImage: `url("/hero-bg.png")`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-white/20 backdrop-blur-[2px] pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/40 to-white/90 pointer-events-none" />
 
-                <div className="mt-8 md:mt-12 max-w-4xl space-y-6 animate-in slide-in-from-bottom-8 duration-700 delay-100 fill-mode-forwards opacity-0">
-                  <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] text-[#111111] font-bold tracking-tight leading-[1.05]">
-                    O seu estilo, <br className="hidden md:block"/>no piloto automático.
-                  </h2>
-                  <p className="max-w-2xl mx-auto text-base md:text-xl text-[#666666] leading-relaxed">
-                    A primeira impressão é a que fica. Nossa inteligência artificial analisa seu look com rigor cirúrgico. Descubra agora se seu visual merece confiança ou correção.
-                  </p>
-                </div>
-
-                <div className="mt-10 w-full max-w-4xl animate-in fade-in duration-1000 delay-300 fill-mode-forwards opacity-0">
-                  <div className="flex flex-col gap-4 text-center">
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-[#888888] font-bold">Escolha o seu contexto de avaliação</p>
-                    <div className="flex flex-wrap justify-center gap-3">
-                      {CHALLENGE_OPTIONS.map((challenge) => (
-                        <button
-                          key={challenge.key}
-                          onClick={() => setSelectedChallengeKey(challenge.key)}
-                          className={`rounded-full border px-5 py-3 transition-all ${
-                            selectedChallenge.key === challenge.key
-                              ? 'border-black bg-black text-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] scale-105'
-                              : 'border-black/10 bg-white text-[#444444] hover:bg-[#f4f4f4]'
-                          }`}
-                        >
-                          <span className="block text-[10px] uppercase tracking-[0.2em] font-bold">
-                            {challenge.label}
-                          </span>
-                        </button>
-                      ))}
+                <div className="relative flex flex-col items-center text-center w-full z-10">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="inline-flex items-center justify-center gap-3 px-5 py-2 rounded-full border border-black/10 bg-white/70 text-black uppercase tracking-[0.2em] text-[10px] font-bold backdrop-blur-md shadow-sm">
+                      <span>Season em vigor</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-black"></span>
+                      <span>Análises Abertas</span>
                     </div>
                   </div>
-                </div>
 
-                {isBlocked ? (
-                   <div className="mt-12 w-full max-w-3xl rounded-[2rem] border border-black/5 bg-[#fafafa] p-6 md:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.04)] animate-in slide-in-from-bottom-4 duration-500">
-                     <div className="space-y-4">
-                       <p className="text-[10px] uppercase tracking-[0.35em] text-[#111111] font-bold">Correção Premium</p>
-                       <h3 className="text-3xl md:text-4xl text-[#111111] font-bold tracking-tight">
-                         O limite da amostra gratuita atingido.
-                       </h3>
-                       <p className="text-[#666666] leading-relaxed">
-                         Desbloqueie análises ilimitadas, diagnósticos detalhados e um plano exclusivo com substituições inteligentes para refinar o seu estilo completamente.
-                       </p>
-                     </div>
-                     <div className="mt-8 flex flex-col md:flex-row gap-4 md:items-center justify-center">
-                       <a
-                         href="https://pay.kiwify.com.br/xxxxx"
-                         target="_blank"
-                         rel="noopener noreferrer"
-                         className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#111111] text-white font-bold uppercase tracking-[0.2em] text-[10px] transition-all hover:bg-black"
-                       >
-                         Desbloquear Premium <ArrowRight size={14} />
-                       </a>
-                       <p className="text-[10px] uppercase tracking-[0.2em] text-[#888] font-bold">
-                         Use o mesmo email da compra.
-                       </p>
-                     </div>
-                   </div>
-                ) : (
-                   <div className="mt-12 flex flex-col items-center gap-5 w-full animate-in fade-in duration-500 delay-500 fill-mode-forwards opacity-0">
-                     <div className="flex flex-col md:flex-row gap-4 w-full max-w-xl justify-center">
-                       <button
-                         onClick={startCamera}
-                         className="inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 rounded-full bg-[#111111] text-white font-bold uppercase tracking-[0.2em] text-[10px] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)] shadow-[0_8px_30px_rgba(0,0,0,0.15)] w-full"
-                       >
-                         Avaliar Agora
-                       </button>
-                       <label className="cursor-pointer inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 rounded-full border border-black/10 bg-white text-[#111111] font-bold uppercase tracking-[0.2em] text-[10px] transition-all hover:bg-[#fafafa] hover:-translate-y-0.5 w-full">
-                         Importar Foto
-                         <input
-                           type="file"
-                           accept="image/*"
-                           onChange={handleFileUpload}
-                           className="hidden"
-                         />
-                       </label>
-                     </div>
-                     <div className="flex flex-col items-center gap-2 mt-4">
-                       <p className="text-[10px] uppercase tracking-[0.32em] text-[#666] font-bold">
-                         Diferencial premium: {selectedChallenge.premiumAngle}
-                       </p>
-                       <span className="text-[9px] md:text-[10px] text-[#999] uppercase tracking-[0.3em] font-bold text-center">
-                         {isPremium ? `${remainingUses} Análises Premium Restantes Hoje` : `${remainingUses} Análises Gratuitas Restantes`}
-                       </span>
-                     </div>
-                   </div>
-                )}
+                  <div className="mt-8 md:mt-12 max-w-4xl space-y-6">
+                    <h2 className="text-5xl md:text-7xl lg:text-[5rem] font-serif tracking-tight leading-[1] text-[#111111] font-bold">
+                      Julgamento editorial.<br/>Sem falsos elogios.
+                    </h2>
+                    <p className="max-w-2xl mx-auto text-base md:text-lg text-[#111111]/60 leading-relaxed font-medium">
+                      Comece a entender onde o seu look funciona e onde ele precisa de correção profissional em segundos.
+                    </p>
+                  </div>
+
+                  <div className="mt-12 w-full max-w-3xl">
+                    <div className="rounded-[1.5rem] bg-white border border-black/5 p-4 md:p-6 shadow-[0_12px_40px_rgba(0,0,0,0.04)]">
+                      <div className="flex flex-col gap-4 text-left">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                          <p className="text-[11px] uppercase tracking-[0.2em] text-black font-bold">1. Escolha a Avaliação</p>
+                          <p className="text-xs text-black/50 font-medium">{selectedChallenge.teaser}</p>
+                        </div>
+                        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+                          {CHALLENGE_OPTIONS.map((challenge) => (
+                            <button
+                              key={challenge.key}
+                              onClick={() => setSelectedChallengeKey(challenge.key)}
+                              className={`rounded-xl border px-3 py-3 md:py-4 text-center transition-all ${
+                                selectedChallenge.key === challenge.key
+                                  ? 'border-black bg-black text-white shadow-md scale-100'
+                                  : 'border-black/10 bg-[#FAFAFA] text-black/60 hover:bg-black/5 hover:text-black scale-[0.98]'
+                              }`}
+                            >
+                              <span className="block text-[10px] md:text-xs font-bold leading-tight">
+                                {challenge.label}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {isBlocked ? (
+                    <div className="mt-8 w-full max-w-3xl rounded-[1.5rem] border border-black/10 bg-white p-6 md:p-8 text-left shadow-md">
+                      <div className="space-y-3">
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-black font-bold">Acesso Bloqueado</p>
+                        <h3 className="text-2xl md:text-3xl font-serif text-black font-bold">
+                          O limite cortesia foi atingido.
+                        </h3>
+                        <p className="text-black/60 font-medium">
+                          Desbloqueie o acesso premium para diagnósticos ilimitados e planos de reabilitação.
+                        </p>
+                      </div>
+                      <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-center">
+                        <a
+                          href="https://pay.kiwify.com.br/xxxxx"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
+                        >
+                          Tornar-se Premium <ArrowRight size={16} />
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-8 flex flex-col items-center gap-5 w-full">
+                      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xl justify-center z-20">
+                        <button
+                          onClick={startCamera}
+                          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl w-full sm:w-auto"
+                        >
+                          Usar a Câmera
+                        </button>
+                        <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-black/20 bg-white text-black font-bold text-sm transition-all hover:bg-black/5 w-full sm:w-auto">
+                          Importar Foto
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileUpload}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+                      <div className="flex flex-col items-center gap-1 mt-2">
+                        <span className="text-xs text-black/40 font-semibold">
+                          {isPremium ? `${remainingUses} Análises Premium Restantes Hoje` : `${remainingUses} Avaliações Gratuitas Restantes`}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
             {error && (
-              <div className="max-w-md mx-auto mt-8 p-6 md:p-8 bg-black border border-red-500 text-white rounded-[1.5rem] flex flex-col items-center gap-6 animate-in zoom-in-95 duration-300 shadow-[0_20px_60px_rgba(200,0,0,0.2)]">
-                {error.includes("reunião") ? <Clock className="text-red-500" size={40} /> : <CameraOff className="text-red-500" size={40} />}
-                <p className="tracking-[0.1em] text-center text-[13px] font-bold ">{error}</p>
-                <button onClick={() => setError(null)} className="px-8 py-3 bg-white text-black text-[9px] uppercase tracking-[0.3em] font-black hover:bg-red-50 transition-colors rounded-full">OK</button>
+              <div className="max-w-md mx-auto mt-8 p-6 md:p-10 bg-red-950/5 border border-red-500/10 text-red-300 text-xs text-center font-serif italic rounded-[1.5rem] flex flex-col items-center gap-6 animate-in shake duration-500">
+                {error.includes("reunião") ? <Clock className="text-red-500/20" size={48} /> : <CameraOff className="text-red-500/20" size={48} />}
+                <p className="tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase text-[9px] md:text-[10px] font-black text-red-400/60">{error}</p>
+                <button onClick={() => setError(null)} className="px-8 py-3 border border-white/10 text-white/40 hover:text-white text-[8px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all font-black rounded-full">Dispensar</button>
               </div>
             )}
 
-            <section id="landing-benefits" className="max-w-6xl mx-auto mt-10 md:mt-16">
-              <div className="rounded-[2.5rem] bg-[#f9f9f9] border border-black/5 px-6 py-12 md:px-12 md:py-20 shadow-none">
-                <div className="max-w-2xl mx-auto text-center space-y-4">
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#888] font-bold">Por Dentro</p>
-                  <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-[#111]">Simplifique sua rotina financeira de imagem.</h3>
-                  <p className="text-[#666] text-base md:text-lg leading-relaxed">
-                    Ferramentas inteligentes ao seu alcance para garantir que sua estética sempre passe a mensagem ideal, focando apenas no que realmente importa.
+            <section id="landing-benefits" className="max-w-6xl mx-auto mt-16 md:mt-24">
+              <div className="bg-[#111111] text-white rounded-[2.5rem] px-6 py-12 md:px-16 md:py-20 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+                
+                <div className="max-w-3xl mx-auto text-center space-y-4 relative z-10">
+                  <h3 className="text-3xl md:text-5xl font-serif font-bold text-white tracking-tight">O que você ganha</h3>
+                  <p className="text-white/60 text-base md:text-lg">
+                    Simplificamos a avaliação de imagem. Foco no que realmente importa, com ferramentas inteligentes.
                   </p>
-                </div>
-                <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                  {LANDING_PILLARS.map((pillar, idx) => (
-                     <div key={pillar.title} className="rounded-[2rem] border border-black/5 bg-white p-8 md:p-10 shadow-[0_4px_25px_rgba(0,0,0,0.02)] text-left flex flex-col items-start transition-all hover:-translate-y-1 hover:shadow-[0_12px_45px_rgba(0,0,0,0.06)]">
-                      <span className="inline-flex w-14 h-14 items-center justify-center rounded-[1rem] bg-[#f4f4f4] text-[#111] text-[16px] font-black border border-black/5 mb-6">
-                        {idx === 0 ? <CameraOff size={22} className="opacity-80" /> : idx === 1 ? <RefreshCw size={22} className="opacity-80" /> : <Sparkles size={22} className="opacity-80" />}
-                      </span>
-                      <h4 className="text-xl font-bold text-[#111]">{pillar.title}</h4>
-                      <p className="mt-3 text-[#666] leading-relaxed text-sm lg:text-base">{pillar.body}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            <section id="landing-flow" className="max-w-6xl mx-auto mt-10 md:mt-20">
-              <div className="px-6 py-10 md:px-10 md:py-14">
-                <div className="max-w-2xl mx-auto text-center space-y-4">
-                  <h3 className="text-4xl md:text-5xl font-bold text-[#111] tracking-tight">Como Funciona</h3>
-                  <p className="text-[#666] text-base md:text-lg leading-relaxed">
-                    Comece a controlar o efeito das suas escolhas em três passos simples.
-                  </p>
-                </div>
-                <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
-                  {LANDING_FLOW.map((item) => (
-                    <div key={item.step} className="text-center flex flex-col items-center">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#111] text-white text-xl font-bold font-sans shadow-[0_8px_30px_rgba(0,0,0,0.15)]">
-                        {parseInt(item.step, 10)}
-                      </div>
-                      <h4 className="mt-6 text-xl font-bold text-[#111]">{item.title}</h4>
-                      <p className="mt-3 text-[#666] leading-relaxed text-sm md:text-base max-w-[280px] mx-auto">{item.body}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            <section id="landing-cta" className="mt-16 md:mt-24 w-[100vw] ml-[calc(-50vw+50%)]">
-              <div className="bg-[#0f0f0f] px-6 py-24 md:py-32 text-center flex flex-col items-center border-t border-black">
-                <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-                  Pronto para assumir o controle?
-                </h3>
-                <p className="mt-6 max-w-2xl mx-auto text-[#a1a1a1] text-lg leading-relaxed">
-                  Junte-se a milhares de pessoas que já transformaram a maneira como lidam com a autoconfiança. Comece de graça hoje mesmo.
-                </p>
-                <div className="mt-10">
-                  <button
-                    onClick={() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="inline-flex items-center justify-center gap-3 px-8 py-5 rounded-full bg-white text-[#111] font-bold uppercase tracking-[0.2em] text-[11px] transition-all hover:bg-[#eaeaea] hover:scale-105"
-                  >
-                    Criar Análise Grátis
-                  </button>
                 </div>
                 
-                <div className="mt-32 w-full max-w-6xl mx-auto border-t border-white/10 pt-10 text-center flex flex-col items-center">
-                   <h2 className="text-xl font-serif tracking-[0.25em] uppercase text-white">Runway</h2>
-                   <p className="mt-2 text-[#666] text-xs">A primeira impressão no piloto automático.</p>
-                   <p className="mt-8 text-[#555] text-[11px] font-bold">© 2026 Runway Finance & Image. Todos os direitos reservados.</p>
+                <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                  {LANDING_PILLARS.map((pillar) => (
+                    <div key={pillar.title} className="rounded-2xl bg-white/5 border border-white/5 p-8 transition-all hover:bg-white/10">
+                      <div className="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center font-bold text-lg mb-6">
+                        +
+                      </div>
+                      <h4 className="text-xl font-bold text-white mb-3">{pillar.title}</h4>
+                      <p className="text-white/50 text-sm leading-relaxed">{pillar.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section id="landing-flow" className="max-w-5xl mx-auto mt-20 md:mt-32 mb-10">
+              <div className="text-center space-y-4 mb-16">
+                <h3 className="text-3xl md:text-4xl font-serif font-bold text-black">Como Funciona</h3>
+                <p className="text-black/50 text-base">Receba seu veredito editorial em três passos rápidos.</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+                {LANDING_FLOW.map((item, index) => (
+                  <div key={item.step} className="flex flex-col items-center text-center group">
+                    <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                      {index + 1}
+                    </div>
+                    <h4 className="text-xl font-bold text-black mb-3">{item.title}</h4>
+                    <p className="text-black/60 text-sm leading-relaxed max-w-xs">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="bg-[#050505] text-white py-24 md:py-32 rounded-t-[3rem] mt-24 text-center">
+              <div className="max-w-3xl mx-auto px-6">
+                <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Pronto para a avaliação?</h3>
+                <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
+                  Junte-se às milhares de sessões editoriais diárias e veja em qual patamar o seu estilo está.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="px-10 py-4 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:-translate-y-1 transition-transform"
+                  >
+                    Usar Runway Index
+                  </button>
                 </div>
               </div>
             </section>
