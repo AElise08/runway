@@ -1,7 +1,8 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
+import { AnalysisContext } from '../types';
 
-const getSystemInstruction = (isPremium: boolean) => {
+const getSystemInstruction = (isPremium: boolean, context?: AnalysisContext) => {
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString('pt-BR', { month: 'long' });
   const currentYear = currentDate.getFullYear();
@@ -29,6 +30,10 @@ Você deve atribuir uma nota de 0 a 100.
 - 71-90: "Raro. Quase aceitável." (Extremamente difícil de atingir)
 - 91-100: "Perfeição." (Praticamente impossível. Miranda só deu 100 uma vez na vida).
 `;
+
+  const contextInstruction = context
+    ? `\nCONTEXTO DE JULGAMENTO: o look foi enviado para o desafio/ocasião "${context.label}". Avalie explicitamente se a roupa funciona para esse contexto e cite o contexto pelo menos uma vez no resultado. ${context.promptContext}\n`
+    : `\nCONTEXTO DE JULGAMENTO: faça uma análise editorial geral, sem inventar ocasião específica.\n`;
 
   const premiumInstruction = `
 MODO STYLIST ELITE (PREMIUM ATIVADO):
@@ -62,14 +67,14 @@ FORMATO DE RESPOSTA (JSON):
 Responda sempre em Português.
 `;
 
-  return baseInstruction + (isPremium ? premiumInstruction : standardInstruction) + rules;
+  return baseInstruction + contextInstruction + (isPremium ? premiumInstruction : standardInstruction) + rules;
 };
 
-export const analyzeLook = async (imageBase64: string, isPremium: boolean = false): Promise<string> => {
+export const analyzeLook = async (imageBase64: string, isPremium: boolean = false, context?: AnalysisContext): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY || '' });
   
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-3.1-flash-lite-preview",
     contents: [
       {
         parts: [
@@ -84,7 +89,7 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
       }
     ],
     config: {
-      systemInstruction: getSystemInstruction(isPremium),
+      systemInstruction: getSystemInstruction(isPremium, context),
       responseMimeType: "application/json",
       thinkingConfig: { thinkingBudget: 0 },
       responseSchema: {

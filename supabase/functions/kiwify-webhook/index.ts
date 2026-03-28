@@ -7,61 +7,83 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 serve(async (req) => {
   try {
-    // A Kiwify manda as informações via POST
     if (req.method !== 'POST') {
       return new Response("Method not allowed", { status: 405 });
     }
 
-    // 1. Verificação de Autenticidade do Token da Kiwify (Validação de Segurança)
-    const kiwifySignature = req.headers.get('x-kiwify-signature');
-    const secretToken = Deno.env.get('KIWIFY_WEBHOOK_TOKEN'); // Configure essa variável no Supabase: supabase secrets set KIWIFY_WEBHOOK_TOKEN=seu_token_aqui
+    // 1. Pegar o corpo bruto (raw) para validar a assinatura
+    const rawBody = await req.text();
+    
+    // 2. Verificação de Autenticidade (HMAC-SHA1)
+    const url = new URL(req.url);
+    const signatureFromUrl = url.searchParams.get('signature');
+    const signatureFromHeader = req.headers.get('x-kiwify-signature');
+    const kiwifySignature = signatureFromHeader || signatureFromUrl;
+    
+    const secretToken = Deno.env.get('KIWIFY_WEBHOOK_TOKEN');
 
-    // Só faça essa verificação se o token de ambiente estiver setado
-    if (secretToken && kiwifySignature !== secretToken) {
-       console.error("Token da Kiwify inválido! Assinatura não confere.");
-       return new Response("Unauthorized", { status: 401 });
+    if (secretToken && kiwifySignature) {
+      const encoder = new TextEncoder();
+      const key = await crypto.subtle.importKey(
+        "raw",
+        encoder.encode(secretToken),
+        { name: "HMAC", hash: "SHA-1" },
+        false,
+        ["sign"]
+      );
+      const signatureArrayBuffer = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        encoder.encode(rawBody)
+      );
+      
+      const computedSignature = Array.from(new Uint8Array(signatureArrayBuffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+
+      console.log(`Assinatura recebida: ${kiwifySignature}`);
+      console.log(`Assinatura calculada: ${computedSignature}`);
+
+      if (kiwifySignature !== computedSignature) {
+        console.error("Assinatura inválida! O HMAC não confere.");
+        return new Response("Invalid Signature", { status: 401 });
+      }
+    } else if (secretToken && !kiwifySignature) {
+      console.error("Assinatura ausente!");
+      return new Response("Missing Signature", { status: 401 });
     }
 
-    const payload = await req.json();
+    const payload = JSON.parse(rawBody);
 
     // Verifique o tipo de evento (queremos saber quando a compra é aprovada)
     if (payload.order_status === 'paid' || payload.order_status === 'approved') {
       const customerEmail = payload.Customer?.email || payload.customer?.email;
 
-      console.log(`Recebido webhook da Kiwify para o status: ${payload.order_status}`);
-      console.log(`Email do cliente: ${customerEmail}`);
-      console.log(`Payload completo:`, JSON.stringify(payload));
-
       if (!customerEmail) {
-        console.error("Missing Customer Email in Payload!");
         return new Response("Missing Customer Email", { status: 400 });
       }
 
-      // Conecte ao seu banco Supabase usando a Service Role Key para ignorar regras de RLS
+      console.log(`Processando pagamento aprovado para: ${customerEmail}`);
+
       const supabaseAdmin = createClient(
         Deno.env.get('SUPABASE_URL') ?? '',
         Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
       )
-
-      // 1. Precisamos buscar o ID do usuário (auth.users) baseado no email
-      // Como estamos numa Edge API e por questões de segurança o Supabase bloqueia selects no auth.users sem permissões,
-      // usaremos nossa Service Role.
       
-      const { data: userData, error: userError } = await supabaseAdmin.auth.admin.listUsers()
+      // Buscar usuário pelo e-mail
+      const { data: userData, error: userError } = await supabaseAdmin.auth.admin.listUsers();
       if (userError) throw userError;
 
-      const user = userData.users.find(u => u.email === customerEmail);
+      const user = userData.users.find(u => u.email?.toLowerCase() === customerEmail.toLowerCase());
 
       if (user) {
-        // Encontrou o usuário! Pelo email atrelado à compra, marca ele como premium.
+        console.log(`Usuário encontrado: ${user.id}. Ativando Premium...`);
         const { error: updateError } = await supabaseAdmin
           .from('profiles')
           .update({ is_premium: true })
           .eq('id', user.id);
 
-        if (updateError) {
-          throw updateError;
-        }
+        if (updateError) throw updateError;
 
         return new Response(JSON.stringify({ message: "User upgraded successfully" }), {
           headers: { "Content-Type": "application/json" },
@@ -69,14 +91,8 @@ serve(async (req) => {
         });
 
       } else {
-        // Usuário comprou mas ainda não logou no nosso site pra criar a conta.
-        // Solução avançada 1: Você pode criar o usuário pra ele e mandar email.
-        // Solução desta fase: Vamos ignorar e avisar o log, ou dependemos da instrução 
-        // "Faça login com o mesmo email usado". Para robustez total numa V2, criaríamos uma tabela 
-        // "pending_purchases" e bateríamos com ela no trigger de "new_user" que você adicionou no DB.
-        
-        console.log(`User ${customerEmail} paid but hasn't created an account yet.`);
-        return new Response(JSON.stringify({ message: "Purchase recorded but user not found. Handled later or manually." }), {
+        console.warn(`Usuário ${customerEmail} pagou mas não tem conta no sistema.`);
+        return new Response(JSON.stringify({ message: "Purchase recorded but user not found." }), {
           headers: { "Content-Type": "application/json" },
           status: 200,
         });
@@ -89,7 +105,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Erro interno no Webhook:", error);
     return new Response("Server error", { status: 500 });
   }
 })

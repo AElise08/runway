@@ -5,7 +5,8 @@ import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
 import Auth from './components/Auth';
 import { supabase } from './services/supabase';
-import { analyzeLook } from './services/mistralService';
+import { analyzeLook as analyzeLookGemini } from './services/geminiService';
+import { analyzeLook as analyzeLookMistral } from './services/mistralService';
 import { AnalysisContext, CritiqueResult, AppState, Profile } from './types';
 import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2, ArrowRight } from 'lucide-react';
 
@@ -591,7 +592,16 @@ const App: React.FC = () => {
     setActiveChallengeKey(challengeContext.key);
 
     try {
-      const jsonStr = await analyzeLook(base64, isPremium, challengeContext);
+      let jsonStr: string;
+      try {
+        // Tentativa principal: Gemini
+        jsonStr = await analyzeLookGemini(base64, isPremium, challengeContext);
+      } catch (geminiErr: any) {
+        // Fallback: Mistral (caso o Gemini esteja fora ou com quota esgotada)
+        console.warn("Gemini falhou, usando Mistral como fallback:", geminiErr?.message || geminiErr);
+        jsonStr = await analyzeLookMistral(base64, isPremium, challengeContext);
+      }
+
       const parsed: CritiqueResult = JSON.parse(jsonStr);
       setResult(parsed);
       
@@ -607,12 +617,12 @@ const App: React.FC = () => {
       setState('result');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {
-      console.error("Analysis Error:", err);
+      console.error("Analysis Error (Gemini + Mistral falharam):", err);
       const errorMsg = err?.message || err?.toString() || "";
       if (errorMsg.includes("429") || errorMsg.includes("quota") || errorMsg.includes("Too Many Requests")) {
         setError("Miranda está em uma reunião com Donatella. Ela não tem tempo para você agora. Isso ocorre pelo altíssimo volume de acessos na IA. Tente novamente em 20 segundos.");
       } else if (errorMsg.includes("401") || errorMsg.includes("key") || errorMsg.toLowerCase().includes("unauthorized")) {
-        setError("Erro técnico: Chave da Mistral inválida ou não configurada no Vercel. Demitam a TI.");
+        setError("Erro técnico: Chave de API inválida ou não configurada. Demitam a TI.");
       } else if (errorMsg.includes("413") || errorMsg.toLowerCase().includes("too large") || errorMsg.includes("size")) {
         setError("A foto enviada é grande demais até para o ego da Miranda. Reduza a qualidade.");
       } else {
