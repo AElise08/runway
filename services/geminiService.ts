@@ -75,20 +75,22 @@ CRÍTICA vs. DIRETRIZES — DISTINÇÃO ESTRITA:
 REGRAS DE RESPOSTA (NUNCA COPIE ESTAS INSTRUÇÕES PARA A RESPOSTA FINAL):
 1. Lead: Uma frase CURTA, mortal e decepcionada. Máximo 25 palavras.
 2. Seções (sections): 3-4 tópicos técnicos DISTINTOS entre si. Diagnóstico: O QUE está errado e POR QUÊ.
-3. Diretrizes (fashionTips): COMPLETAMENTE DIFERENTE das sections. São ordens práticas e curtas.
+   - O 'title' deve ser um conceito curto e brutal (ex: "A Silhueta Anacrônica", "Ausência de Intenção"). NUNCA use números, prefixos ou marcadores como "01 //" ou "1.".
+   - O 'content' deve começar imediatamente com a análise. NUNCA repita o título no começo do texto.
+3. Diretrizes (fashionTips): COMPLETAMENTE DIFERENTE das sections. São regras práticas para o futuro. NUNCA apenas copie as instruções que eu te dei neste prompt.
 4. Finalização: Termine OBRIGATORIAMENTE com: "Isso é tudo."
 
 FORMATO DE RESPOSTA (JSON). Substitua com sua análise autêntica:
 - verdict: 'The Nod' | 'The Purse Drop'
 - rating: número de 0 a 100.
 - lead: Frase inicial devastadora. Máximo 25 palavras.
-- sections: Lista de objetos com title + content com seu diagnóstico real.
-- fashionTips: ${isPremium ? 'Array com 2-3 dicas curtas e brutais sobre os piores erros.' : 'Array com 3 regras práticas diretas de estilo. NUNCA repita a crítica.'}
+- sections: Lista de objetos (title e content). Siga as regras de title/content acima RIGOROSAMENTE para evitar repetições.
+- fashionTips: ${isPremium ? 'Array com 2-3 dicas curtas e brutais sobre os piores erros.' : 'Array com 3 regras práticas diretas de estilo. NUNCA repita a crítica das sections ou do meu prompt.'}
 - suggestedAccessories: Array de strings com sugestões de luxo.
 - premiumFixes: ${isPremium ? 'Array obrigatório com 5 grupos: O que manter / O que tirar / Truque de Mestre / Substituição Cirúrgica / Versão Mais Ousada.' : 'Array vazio [].'}
 - shareCaption: Frase ultra-compartilhável, em português, máximo 12 palavras.
 
-Responda sempre em Português do Brasil e com sua própria análise, nunca repita o meu prompt.
+Responda sempre em Português do Brasil e com sua própria análise, com conteúdo original e espetacular.
 `;
 
   return baseInstruction + contextInstruction + (isPremium ? premiumInstruction : standardInstruction) + rules;

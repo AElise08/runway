@@ -47,12 +47,12 @@ CRÍTICA vs. DIRETRIZES — DISTINÇÃO ESTRITA:
 
   const rules = `
 IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
-RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários pela sua análise real, NUNCA copie as instruções do prompt):
+RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários pela sua análise autêntica, criativa e espetacular):
 {
   "verdict": "The Nod | The Purse Drop",
   "rating": <numero de 0 a 100>,
   "lead": "<escreva aqui a frase curta devastadora>",
-  "sections": [{"title": "<topico tecnico>", "content": "<escreva aqui o diagnostico acido>"}],
+  "sections": [{"title": "<conceito curto, SEM NÚMEROS ou '//'>", "content": "<diagnóstico ácido indo direto ao ponto, SEM REPETIR O TÍTULO>"}],
   "fashionTips": ["<dica pratica 1>", "<dica pratica 2>", "<dica pratica 3>"],
   "suggestedAccessories": ["<acessorio de luxo 1>", "<acessorio 2>"],
   "premiumFixes": [
@@ -67,8 +67,9 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários p
 
 REGRAS EXTRAS:
 - NUNCA copie as diretrizes e instruções de dicas textualmente.
-- "premiumFixes" deve vir vazio [] quando o modo não for premium.
-- "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica.
+- Seções (\`sections\`): NUNCA use números como "01 //" no \`title\`. O \`content\` nunca deve repetir o \`title\` no começo da frase. Escreva textos criativos, com diagnóstico técnico profundo, direto ao ponto e espetacular.
+- "premiumFixes" deve vir vazio [] ou omitido quando o modo não for premium.
+- "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica. NUNCA apenas copie as instruções que eu te dei neste prompt.
 - "shareCaption" precisa soar como texto de story ou repost.
 `;
 

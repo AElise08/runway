@@ -1233,7 +1233,7 @@ const App: React.FC = () => {
                   {result.sections.map((section, idx) => (
                     <div key={idx} className="space-y-6 md:space-y-8 group">
                       <div className="flex items-center gap-4">
-                        <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {renderBoldText(section.title)}</span>
+                        <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">CRÍTICA 0{idx + 1}</span>
                         <div className="flex-1 h-[0.5px] bg-white/5 group-hover:bg-white/10 transition-colors"></div>
                       </div>
                       <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-white/80 break-words">{renderBoldText(section.title)}</h3>
