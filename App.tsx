@@ -84,34 +84,34 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
 
 const LANDING_PILLARS = [
   {
-    title: 'Roast Compartilhavel',
-    body: 'Um veredito memoravel, visualmente forte e pronto para virar story antes da dignidade voltar.',
+    title: 'Roast Que Envergonha',
+    body: 'Um veredito afiado, visualmente devastador e pronto para virar story antes que a vergonha passe.',
   },
   {
-    title: 'Desafios Tematicos',
-    body: 'Look de trabalho, date night e outros contextos para aumentar comparacao, curiosidade e retorno.',
+    title: 'Contexto e Tudo',
+    body: 'Look de trabalho, date night, fashion week: o mesmo look pode ser salvo ou executado dependendo da ocasiao.',
   },
   {
-    title: 'Premium Corrige',
-    body: 'Nao para na humilhacao: mostra como manter, tirar e substituir para o look finalmente funcionar.',
+    title: 'Premium Ressuscita',
+    body: 'Apos o trauma, o premium entrega o que manter, o que tirar e o que substituir. Resultado garantido.',
   },
 ];
 
 const LANDING_FLOW = [
   {
     step: '01',
-    title: 'Escolha o contexto',
-    body: 'Defina se a analise sera geral, para trabalho, encontro, primeira impressao ou fashion week.',
+    title: 'Escolha o veredicto',
+    body: 'Livre, para trabalho, date night, primeira impressao ou fashion week. Cada contexto muda tudo.',
   },
   {
     step: '02',
-    title: 'Envie o look',
-    body: 'Use a camera ou importe uma foto e receba um Runway Index com comentario editorial.',
+    title: 'Submeta o look',
+    body: 'Camera ou galeria. O Runway Index aparece em segundos com um comentario editorial sem filtro.',
   },
   {
     step: '03',
-    title: 'Compartilhe ou corrija',
-    body: 'Publique a humilhacao ou destrave o premium para transformar o look de verdade.',
+    title: 'Viraliza ou se salva',
+    body: 'Compartilhe a humilhacao ou destrave o premium para sair do roast com dignidade e um plano real.',
   },
 ];
 
@@ -254,27 +254,27 @@ const getEditorialVerdictMeta = (result: CritiqueResult): EditorialVerdictMeta =
   if (result.verdict === 'The Nod') {
     if (result.rating >= 90) {
       return {
-        title: 'Aprovada Com Severo Desgosto',
+        title: 'Miranda Inclinou A Cabeca',
         strapline: 'raridade lendaria',
         rarity: 'legendary',
-        shareHook: 'Miranda aprovou meu look com severo desgosto.',
+        shareHook: 'Miranda inclinou a cabeca pro meu look. Isso nao acontece.',
       };
     }
 
     if (result.rating >= 75) {
       return {
-        title: 'Sobreviveu a Reuniao',
+        title: 'Nao Foi Expulsa Da Sala',
         strapline: 'veredito raro',
         rarity: 'rare',
-        shareHook: 'Sobrevivi a reuniao editorial da Runway.',
+        shareHook: 'Fui avaliada pela Miranda e nao fui expulsa da sala.',
       };
     }
 
     return {
-      title: 'Passou Por Um Fio De Seda',
-      strapline: 'aprovacao tensa',
+      title: 'Ainda Empregada Por Enquanto',
+      strapline: 'sobrevivencia editorial',
       rarity: 'common',
-      shareHook: 'Passei por um fio de seda no comite da Runway.',
+      shareHook: 'A Miranda me avaliou e eu ainda tenho emprego. Por enquanto.',
     };
   }
 
@@ -283,33 +283,33 @@ const getEditorialVerdictMeta = (result: CritiqueResult): EditorialVerdictMeta =
       title: 'Demitida Antes Do Cafe',
       strapline: 'veredito lendario',
       rarity: 'legendary',
-      shareHook: 'Meu look foi demitido antes do cafe.',
+      shareHook: 'A Miranda me demitiu antes mesmo do cafe da manha. Meu look nao tem perdao.',
     };
   }
 
   if (result.rating <= 30) {
     return {
-      title: 'Ceruleo Sem Salvacao',
-      strapline: 'veredito raro',
+      title: 'Isso E Tudo',
+      strapline: 'execucao editorial',
       rarity: 'rare',
-      shareHook: 'Recebi um ceruleo sem salvacao da Miranda.',
+      shareHook: 'A Miranda olhou pro meu look e disse: isso e tudo. Nao era elogio.',
     };
   }
 
   if (result.rating <= 45) {
     return {
-      title: 'Demitida Da Runway',
-      strapline: 'queda editorial',
+      title: 'Nao E O Que Eu Pedi',
+      strapline: 'dececpcao editorial',
       rarity: 'rare',
-      shareHook: 'Meu look foi demitido da Runway.',
+      shareHook: 'A Miranda viu meu look e disse que nao era o que ela pediu. Nunca e.',
     };
   }
 
   return {
-    title: 'Sob Revisao Hostil',
-    strapline: 'observacao disciplinar',
+    title: 'Voce Pode Ir Embora',
+    strapline: 'dispensa editorial',
     rarity: 'common',
-    shareHook: 'Meu look entrou sob revisao hostil na Runway.',
+    shareHook: 'A Miranda me avaliou e me dispensou com um gesto. Meu look nao impressionou.',
   };
 };
 
@@ -1090,9 +1090,9 @@ const App: React.FC = () => {
               </div>
             </div>
             <div className="text-center space-y-6 md:space-y-10 max-w-md">
-              <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Explique-me..."</h3>
+              <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Isso é interessante..."</h3>
               <p className="text-white/20 text-[8px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.8em] font-black leading-loose px-4">
-                Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway.
+                Miranda está examinando cada centímetro do seu look para decidir se você merece existir neste universo editorial.
               </p>
             </div>
           </div>
