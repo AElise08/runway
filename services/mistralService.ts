@@ -42,11 +42,6 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários p
   "sections": [{"title": "<topico tecnico>", "content": "<escreva aqui o diagnostico acido>"}],
   "fashionTips": ["<dica pratica 1>", "<dica pratica 2>", "<dica pratica 3>"],
   "suggestedAccessories": ["<acessorio de luxo 1>", "<acessorio 2>"],
-  "diagnosis": [
-    {"label": "Silhueta", "summary": "<escreva aqui o resumo da silhueta>"},
-    {"label": "Cores", "summary": "<escreva aqui o resumo das cores>"},
-    {"label": "Ocasião", "summary": "<escreva se o look funciona para a ocasiao>"}
-  ],
   "premiumFixes": [
     {"title": "O que manter", "items": ["<adicione os itens a manter aqui>"]},
     {"title": "O que tirar", "items": ["<adicione os itens a tirar aqui>"]},
@@ -59,7 +54,6 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários p
 
 REGRAS EXTRAS:
 - NUNCA copie as diretrizes e instruções de dicas textualmente.
-- "diagnosis" deve ter entre 3 e 4 itens.
 - "premiumFixes" deve vir vazio [] quando o modo não for premium.
 - "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica.
 - "shareCaption" precisa soar como texto de story ou repost.

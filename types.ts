@@ -4,10 +4,6 @@ export interface EditorialSection {
   content: string;
 }
 
-export interface DiagnosisItem {
-  label: string;
-  summary: string;
-}
 
 export interface PremiumFixGroup {
   title: string;
@@ -27,7 +23,6 @@ export interface CritiqueResult {
   sections: EditorialSection[];
   fashionTips: string[];
   suggestedAccessories: string[];
-  diagnosis?: DiagnosisItem[];
   premiumFixes?: PremiumFixGroup[];
   shareCaption?: string;
 }
