@@ -332,17 +332,6 @@ const getChallengeOption = (key: ChallengeKey) => {
   return CHALLENGE_OPTIONS.find((option) => option.key === key) ?? CHALLENGE_OPTIONS[0];
 };
 
-const getDiagnosisItems = (result: CritiqueResult) => {
-  if (result.diagnosis?.length) {
-    return result.diagnosis.slice(0, 4);
-  }
-
-  const labels = ['Silhueta', 'Proporcao', 'Cores', 'Contexto'];
-  return result.sections.slice(0, 4).map((section, index) => ({
-    label: labels[index] ?? section.title,
-    summary: section.content,
-  }));
-};
 
 const getPremiumFixGroups = (result: CritiqueResult, isPremium: boolean) => {
   if (!isPremium) {
@@ -445,7 +434,6 @@ const App: React.FC = () => {
   const selectedChallenge = getChallengeOption(selectedChallengeKey);
   const activeChallenge = getChallengeOption(activeChallengeKey);
   const remainingUses = isPremium ? Math.max(0, maxUses - (profile?.daily_looks || 0)) : Math.max(0, maxUses - usageCount);
-  const diagnosisItems = result ? getDiagnosisItems(result) : [];
   const premiumFixGroups = result ? getPremiumFixGroups(result, isPremium) : [];
 
   const startCamera = async () => {
@@ -1241,15 +1229,6 @@ const App: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {diagnosisItems.map((item, index) => (
-                    <div key={`${item.label}-${index}`} className="border border-white/8 bg-white/[0.02] p-5 md:p-6">
-                      <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black mb-3">{item.label}</p>
-                      <p className="text-sm md:text-base text-white/65 leading-relaxed">{renderBoldText(item.summary)}</p>
-                    </div>
-                  ))}
-                </div>
-
                 <div className="space-y-16 md:space-y-24">
                   {result.sections.map((section, idx) => (
                     <div key={idx} className="space-y-6 md:space-y-8 group">
@@ -1257,6 +1236,7 @@ const App: React.FC = () => {
                         <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">0{idx + 1} // {renderBoldText(section.title)}</span>
                         <div className="flex-1 h-[0.5px] bg-white/5 group-hover:bg-white/10 transition-colors"></div>
                       </div>
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif italic text-white/80 break-words">{renderBoldText(section.title)}</h3>
                       <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed text-white/60 selection:bg-white selection:text-black break-words">
                         {renderBoldText(section.content)}
                       </p>

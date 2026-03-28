@@ -34,33 +34,34 @@ CRÍTICA vs. DIRETRIZES — DISTINÇÃO OBRIGATÓRIA:
 
   const rules = `
 IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
-RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
+RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários pela sua análise real, NUNCA copie as instruções do prompt):
 {
   "verdict": "The Nod | The Purse Drop",
-  "rating": 50,
-  "lead": "Sua citação sarcástica em PORTUGUÊS aqui, MENCIONANDO de forma dramática a NOTA (rating de 0 a 100) que o look recebeu. DEVE SER UMA FRASE ÚNICA E DE ALTO IMPACTO com no MÁXIMO 25 PALAVRAS. Ex: 'Um pesadelo previsível que machucou meus olhos e destruiu minha tarde inteira. 23 pontos.'",
-  "sections": [{"title": "Tópico técnico em português (Modelagem, Cores, etc)", "content": "Diagnóstico ácido — O QUE está errado e POR QUÊ. Cada seção = aspecto diferente do look."}],
-  "fashionTips": ["Prescrição prática inédita 1 — diferente das sections", "Prescrição prática inédita 2", "Prescrição prática inédita 3"],
-  "suggestedAccessories": ["Acessório de grife 1", "Acessório 2"],
+  "rating": <numero de 0 a 100>,
+  "lead": "<escreva aqui a frase curta devastadora>",
+  "sections": [{"title": "<topico tecnico>", "content": "<escreva aqui o diagnostico acido>"}],
+  "fashionTips": ["<dica pratica 1>", "<dica pratica 2>", "<dica pratica 3>"],
+  "suggestedAccessories": ["<acessorio de luxo 1>", "<acessorio 2>"],
   "diagnosis": [
-    {"label": "Silhueta", "summary": "Resumo direto e cruel."},
-    {"label": "Cores", "summary": "Resumo direto e cruel."},
-    {"label": "Ocasião", "summary": "Diga se funciona para o desafio informado."}
+    {"label": "Silhueta", "summary": "<escreva aqui o resumo da silhueta>"},
+    {"label": "Cores", "summary": "<escreva aqui o resumo das cores>"},
+    {"label": "Ocasião", "summary": "<escreva se o look funciona para a ocasiao>"}
   ],
   "premiumFixes": [
-    {"title": "O que manter", "items": ["Peça + POR QUÊ funciona (caimento/cor/proporção)"]},
-    {"title": "O que tirar imediatamente", "items": ["Peça + o que está destruindo o look"]},
-    {"title": "Truque de Mestre", "items": ["Truque específico e prático sem comprar nada"]},
-    {"title": "Substituição Cirúrgica", "items": ["Peça concreta + loja acessível (ex: Zara, Renner)"]},
-    {"title": "Versão Mais Ousada", "items": ["Visão editorial de como o look poderia ser"]}
+    {"title": "O que manter", "items": ["<adicione os itens a manter aqui>"]},
+    {"title": "O que tirar", "items": ["<adicione os itens a tirar aqui>"]},
+    {"title": "Truque de Mestre", "items": ["<truque pratico aqui>"]},
+    {"title": "Substituição Cirúrgica", "items": ["<peca substituta aqui>"]},
+    {"title": "Versão Mais Ousada", "items": ["<visao ousada aqui>"]}
   ],
-  "shareCaption": "Frase curta e altamente compartilhável, em português, com no máximo 12 palavras."
+  "shareCaption": "<escreva a frase curta de compartilhamento aqui>"
 }
 
 REGRAS EXTRAS:
+- NUNCA copie as diretrizes e instruções de dicas textualmente.
 - "diagnosis" deve ter entre 3 e 4 itens.
 - "premiumFixes" deve vir vazio [] quando o modo não for premium.
-- "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica, prescrava o futuro.
+- "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica.
 - "shareCaption" precisa soar como texto de story ou repost.
 `;
 

@@ -59,23 +59,23 @@ CRÍTICA vs. DIRETRIZES — DISTINÇÃO OBRIGATÓRIA:
 `;
 
   const rules = `
-REGRAS DE RESPOSTA:
+REGRAS DE RESPOSTA (NUNCA COPIE ESTAS INSTRUÇÕES PARA A RESPOSTA FINAL):
 1. Lead: Uma frase CURTA, mortal e decepcionada. Máximo 25 palavras.
-2. Seções (sections): 3-4 tópicos técnicos DISTINTOS entre si (ex: Modelagem, Paleta de Cores, Harmonia de Tecidos, Contexto). Análise — O QUE está errado e POR QUÊ. Vocabulário obrigatório: 'démodé', 'silhouette manquée', 'pret-a-porter de quinta categoria'.
-3. Diretrizes (fashionTips): COMPLETAMENTE DIFERENTE das sections. Não analisa — PRESCREVE. São ordens práticas e distintas sobre o que fazer daqui para frente.
+2. Seções (sections): 3-4 tópicos técnicos DISTINTOS entre si. Diagnóstico: O QUE está errado e POR QUÊ.
+3. Diretrizes (fashionTips): COMPLETAMENTE DIFERENTE das sections. São ordens práticas e curtas.
 4. Finalização: Termine OBRIGATORIAMENTE com: "Isso é tudo."
 
-FORMATO DE RESPOSTA (JSON):
+FORMATO DE RESPOSTA (JSON). Substitua com sua análise autêntica:
 - verdict: 'The Nod' | 'The Purse Drop'
 - rating: número de 0 a 100.
 - lead: Frase inicial devastadora. Máximo 25 palavras.
-- sections: Lista de objetos com title + content. Diagnóstico técnico — O QUE está errado e POR QUÊ. Cada seção = aspecto diferente do look.
-- fashionTips: ${isPremium ? 'APENAS 2-3 observações sintéticas e brutais sobre os piores erros visuais. SEM soluções — essas ficam no premiumFixes.' : 'PRESCRIÇÕES PRÁTICAS — 3 ordens diretas e diferentes das sections. Comportamento de compra, peças a descartar permanentemente ou regras de estilo que ela desconhece. NUNCA repita o que foi dito na crítica acima.'}
-- suggestedAccessories: Sugestões de luxo que o look desperdiçou.
-- premiumFixes: ${isPremium ? 'OBRIGATÓRIO. Array com os 5 grupos distintos: O que manter / O que tirar / Truque de Mestre / Substituição Cirúrgica / Versão Mais Ousada. Cada item deve ser específico, acionável e DIFERENTE dos fashionTips.' : 'Array vazio [].'}
+- sections: Lista de objetos com title + content com seu diagnóstico real.
+- fashionTips: ${isPremium ? 'Array com 2-3 dicas curtas e brutais sobre os piores erros.' : 'Array com 3 regras práticas diretas de estilo. NUNCA repita a crítica.'}
+- suggestedAccessories: Array de strings com sugestões de luxo.
+- premiumFixes: ${isPremium ? 'Array obrigatório com 5 grupos: O que manter / O que tirar / Truque de Mestre / Substituição Cirúrgica / Versão Mais Ousada.' : 'Array vazio [].'}
 - shareCaption: Frase ultra-compartilhável, em português, máximo 12 palavras.
 
-Responda sempre em Português do Brasil.
+Responda sempre em Português do Brasil e com sua própria análise, nunca repita o meu prompt.
 `;
 
   return baseInstruction + contextInstruction + (isPremium ? premiumInstruction : standardInstruction) + rules;
@@ -125,23 +125,12 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
             type: Type.ARRAY,
             items: { type: Type.STRING },
             description: isPremium
-              ? "2-3 observacoes sinteticas sobre os maiores erros. Sem solucoes — essas ficam em premiumFixes."
-              : "3-4 ordens brutais de descarte ou humilhacao.",
+              ? "Lista contendo apenas as as observacoes sinteticas reais (sem as instrucoes de prompt)"
+              : "Lista de ordens brutais geradas pela IA (nao repita as instrucoes de prompt aqui)",
           },
           suggestedAccessories: {
             type: Type.ARRAY,
             items: { type: Type.STRING },
-          },
-          diagnosis: {
-            type: Type.ARRAY,
-            items: {
-              type: Type.OBJECT,
-              properties: {
-                label: { type: Type.STRING },
-                summary: { type: Type.STRING },
-              },
-              required: ["label", "summary"],
-            },
           },
           premiumFixes: {
             type: Type.ARRAY,
