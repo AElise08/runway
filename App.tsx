@@ -84,34 +84,34 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
 
 const LANDING_PILLARS = [
   {
-    title: 'Roast Que Envergonha',
-    body: 'Um veredito afiado, visualmente devastador e pronto para virar story antes que a vergonha passe.',
+    title: 'Roast Compartilhavel',
+    body: 'Um veredito memoravel, visualmente forte e pronto para virar story antes da dignidade voltar.',
   },
   {
-    title: 'Contexto e Tudo',
-    body: 'Look de trabalho, date night, fashion week: o mesmo look pode ser salvo ou executado dependendo da ocasiao.',
+    title: 'Desafios Tematicos',
+    body: 'Look de trabalho, date night e outros contextos para aumentar comparacao, curiosidade e retorno.',
   },
   {
-    title: 'Premium Ressuscita',
-    body: 'Apos o trauma, o premium entrega o que manter, o que tirar e o que substituir. Resultado garantido.',
+    title: 'Premium Corrige',
+    body: 'Nao para na humilhacao: mostra como manter, tirar e substituir para o look finalmente funcionar.',
   },
 ];
 
 const LANDING_FLOW = [
   {
     step: '01',
-    title: 'Escolha o veredicto',
-    body: 'Livre, para trabalho, date night, primeira impressao ou fashion week. Cada contexto muda tudo.',
+    title: 'Escolha o contexto',
+    body: 'Defina se a analise sera geral, para trabalho, encontro, primeira impressao ou fashion week.',
   },
   {
     step: '02',
-    title: 'Submeta o look',
-    body: 'Camera ou galeria. O Runway Index aparece em segundos com um comentario editorial sem filtro.',
+    title: 'Envie o look',
+    body: 'Use a camera ou importe uma foto e receba um Runway Index com comentario editorial.',
   },
   {
     step: '03',
-    title: 'Viraliza ou se salva',
-    body: 'Compartilhe a humilhacao ou destrave o premium para sair do roast com dignidade e um plano real.',
+    title: 'Compartilhe ou corrija',
+    body: 'Publique a humilhacao ou destrave o premium para transformar o look de verdade.',
   },
 ];
 
@@ -250,67 +250,78 @@ const getCampaignState = (): CampaignState => {
   };
 };
 
+const VERDICT_POOL = {
+  legendary_nod: [
+    { title: 'Aprovada Com Severo Desgosto', strapline: 'raridade lendaria', shareHook: 'Miranda aprovou meu look com severo desgosto. Isso nao acontece.' },
+    { title: 'O Unico Aceno Da Temporada', strapline: 'fenomeno editorial', shareHook: 'Recebi o unico aceno da temporada. Miranda disse que sim.' },
+    { title: 'Milagre Couture', strapline: 'acontecimento historico', shareHook: 'Miranda Priestly disse que meu look era quase perfeito. Quase.' },
+  ],
+  rare_nod: [
+    { title: 'Sobreviveu a Reuniao', strapline: 'veredito raro', shareHook: 'Sobrevivi a reuniao editorial da Runway.' },
+    { title: 'Passou Pelo Olhar Sem Suspiro', strapline: 'aprovacao silenciosa', shareHook: 'Miranda me olhou e nao suspirou. Isso e vitoria na Runway.' },
+    { title: 'Veredito De Tolerancia', strapline: 'aprovacao a contragosto', shareHook: 'Miranda me tolerou. Para ela, isso e quase um elogio.' },
+  ],
+  common_nod: [
+    { title: 'Passou Por Um Fio De Seda', strapline: 'aprovacao tensa', shareHook: 'Passei por um fio de seda no comite da Runway.' },
+    { title: 'Inofensiva. Infelizmente.', strapline: 'neutro editorial', shareHook: 'Miranda disse que meu look era inofensivo. Isso e pior que uma critica.' },
+    { title: 'Aceitavel Para Uma Estagiaria', strapline: 'damacao condescendente', shareHook: 'Miranda disse que meu look era aceitavel para uma estagiaria. Choro.' },
+  ],
+  legendary_drop: [
+    { title: 'Demitida Antes Do Cafe', strapline: 'veredito lendario', shareHook: 'Meu look foi demitido antes do cafe da manha.' },
+    { title: 'Declarada Persona Non Grata', strapline: 'expulsao editorial', shareHook: 'Miranda me declarou persona non grata na Runway. Look e tudo.' },
+    { title: 'O Pior Look Da Decada', strapline: 'catastrofe historica', shareHook: 'Miranda disse que meu look e o pior da decada. Ela guarda estatisticas.' },
+    { title: 'Isso E Um Crime Couture', strapline: 'violacao editorial', shareHook: 'Miranda quer que eu seja processada por crime contra a moda.' },
+  ],
+  rare_drop: [
+    { title: 'Ceruleo Sem Salvacao', strapline: 'veredito raro', shareHook: 'Recebi um ceruleo sem salvacao da Miranda.' },
+    { title: 'Tragedia Em Tres Camadas', strapline: 'colapso de silhueta', shareHook: 'Miranda chamou meu look de tragedia em tres camadas. Ela contou.' },
+    { title: 'Archivada Por Falta De Proposito', strapline: 'descarte editorial', shareHook: 'Fui archivada pela Miranda. Meu look nao teve proposito editorial.' },
+  ],
+  medium_drop: [
+    { title: 'Demitida Da Runway', strapline: 'queda editorial', shareHook: 'Meu look foi demitido da Runway.' },
+    { title: 'Revisao Sem Volta', strapline: 'caso perdido', shareHook: 'Miranda entrou em revisao permanente do meu look. Nao tem volta.' },
+    { title: 'O Que Voce Estava Pensando', strapline: 'questionamento editorial', shareHook: 'Miranda perguntou o que eu estava pensando. Ela nao queria resposta.' },
+  ],
+  common_drop: [
+    { title: 'Sob Revisao Hostil', strapline: 'observacao disciplinar', shareHook: 'Meu look entrou sob revisao hostil na Runway.' },
+    { title: 'Mediocridade Documentada', strapline: 'archivo editorial', shareHook: 'Miranda documentou minha mediocridade. Para nao esquecer.' },
+    { title: 'Aqui Nao E A Riachuelo', strapline: 'correcao de rota', shareHook: 'Miranda me lembrou que aqui nao e a Riachuelo. Com desdém.' },
+  ],
+};
+
+const pickRandom = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
 const getEditorialVerdictMeta = (result: CritiqueResult): EditorialVerdictMeta => {
   if (result.verdict === 'The Nod') {
     if (result.rating >= 90) {
-      return {
-        title: 'Miranda Inclinou A Cabeca',
-        strapline: 'raridade lendaria',
-        rarity: 'legendary',
-        shareHook: 'Miranda inclinou a cabeca pro meu look. Isso nao acontece.',
-      };
+      const v = pickRandom(VERDICT_POOL.legendary_nod);
+      return { ...v, rarity: 'legendary' };
     }
-
     if (result.rating >= 75) {
-      return {
-        title: 'Nao Foi Expulsa Da Sala',
-        strapline: 'veredito raro',
-        rarity: 'rare',
-        shareHook: 'Fui avaliada pela Miranda e nao fui expulsa da sala.',
-      };
+      const v = pickRandom(VERDICT_POOL.rare_nod);
+      return { ...v, rarity: 'rare' };
     }
-
-    return {
-      title: 'Ainda Empregada Por Enquanto',
-      strapline: 'sobrevivencia editorial',
-      rarity: 'common',
-      shareHook: 'A Miranda me avaliou e eu ainda tenho emprego. Por enquanto.',
-    };
+    const v = pickRandom(VERDICT_POOL.common_nod);
+    return { ...v, rarity: 'common' };
   }
 
   if (result.rating <= 15) {
-    return {
-      title: 'Demitida Antes Do Cafe',
-      strapline: 'veredito lendario',
-      rarity: 'legendary',
-      shareHook: 'A Miranda me demitiu antes mesmo do cafe da manha. Meu look nao tem perdao.',
-    };
+    const v = pickRandom(VERDICT_POOL.legendary_drop);
+    return { ...v, rarity: 'legendary' };
   }
 
   if (result.rating <= 30) {
-    return {
-      title: 'Isso E Tudo',
-      strapline: 'execucao editorial',
-      rarity: 'rare',
-      shareHook: 'A Miranda olhou pro meu look e disse: isso e tudo. Nao era elogio.',
-    };
+    const v = pickRandom(VERDICT_POOL.rare_drop);
+    return { ...v, rarity: 'rare' };
   }
 
   if (result.rating <= 45) {
-    return {
-      title: 'Nao E O Que Eu Pedi',
-      strapline: 'dececpcao editorial',
-      rarity: 'rare',
-      shareHook: 'A Miranda viu meu look e disse que nao era o que ela pediu. Nunca e.',
-    };
+    const v = pickRandom(VERDICT_POOL.medium_drop);
+    return { ...v, rarity: 'rare' };
   }
 
-  return {
-    title: 'Voce Pode Ir Embora',
-    strapline: 'dispensa editorial',
-    rarity: 'common',
-    shareHook: 'A Miranda me avaliou e me dispensou com um gesto. Meu look nao impressionou.',
-  };
+  const v = pickRandom(VERDICT_POOL.common_drop);
+  return { ...v, rarity: 'common' };
 };
 
 const shouldPromptShare = (result: CritiqueResult, verdictMeta: EditorialVerdictMeta) => {
@@ -1080,23 +1091,36 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {state === 'analyzing' && (
-          <div className="max-w-4xl mx-auto px-6 py-20 md:py-40 flex flex-col items-center justify-center space-y-16 md:space-y-24">
-            <div className="relative w-40 h-40 md:w-56 md:h-56">
-              <div className="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-125"></div>
-              <div className="absolute inset-0 border-t-[0.5px] border-white rounded-full animate-spin duration-[4000ms]"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Sparkles className="text-white/10 animate-pulse" size={64} />
+        {state === 'analyzing' && (() => {
+          const ANALYZING_PHRASES = [
+            { quote: '"Isso é tudo."', sub: 'Miranda está decidindo se o seu look merece sequer um segundo olhar.' },
+            { quote: '"Explique-me..."', sub: 'Miranda está verificando se você tem o direito de respirar o mesmo ar que a Runway.' },
+            { quote: '"Interessante."', sub: 'Ela disse isso sem sorrir. Isso não é um elogio.' },
+            { quote: '"Sério?"', sub: 'Miranda olhou para a foto e fez esta pergunta. Apenas esta pergunta.' },
+            { quote: '"Por que?"', sub: 'Não há resposta certa. A pergunta em si já é o veredito.' },
+            { quote: '"Estou esperando."', sub: 'O silêncio de Miranda é mais devastador do que qualquer crítica.' },
+            { quote: '"Hm."', sub: 'Uma sílaba. É tudo que você vai receber antes da sentença.' },
+            { quote: '"Que decepção."', sub: 'Ela ainda não terminou de analisar. Isso é só o começo.' },
+          ];
+          const phrase = ANALYZING_PHRASES[Math.floor(Date.now() / 1000) % ANALYZING_PHRASES.length];
+          return (
+            <div className="max-w-4xl mx-auto px-6 py-20 md:py-40 flex flex-col items-center justify-center space-y-16 md:space-y-24">
+              <div className="relative w-40 h-40 md:w-56 md:h-56">
+                <div className="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-125"></div>
+                <div className="absolute inset-0 border-t-[0.5px] border-white rounded-full animate-spin duration-[4000ms]"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Sparkles className="text-white/10 animate-pulse" size={64} />
+                </div>
+              </div>
+              <div className="text-center space-y-6 md:space-y-10 max-w-md">
+                <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">{phrase.quote}</h3>
+                <p className="text-white/20 text-[8px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.8em] font-black leading-loose px-4">
+                  {phrase.sub}
+                </p>
               </div>
             </div>
-            <div className="text-center space-y-6 md:space-y-10 max-w-md">
-              <h3 className="text-4xl md:text-6xl font-serif italic text-white/80 tracking-tighter animate-pulse">"Isso é interessante..."</h3>
-              <p className="text-white/20 text-[8px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.8em] font-black leading-loose px-4">
-                Miranda está examinando cada centímetro do seu look para decidir se você merece existir neste universo editorial.
-              </p>
-            </div>
-          </div>
-        )}
+          );
+        })()}
 
         {state === 'result' && result && (
           <div className="animate-in fade-in slide-in-from-bottom-20 duration-1000">

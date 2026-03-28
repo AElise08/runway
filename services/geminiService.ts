@@ -57,7 +57,7 @@ O usuário não pagou pela sua mentoria de verdade. Apenas destrua a autoestima 
 
   const rules = `
 REGRAS DE RESPOSTA:
-1. Lead: Uma frase CURTA, mortal e decepcionada. Máximo 15 palavras.
+1. Lead: Uma frase CURTA, mortal e decepcionada. Máximo 25 palavras.
 2. Seções: Divida em tópicos técnicos (Modelagem, Cores, Acessórios, etc).
 3. Vocabulário: Use 'démodé', 'silhouette manquée', 'pret-a-porter de quinta categoria'.
 4. Finalização: Termine OBRIGATORIAMENTE com: "Isso é tudo."
@@ -65,7 +65,7 @@ REGRAS DE RESPOSTA:
 FORMATO DE RESPOSTA (JSON):
 - verdict: 'The Nod' | 'The Purse Drop'
 - rating: número de 0 a 100.
-- lead: Frase inicial devastadora. Máximo 15 palavras.
+- lead: Frase inicial devastadora. Máximo 25 palavras.
 - sections: Lista de objetos com title + content. Crítica técnica profunda.
 - fashionTips: ${isPremium ? 'APENAS 2-3 observações sinteticas e brutais sobre os piores erros. SEM soluções — essas ficam no premiumFixes.' : 'Ordens humilhantes de descarte.'}
 - suggestedAccessories: Sugestões de luxo que o look desperdiçou.
@@ -106,7 +106,7 @@ export const analyzeLook = async (imageBase64: string, isPremium: boolean = fals
         properties: {
           verdict: { type: Type.STRING, enum: ["The Nod", "The Purse Drop"] },
           rating: { type: Type.NUMBER, description: "Runway Index de 0 a 100." },
-          lead: { type: Type.STRING, description: "Frase inicial devastadora, max 15 palavras." },
+          lead: { type: Type.STRING, description: "Frase inicial devastadora, max 25 palavras." },
           sections: {
             type: Type.ARRAY,
             items: {

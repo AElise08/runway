@@ -35,7 +35,7 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
 {
   "verdict": "The Nod | The Purse Drop",
   "rating": 50,
-  "lead": "Sua citação sarcástica em PORTUGUÊS aqui, MENCIONANDO de forma dramática a NOTA (rating de 0 a 100) que o look recebeu. DEVE SER UMA FRASE ÚNICA, CURTA E DE ALTO IMPACTO MÁXIMO 15 PALAVRAS. Ex: 'Um pesadelo previsível que machucou meus olhos. 23 pontos.'",
+  "lead": "Sua citação sarcástica em PORTUGUÊS aqui, MENCIONANDO de forma dramática a NOTA (rating de 0 a 100) que o look recebeu. DEVE SER UMA FRASE ÚNICA E DE ALTO IMPACTO com no MÁXIMO 25 PALAVRAS. Ex: 'Um pesadelo previsível que machucou meus olhos e destruiu minha tarde inteira. 23 pontos.'",
   "sections": [{"title": "Tópico em português", "content": "Sua crítica ácida aqui."}],
   "fashionTips": ["Dica 1", "Dica 2"],
   "suggestedAccessories": ["Acessório de grife 1", "Acessório 2"],
