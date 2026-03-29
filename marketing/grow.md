@@ -1,5 +1,4 @@
 # Growth Guide — Runway Lumes
-
 O foco agora é escalar a experiência gratuita: 3 análises por dia, alta taxa de compartilhamento e sentimento viral. Não há paywall, não há cobrança — só o juízo editorial cortante e a vontade de mostrar o veredito.
 
 ## Estratégias imediatas
