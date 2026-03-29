@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
-import { User } from '@supabase/supabase-js';
 import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
-import Auth from './components/Auth';
-import { supabase } from './services/supabase';
 import { analyzeLook as analyzeLookGemini } from './services/geminiService';
 import { analyzeLook as analyzeLookMistral } from './services/mistralService';
-import { AnalysisContext, CritiqueResult, AppState, Profile } from './types';
-import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2, ArrowRight } from 'lucide-react';
+import { AnalysisContext, CritiqueResult, AppState } from './types';
+import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2 } from 'lucide-react';
 
 const MAX_EXPORT_DIMENSION = 3840;
 const MAX_DISPLAY_DIMENSION = 1920;
@@ -36,7 +33,6 @@ type ChallengeKey = 'none' | 'office' | 'date-night' | 'first-impression' | 'fas
 interface ChallengeOption extends AnalysisContext {
   key: ChallengeKey;
   teaser: string;
-  premiumAngle: string;
 }
 
 const CHALLENGE_OPTIONS: ChallengeOption[] = [
@@ -46,7 +42,6 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
     frameLabel: 'Free Roast',
     promptContext: 'Faça uma análise editorial geral, sem assumir dress code específico.',
     teaser: 'Para quem quer só descobrir se o look merece humilhação pública.',
-    premiumAngle: 'diagnóstico completo com correção editorial sob medida',
   },
   {
     key: 'office',
@@ -54,7 +49,6 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
     frameLabel: 'Office Trial',
     promptContext: 'Considere ambiente de trabalho, autoridade visual, elegância e competência percebida.',
     teaser: 'Testa se a produção transmite competência ou caos corporativo.',
-    premiumAngle: 'ajustes para parecer mais cara, competente e polida no trabalho',
   },
   {
     key: 'date-night',
@@ -62,7 +56,6 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
     frameLabel: 'Date Night',
     promptContext: 'Considere atração, intenção, sensualidade controlada e coerência noturna.',
     teaser: 'Ideal para ver se o look seduz ou pede desculpas por existir.',
-    premiumAngle: 'versões mais elegante, mais ousada e mais magnética para encontros',
   },
   {
     key: 'first-impression',
@@ -70,7 +63,6 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
     frameLabel: 'First Impression',
     promptContext: 'Considere impacto imediato, confiança, clareza de estilo e memorabilidade.',
     teaser: 'Mede se você chega como presença ou como ruído visual.',
-    premiumAngle: 'um plano de imagem para causar impacto sem parecer forçada',
   },
   {
     key: 'fashion-week',
@@ -78,7 +70,6 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
     frameLabel: 'Fashion Week',
     promptContext: 'Considere repertório fashion, intenção editorial, ousadia e sofisticação visual.',
     teaser: 'Para descobrir se existe moda ali ou só figurino nervoso.',
-    premiumAngle: 'substituições mais editoriais e ousadas sem perder sofisticação',
   },
 ];
 
@@ -92,8 +83,8 @@ const LANDING_PILLARS = [
     body: 'Look de trabalho, date night e outros contextos para aumentar comparacao, curiosidade e retorno.',
   },
   {
-    title: 'Premium Corrige',
-    body: 'Nao para na humilhacao: mostra como manter, tirar e substituir para o look finalmente funcionar.',
+    title: 'Diagnostico Direto',
+    body: 'Receba um parecer editorial rapido, seco e compartilhavel sem cadastro, plano ou atrito.',
   },
 ];
 
@@ -110,10 +101,24 @@ const LANDING_FLOW = [
   },
   {
     step: '03',
-    title: 'Compartilhe ou corrija',
-    body: 'Publique a humilhacao ou destrave o premium para transformar o look de verdade.',
+    title: 'Compartilhe o veredito',
+    body: 'Exporte a capa e publique o julgamento enquanto a dignidade ainda esta em choque.',
   },
 ];
+
+const DAILY_USAGE_LIMIT = 3;
+
+const getTodayUsageCount = () => {
+  const today = new Date().toDateString();
+  const savedDate = localStorage.getItem('miranda_usage_date');
+  if (savedDate !== today) {
+    localStorage.setItem('miranda_usage_date', today);
+    localStorage.setItem('miranda_usage_count', '0');
+    return 0;
+  }
+  const saved = localStorage.getItem('miranda_usage_count');
+  return saved ? parseInt(saved, 10) : 0;
+};
 
 const EDITORIAL_HERO_BACKGROUND = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
   <svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -332,28 +337,6 @@ const getChallengeOption = (key: ChallengeKey) => {
   return CHALLENGE_OPTIONS.find((option) => option.key === key) ?? CHALLENGE_OPTIONS[0];
 };
 
-
-const getPremiumFixGroups = (result: CritiqueResult, isPremium: boolean) => {
-  if (!isPremium) {
-    return [];
-  }
-
-  if (result.premiumFixes?.length) {
-    return result.premiumFixes;
-  }
-
-  if (!result.fashionTips?.length) {
-    return [];
-  }
-
-  return [
-    {
-      title: 'Plano de Reabilitacao',
-      items: result.fashionTips.slice(0, 4),
-    },
-  ];
-};
-
 const dataUrlToBlob = async (dataUrl: string) => {
   const response = await fetch(dataUrl);
   return response.blob();
@@ -366,77 +349,32 @@ const App: React.FC = () => {
   const [result, setResult] = useState<CritiqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
-  const [socialPercentile, setSocialPercentile] = useState<number | null>(null);
-
-  // Auth & Profile State
-  const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const [showAuth, setShowAuth] = useState<boolean | 'login' | 'signup'>(false);
   const [selectedChallengeKey, setSelectedChallengeKey] = useState<ChallengeKey>('none');
   const [activeChallengeKey, setActiveChallengeKey] = useState<ChallengeKey>('none');
-
-  // Rate limiting with daily reset
-  const [usageCount, setUsageCount] = useState<number>(() => {
-    const today = new Date().toDateString();
-    const savedDate = localStorage.getItem('miranda_usage_date');
-    if (savedDate !== today) {
-      localStorage.setItem('miranda_usage_date', today);
-      localStorage.setItem('miranda_usage_count', '0');
-      return 0;
-    }
-    const saved = localStorage.getItem('miranda_usage_count');
-    return saved ? parseInt(saved, 10) : 0;
-  });
   const [isExporting, setIsExporting] = useState(false);
-
-  // Setup Auth Listener
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) fetchProfile(session.user.id);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        setShowAuth(false);
-        fetchProfile(session.user.id);
-      } else {
-        setProfile(null);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const fetchProfile = async (userId: string) => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    
-    if (data) setProfile(data);
-  };
+  const [usageCount, setUsageCount] = useState<number>(() => {
+    if (typeof window === 'undefined') return 0;
+    return getTodayUsageCount();
+  });
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const exportRef = useRef<HTMLDivElement>(null);
 
-  // Limit check
-  const isPremium = profile?.is_premium || false;
-  const maxUses = isPremium ? 20 : 3;
-  const isBlocked = !isPremium && usageCount >= maxUses;
   const campaignState = getCampaignState();
   const editorialVerdict = result ? getEditorialVerdictMeta(result) : null;
   const showSharePrompt = result && editorialVerdict ? shouldPromptShare(result, editorialVerdict) : false;
   const selectedChallenge = getChallengeOption(selectedChallengeKey);
   const activeChallenge = getChallengeOption(activeChallengeKey);
-  const remainingUses = isPremium ? Math.max(0, maxUses - (profile?.daily_looks || 0)) : Math.max(0, maxUses - usageCount);
-  const premiumFixGroups = result ? getPremiumFixGroups(result, isPremium) : [];
+  const remainingUses = Math.max(0, DAILY_USAGE_LIMIT - usageCount);
+  const isLimitReached = usageCount >= DAILY_USAGE_LIMIT;
 
   const startCamera = async () => {
+    if (isLimitReached) {
+      setError('Limite diário de 3 análises atingido. Tente novamente amanhã.');
+      return;
+    }
     try {
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -603,11 +541,11 @@ const App: React.FC = () => {
       let jsonStr: string;
       try {
         // Tentativa principal: Gemini
-        jsonStr = await analyzeLookGemini(base64, isPremium, challengeContext);
+        jsonStr = await analyzeLookGemini(base64, false, challengeContext);
       } catch (geminiErr: any) {
         // Fallback: Mistral (caso o Gemini esteja fora ou com quota esgotada)
         console.warn("Gemini falhou, usando Mistral como fallback:", geminiErr?.message || geminiErr);
-        jsonStr = await analyzeLookMistral(base64, isPremium, challengeContext);
+        jsonStr = await analyzeLookMistral(base64, false, challengeContext);
       }
 
       // JSON parse seguro — evita tela branca silenciosa se a IA retornar algo inesperado
@@ -622,7 +560,7 @@ const App: React.FC = () => {
         if (!Array.isArray(parsed.fashionTips)) parsed.fashionTips = [];
         if (!Array.isArray(parsed.suggestedAccessories)) parsed.suggestedAccessories = [];
       } catch (_parseErr) {
-        console.error('JSON inválido da IA:', jsonStr);
+        console.error('JSON inválido da IA - resposta não parseável');
         throw new Error('Miranda teve um surto e a resposta saiu incoerente. Tente novamente.');
       }
 
@@ -631,30 +569,6 @@ const App: React.FC = () => {
       const newCount = usageCount + 1;
       setUsageCount(newCount);
       localStorage.setItem('miranda_usage_count', newCount.toString());
-
-      if (user && profile) {
-         await supabase.from('profiles').update({ daily_looks: profile.daily_looks + 1 }).eq('id', user.id);
-         setProfile({...profile, daily_looks: profile.daily_looks + 1});
-      }
-
-      // Comparação social — busca quantas análises ficaram abaixo desta nota
-      try {
-        const { count: below } = await supabase
-          .from('profiles')
-          .select('*', { count: 'exact', head: true })
-          .lt('last_score', parsed.rating);
-        const { count: total } = await supabase
-          .from('profiles')
-          .select('*', { count: 'exact', head: true })
-          .not('last_score', 'is', null);
-        if (below !== null && total !== null && total > 0) {
-          setSocialPercentile(Math.round((below / total) * 100));
-        }
-        // Salva a nota no perfil para futuras comparações
-        if (user) {
-          await supabase.from('profiles').update({ last_score: parsed.rating }).eq('id', user.id);
-        }
-      } catch (_) { /* comparação social é non-critical */ }
 
       setState('result');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -764,21 +678,7 @@ const App: React.FC = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-[#FAFAFA] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
-      <Header user={user} setShowAuth={setShowAuth} />
-      
-      {showAuth && !user && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm animate-in fade-in">
-          <div className="relative w-full max-w-sm">
-            <button 
-              onClick={() => setShowAuth(false)}
-              className="absolute -top-12 right-0 text-white/50 hover:text-white"
-            >
-              <X size={24} />
-            </button>
-            <Auth initialAction={showAuth === 'signup' ? 'signup' : 'login'} />
-          </div>
-        </div>
-      )}
+      <Header />
 
       <main className="w-full">
         {state === 'idle' && (
@@ -831,64 +731,37 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                {isBlocked ? (
-                  <div className="mt-8 w-full max-w-3xl rounded-[1.5rem] border border-black/10 bg-white p-6 md:p-8 text-left shadow-md">
-                    <div className="space-y-3">
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-black font-bold">Acesso Bloqueado</p>
-                      <h3 className="text-2xl md:text-3xl font-serif text-black font-bold">
-                        O limite cortesia foi atingido.
-                      </h3>
-                      <p className="text-black/60 font-medium">
-                        Desbloqueie o acesso premium para diagnósticos ilimitados e planos de reabilitação.
-                      </p>
-                    </div>
-                    <div className="mt-6 flex flex-col md:flex-row gap-4 md:items-center">
-                      {user ? (
-                        <a
-                          href={`${import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}?email=${encodeURIComponent(user.email || "")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
-                        >
-                          Tornar-se Premium <ArrowRight size={16} />
-                        </a>
-                      ) : (
-                        <button
-                          onClick={() => setShowAuth('signup')}
-                          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:bg-black/80 shadow-lg"
-                        >
-                          Criar Conta para Assinar <ArrowRight size={16} />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mt-8 flex flex-col items-center gap-5 w-full">
-                    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xl justify-center z-20">
+                <div className="mt-8 flex flex-col items-center gap-5 w-full">
+                  <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xl justify-center z-20">
                       <button
                         onClick={startCamera}
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl w-full sm:w-auto"
+                        disabled={isLimitReached}
+                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl w-full sm:w-auto disabled:opacity-50 disabled:pointer-events-none"
                       >
                         Usar a Câmera
                       </button>
-                      <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-black/20 bg-white text-black font-bold text-sm transition-all hover:bg-black/5 w-full sm:w-auto">
-                        Importar Foto
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleFileUpload}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
+                    <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-black/20 bg-white text-black font-bold text-sm transition-all hover:bg-black/5 w-full sm:w-auto">
+                      Importar Foto
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
                     <div className="flex flex-col items-center gap-1 mt-2">
                       <span className="text-xs text-white/80 drop-shadow-sm font-semibold">
-                        {isPremium ? `${remainingUses} Análises Premium Restantes Hoje` : `${remainingUses} Avaliações Gratuitas Restantes`}
+                        {remainingUses} de {DAILY_USAGE_LIMIT} análises gratuitas restantes hoje
                       </span>
+                      {isLimitReached && (
+                        <span className="text-[10px] text-[#FF7070] uppercase tracking-[0.25em]">
+                          Limite atingido, volte amanhã.
+                        </span>
+                      )}
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
             </div>
 
         {error && (
@@ -940,60 +813,6 @@ const App: React.FC = () => {
                     <p className="text-black/60 text-sm leading-relaxed max-w-xs">{item.body}</p>
                   </div>
                 ))}
-              </div>
-            </section>
-
-            <section id="landing-pricing" className="max-w-5xl mx-auto mt-20 md:mt-32 mb-10 px-4">
-              <div className="text-center space-y-4 mb-16">
-                <h3 className="text-3xl md:text-5xl font-serif font-bold text-black tracking-tight">Assuma o Controle</h3>
-                <p className="text-black/50 text-base md:text-lg">Seja das primeiras a ter acesso. Edição de lançamento com vagas limitadas.</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div className="rounded-[2rem] border border-black/10 bg-white p-8 md:p-10 text-center flex flex-col items-center hover:shadow-lg transition-shadow">
-                  <h4 className="text-xl font-bold font-serif mb-2 text-black">Acesso Gratuito</h4>
-                  <div className="text-4xl font-black text-black mb-6">Grátis</div>
-                  <ul className="text-black/60 text-sm space-y-4 mb-8 text-center flex-1">
-                    <li>Até 3 avaliações básicas</li>
-                    <li>Score de viabilidade editorial</li>
-                    <li>Sem diagnóstico detalhado</li>
-                  </ul>
-                  <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-full py-4 rounded-full border border-black text-black font-bold uppercase tracking-widest text-[10px] hover:bg-black hover:text-white transition-all">
-                    Iniciar Teste
-                  </button>
-                </div>
-
-                <div className="rounded-[2rem] border border-black bg-black p-8 md:p-10 text-center flex flex-col items-center shadow-2xl relative overflow-hidden transform md:scale-105">
-                  <div className="absolute top-0 right-0 border-b border-l border-white/20 bg-white/10 px-4 py-1 text-[8px] uppercase tracking-widest text-white rounded-bl-xl font-bold">
-                    Recomendado
-                  </div>
-                  <h4 className="text-xl font-bold font-serif mb-2 text-white">Correção Premium</h4>
-                  <div className="text-4xl font-black text-white mb-6">R$ 9,90<span className="text-lg text-white/50">/mês</span></div>
-                  <ul className="text-white/60 text-sm space-y-4 mb-8 text-center flex-1">
-                    <li>Avaliações ilimitadas</li>
-                    <li>Análise editorial pelo contexto da ocasião</li>
-                    <li>O que manter, tirar e substituir no look</li>
-                    <li className="text-white/40 italic mt-4 border-t border-white/10 pt-4">Sem renovação automática</li>
-                  </ul>
-                  {user ? (
-                    <a href={`${import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}?email=${encodeURIComponent(user.email || "")}`} target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
-                      Assinar Premium
-                    </a>
-                  ) : (
-                    <button onClick={() => setShowAuth('signup')} className="w-full py-4 rounded-full bg-white text-black font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all text-center">
-                      Criar Conta para Assinar
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-12 text-center">
-                <button
-                  onClick={() => setShowAuth(true)}
-                  className="text-black/50 hover:text-black font-semibold text-xs transition-colors underline underline-offset-4 decoration-black/20 hover:decoration-black"
-                >
-                  Já é premium? Entre na sua conta para acessar os benefícios.
-                </button>
               </div>
             </section>
 
@@ -1171,11 +990,6 @@ const App: React.FC = () => {
                     <p className="text-white/80 text-sm md:text-base font-medium leading-snug">
                       {result.shareCaption || editorialVerdict?.shareHook || `${editorialVerdict?.title} — Runway Index ${result.rating}`}
                     </p>
-                    {socialPercentile !== null && (
-                      <p className="text-white/40 text-xs pt-1">
-                        Você ficou acima de <span className="text-white font-bold">{socialPercentile}%</span> das usuárias desta semana.
-                      </p>
-                    )}
                   </div>
                   <button
                     onClick={shareVerdict}
@@ -1257,97 +1071,6 @@ const App: React.FC = () => {
                     ))}
                   </ul>
                 </div>
-
-                {!isPremium && (
-                  <div className="pt-16 md:pt-24 border-t border-white/5">
-                    <div className="border border-[#D32F2F]/30 bg-[#120404] p-6 md:p-8 rounded-[1.75rem] space-y-6">
-                      <div className="space-y-3">
-                        <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Upsell de Transformacao</p>
-                        <h4 className="text-2xl md:text-4xl font-serif italic text-white">O roast ja te deu o trauma. O premium entrega a reabilitacao.</h4>
-                        <p className="text-white/65 leading-relaxed max-w-3xl">
-                          Para o desafio <strong className="text-white font-semibold">{activeChallenge.label}</strong>, o upgrade libera {activeChallenge.premiumAngle}, alem de mais analises por dia e um plano mais concreto para manter, tirar e substituir.
-                        </p>
-                      </div>
-                      <div className="grid gap-4 md:grid-cols-3">
-                        <div className="border border-white/10 bg-black/20 p-5 rounded-[1.25rem]">
-                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-black">Manter</p>
-                          <p className="mt-3 text-sm text-white/70 leading-relaxed">O que ainda funciona e vale salvar no look.</p>
-                        </div>
-                        <div className="border border-white/10 bg-black/20 p-5 rounded-[1.25rem]">
-                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-black">Substituir</p>
-                          <p className="mt-3 text-sm text-white/70 leading-relaxed">Peças, tecidos e proporcoes que pedem demissao imediata.</p>
-                        </div>
-                        <div className="border border-white/10 bg-black/20 p-5 rounded-[1.25rem]">
-                          <p className="text-[10px] uppercase tracking-[0.3em] text-white/35 font-black">Evoluir</p>
-                          <p className="mt-3 text-sm text-white/70 leading-relaxed">Versoes mais elegantes, mais acessiveis ou mais ousadas do mesmo look.</p>
-                        </div>
-                      </div>
-                      {user ? (
-                        <a
-                          href={`${import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/xxxxx"}?email=${encodeURIComponent(user.email || "")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
-                        >
-                          Desbloquear Correcao Premium <ArrowRight size={14} />
-                        </a>
-                      ) : (
-                        <button
-                          onClick={() => setShowAuth('signup')}
-                          className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-[#D32F2F] text-white font-black uppercase tracking-[0.28em] text-[10px] transition-all hover:bg-[#B32626] rounded-full"
-                        >
-                          Criar Conta para Assinar <ArrowRight size={14} />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {premiumFixGroups.length > 0 && (() => {
-                  // Paleta visual por tipo de grupo
-                  const groupStyle: Record<string, { border: string; bg: string; label: string; bullet: string }> = {
-                    'O que manter':              { border: 'border-emerald-500/20', bg: 'bg-emerald-950/30',   label: 'text-emerald-400',  bullet: '→' },
-                    'O que tirar imediatamente': { border: 'border-[#D32F2F]/30',  bg: 'bg-[#140505]',        label: 'text-[#FF7070]',    bullet: '✕' },
-                    'O que tirar':               { border: 'border-[#D32F2F]/30',  bg: 'bg-[#140505]',        label: 'text-[#FF7070]',    bullet: '✕' },
-                    'Truque de Mestre':          { border: 'border-white/20',      bg: 'bg-white/[0.04]',     label: 'text-white',        bullet: '✦' },
-                    'Substituição Cirúrgica':    { border: 'border-amber-500/25',  bg: 'bg-amber-950/20',     label: 'text-amber-400',    bullet: '◎' },
-                    'Versão Mais Ousada':        { border: 'border-purple-500/20', bg: 'bg-purple-950/20',    label: 'text-purple-300',   bullet: '▶' },
-                  };
-                  const defaultStyle = { border: 'border-[#D32F2F]/18', bg: 'bg-[#140505]', label: 'text-[#FFB0B0]', bullet: '—' };
-
-                  return (
-                    <div className="pt-16 md:pt-24 border-t border-white/5 space-y-6 md:space-y-8">
-                      <div className="flex items-center gap-4">
-                        <h4 className="text-[11px] md:text-[13px] uppercase tracking-[0.4em] md:tracking-[0.8em] text-white/20 font-black">Plano de Reabilitação Premium</h4>
-                        <div className="flex-1 h-px bg-white/5" />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                        {premiumFixGroups.map((group, index) => {
-                          const style = groupStyle[group.title] ?? defaultStyle;
-                          const isTruque = group.title === 'Truque de Mestre';
-                          return (
-                            <div
-                              key={`${group.title}-${index}`}
-                              className={`border ${style.border} ${style.bg} p-5 md:p-6 space-y-4 rounded-[1rem] ${isTruque ? 'md:col-span-2' : ''}`}
-                            >
-                              <p className={`text-[10px] uppercase tracking-[0.35em] font-black ${style.label}`}>{group.title}</p>
-                              <ul className="space-y-2.5">
-                                {group.items.map((item, itemIndex) => (
-                                  <li key={`${group.title}-${itemIndex}`} className="flex items-start gap-3">
-                                    <span className={`text-xs font-black mt-0.5 flex-shrink-0 ${style.label} opacity-60`}>{style.bullet}</span>
-                                    <span className={`text-sm md:text-base leading-relaxed ${isTruque ? 'text-white/85 font-medium' : 'text-white/70'}`}>
-                                      {renderBoldText(item)}
-                                    </span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                })()}
 
               </div>
 

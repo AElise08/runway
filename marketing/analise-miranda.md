@@ -126,9 +126,6 @@ Se a Mistral nao retornar `diagnosis`, `premiumFixes` ou `shareCaption`, eles se
 
 ---
 
-### 10. Rate limiting local (localStorage) e facilmente burlavel
-
-O `usageCount` e armazenado em `localStorage` sem data de expiracao diaria. Se o usuario limpar o storage ou usar outro navegador, o limite reseta. Alem disso, nao ha logica para resetar o contador diariamente.
 
 ---
 
@@ -148,7 +145,7 @@ Nesses casos, o modelo pode retornar um JSON incompleto ou com campos vazios, ca
 | # | Acao | Arquivo | Impacto |
 |---|------|---------|---------|
 | 1 | Configurar `VITE_MISTRAL_API_KEY` no `.env` e/ou Vercel | `.env` | BLOQUEANTE |
-| 2 | Configurar `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` | `.env` | Premium bloqueado |
+| 2 | Configurar `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` | `.env` | Experiência bloqueada |
 | 3 | Validar API key antes de chamar Mistral | `mistralService.ts` | Erro claro |
 | 4 | Adicionar try-catch especifico no JSON.parse | `App.tsx:595` | Evita crash silencioso |
 | 5 | Relaxar condicao de render (remover `&& image`) | `App.tsx:1008` | Resultado aparece mesmo sem imagem |

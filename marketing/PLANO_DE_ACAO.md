@@ -12,7 +12,7 @@ A nova prioridade é aproveitar a janela cultural de **O Diabo Veste Prada 2**, 
 ### Tarefa 0.1: Reposicionamento de Landing
 **Contexto:** a home precisa vender instantaneamente a fantasia do usuário: ser julgado por uma editora de moda cruel, brilhante e icônica.
 * **Ação:**
-  Atualizar o hero, subtítulo e CTA principal para comunicar "avaliação editorial brutal" + "shareável" + "premium corrige seu look".
+  Atualizar o hero, subtítulo e CTA principal para comunicar "avaliação editorial brutal" + "shareável" + "3 análises grátis por dia".
 * **Mensagem sugerida:**
   > "Envie seu look. Receba o veredito que destruiria sua autoestima em uma redação da Runway."
 
@@ -36,8 +36,8 @@ A nova prioridade é aproveitar a janela cultural de **O Diabo Veste Prada 2**, 
   - frase principal curta e cortante
   - selo visual forte
   - CTA discreto com nome do app
-* **Meta:**
-  cada análise precisa parecer um meme premium, não um print técnico.
+  * **Meta:**
+  cada análise precisa parecer um meme pronto para share, não um print técnico.
 
 ### Tarefa 0.4: Gatilhos de Compartilhamento no Momento Certo
 **Contexto:** a maioria dos apps erra pedindo share no timing errado.
@@ -86,13 +86,8 @@ A nova prioridade é aproveitar a janela cultural de **O Diabo Veste Prada 2**, 
 * **Prompt de execução sugerido:**
   > "Refatore o botão 'Exportar Avaliação' em `App.tsx` para gerar um card vertical estilo editorial de moda, com foto, nota, citação da Miranda e branding discreto do app, otimizado para stories."
 
-### Tarefa 1.2: Lógica de Limite Freemium
-**Contexto:** o limite gratuito precisa aumentar a urgência sem matar o compartilhamento.
-* **Ação:**
-  Manter o limite, mas testar UX de bloqueio mais inteligente:
-  - 3 análises grátis por dia
   - 1 exportação grátis
-  - premium libera volume e recursos de correção
+  - reforçar que o card exportado carrega a contagem das 3 análises gratuitas
 
 ### Tarefa 1.3: Vereditos Colecionáveis
 **Contexto:** resultado repetitivo mata retenção e share.
@@ -131,17 +126,11 @@ A nova prioridade é aproveitar a janela cultural de **O Diabo Veste Prada 2**, 
   - erro de textura/tecido
   - erro de contexto/ocasião
 
-### Tarefa 2.2: Modo Premium "Conserte Meu Look"
-**Contexto:** o premium precisa resolver um problema real.
+### Tarefa 2.2: Diagnóstico completo
+**Contexto:** o roast atrai; o diagnóstico faz voltar.
 * **Ação:**
-  No modo premium, devolver:
-  - o que manter
-  - o que tirar
-  - o que substituir
-  - uma versão mais elegante
-  - uma versão mais barata
-  - uma versão mais ousada
-
+  responder com o que manter, o que tirar, o que substituir e uma versão mais ousada sem exigir login.
+* **Impacto:** manter a promessa de valor mesmo com o limite de 3 usos.
 ### Tarefa 2.3: Memória de Estilo
 **Contexto:** sem memória, cada análise é descartável.
 * **Ação:**
@@ -153,76 +142,53 @@ A nova prioridade é aproveitar a janela cultural de **O Diabo Veste Prada 2**, 
 * **Objetivo:**
   fazer a Miranda "lembrar" dos pecados estéticos reincidentes.
 
-### Tarefa 2.4: Armário Cápsula Orientado por IA
-**Contexto:** aqui vocês começam a fugir do território de app-meme.
+### Tarefa 2.4: Armário Cápsula Compacto
+**Contexto:** manter a sensação de mentor na mesma sessão gratuita.
 * **Ação:**
-  Criar uma camada premium para sugerir:
-  - peças essenciais faltantes
-  - combinações de repetição inteligente
-  - armário para trabalho
-  - armário para viagem
-  - armário para encontros/eventos
+  sugerir peças essenciais, combinações e orientações por ocasião dentro do mesmo veredito editorial, sem exigir upgrade.
 
 ---
 
-## Fase 3: Monetização
-**Objetivo:** capturar receita sem matar a aquisição orgânica.
+## Fase 3: Sustentar o ciclo gratuito
+**Objetivo:** garantir que as três análises diárias sejam percebidas como escassas, valiosas e compartilháveis.
 
-### Tarefa 3.1: Assinatura Principal
-**Contexto:** a assinatura deve vender melhoria, não apenas mais uso.
-* **Modelo sugerido:**
-  - grátis: roast + limite curto + share
-  - premium mensal: roast + correção + histórico + planos de looks
-* **Mensagem-chave:**
-  > "Miranda pode humilhar de graça. Corrigir custa mais caro."
-
-### Tarefa 3.2: Produtos Avulsos
-**Contexto:** muita gente não quer assinar no primeiro contato.
-* **Ofertas sugeridas:**
-  - Raio-X de Estilo
-  - Plano de 7 looks
-  - Diagnóstico de entrevista/trabalho
-  - Diagnóstico para encontro/festa
-* **Benefício:**
-  isso aumenta monetização sem depender apenas de recorrência.
-
-### Tarefa 3.3: Afiliados e Curadoria de Compra
-**Contexto:** a IA pode indicar peças reais e monetizar a intenção de compra.
+### Tarefa 3.1: Limite com contexto social
+**Contexto:** o limite cria urgência, mas precisa indicar claramente quando ela está perto de acabar.
 * **Ação:**
-  No premium, sugerir itens reais com links afiliados.
-* **Regra:**
-  primeiro resolver o look; depois vender a compra.
+  mostrar no topo e durante o resultado quantas análises restam; avisar quando o dia chegou ao fim.
+* **Meta:**
+  não bloquear o terceiro uso sem sinalização visual e mensagem clara ("Limite atingido, volte amanhã").
 
-### Tarefa 3.4: Pacote "Evento"
-**Contexto:** ocasiões geram urgência e ticket maior.
-* **Exemplos:**
-  - casamento
-  - entrevista
-  - viagem
-  - jantar importante
-  - fashion week / evento corporativo
+### Tarefa 3.2: Share nativo como gatilho de valor
+**Contexto:** cada veredito deve ser irresistível para postar mesmo sem upgrade.
+* **Ação:**
+  reforçar o deck exportado com a contagem de usos restantes, nota Runway e tagline, além de um CTA textual sugerindo "Publique e prove que Miranda viu seu look".
+* **Meta:**
+  subir o share-rate e criar boca-a-boca, em vez de depender de conversões pagas.
+
+### Tarefa 3.3: Loop de comparação social
+**Contexto:** o usuário quer sentir que foi pior ou melhor que as outras.
+* **Ação:**
+  manter a métrica de percentile social e ampliar o copy (#metade das usuárias foi destruída mais forte) para reforçar o status gratuito.
+* **Meta:**
+  gerar capturas de tela com "Fui pior que 60% das usuárias" sem exigir login ou pagamento.
 
 ---
 
-## Fase 4: Infraestrutura e Conta do Usuário
-**Objetivo:** suportar retenção, upgrade e campanhas sazonais com consistência.
+## Fase 4: Infraestrutura enxuta
+**Objetivo:** continuar evoluindo sem introduzir bloqueios ou camadas pagas.
 
-### Tarefa 4.1: Setup de Autenticação
-**Contexto:** login é necessário para recorrência, histórico e premium.
-* **Ação:**
-  manter e evoluir o fluxo Supabase para capturar perfil e histórico de uso.
+### Tarefa 4.1: Dados mínimos de uso
+**Contexto:** guardamos apenas o necessário para contar as três análises do dia.
+* **Ação:** manter `localStorage` com `miranda_usage_count` e `miranda_usage_date`, sem salvar perfis ou eventos adicionais.
 
-### Tarefa 4.2: Estrutura de Perfil
-**Contexto:** a tabela `profiles` hoje cobre premium, mas não inteligência de produto.
-* **Expandir com campos futuros:**
-  - estilo_preferido
-  - ocasiões_frequentes
-  - budget
-  - paleta_sugerida
-  - share_count
-  - last_campaign_seen
+### Tarefa 4.2: Comunicação da campanha
+**Contexto:** o crescimento depende de novidades visuais, não de upsells.
+* **Ação:** planejar variações temporárias (cores, frases, stickers) para cada semana, sempre com a promessa de "3 usos grátis por dia até o fim da temporada".
 
-### Tarefa 4.3: Eventos de Growth
+### Tarefa 4.3: Operações sem autenticação
+**Contexto:** login e pagamentos adicionavam atrito e complexidade.
+* **Ação:** manter o foco em compartilhamento livre, monitorar erros do backend pela Edge Function `analyze-look` e não criar novas tabelas de usuários/pagamentos.
 **Contexto:** se não medirmos, não saberemos o que viraliza.
 * **Eventos recomendados:**
   - upload iniciado
@@ -234,45 +200,41 @@ A nova prioridade é aproveitar a janela cultural de **O Diabo Veste Prada 2**, 
   - clique em assinar
   - assinatura confirmada
 
-### Tarefa 4.4: Webhook e Upgrade
-**Contexto:** o webhook com Kiwify já cobre a base do premium.
+### Tarefa 4.4: Telemetria e operação enxuta
+**Contexto:** monitorar a Edge Function `analyze-look` garante que o produto gratuito segue estável.
 * **Próximo passo:**
-  expandir para estados como:
-  - assinatura ativa
-  - cancelada
-  - reembolsada
-  - pendente
+  registrar erros críticos e manter uma dashboard simples de uso diário (3 análises máximas) sem rastrear assinaturas.
 
 ---
 
 ## Fase 5: Roadmap de Execução Imediata
-**Objetivo:** escolher o que realmente move resultado antes da estreia.
+**Objetivo:** focalizar os entregáveis que realmente impulsionam o hype do filme.
 
 ### Sprint 1: O que precisa entrar primeiro
-1. Melhorar a landing para vender a fantasia e o share.
-2. Melhorar drasticamente o card de exportação vertical.
-3. Criar o modo de campanha "Runway Season".
+1. Melhorar a landing para vender a fantasia e o share, destacando o limite de 3 usos por dia.
+2. Refinar o card de exportação vertical.
+3. Criar o modo de campanha “Runway Season”.
 4. Escrever 20 a 40 frases e vereditos virais novos.
-5. Ajustar o paywall para vender "correção premium", não só limite.
+5. Garantir que as telas mostram o contador de usos restantes.
 
 ### Sprint 2: O que entra logo depois
 1. Desafios temáticos de look.
 2. Biblioteca de vereditos raros.
-3. Histórico básico de resultados.
-4. Melhorias do prompt premium para "conserte meu look".
-5. Instrumentação mínima de eventos.
+3. Histórico básico de resultados no dispositivo.
+4. Melhorias contínuas do prompt para manter o humor editorial afiado.
+5. Instrumentação mínima de eventos para medir share e limites.
 
-### Sprint 3: O que vira monetização real
-1. Produtos avulsos.
-2. Recomendações com afiliados.
-3. Memória de estilo.
-4. Armário cápsula.
-5. Ofertas por ocasião.
+### Sprint 3: O que reforça o hábito
+1. Conteúdo no app (ex: “Roast em 3 atos”) que reforça a narrativa gratuita.
+2. Recomendações sociais com hashtags oficiais.
+3. Estatísticas simples (cores preferidas, ocasiões) sem login.
+4. Armário cápsula textual sugerido no resultado.
+5. Packs por ocasião com orientações rápidas.
 
 ---
 
 ## Tese Estratégica Final
-O maior erro seria posicionar o Projeto Miranda apenas como "app de IA inspirado em filme". Isso gera curiosidade, mas não sustenta crescimento.
+O maior erro seria transformar o Projeto Miranda em um paywall de IA. Isso mata o impulso do viral e o compartilhamento espontâneo.
 
 O melhor caminho é:
 
@@ -280,6 +242,6 @@ O melhor caminho é:
 
 e
 
-**transformar essa atenção em um produto de estilo com identidade forte, compartilhamento nativo e correção premium útil**.
+**transformar essa atenção em hábito ao oferecer 3 análises grátis por dia, cards prontos e comparação social constante**.
 
-Se isso for bem executado, o filme vira a faísca, mas a recorrência vem do hábito, do ego, da comparação social e da utilidade.
+Se isso for bem executado, o filme vira a faísca, mas a recorrência vem do hábito, do ego, da comparação social e da utilidade, sem pedir nenhuma assinatura.

@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import { User } from '@supabase/supabase-js';
-import { supabase } from '../services/supabase';
 import { Menu, X } from 'lucide-react';
 
-interface HeaderProps {
-  user: User | null;
-  setShowAuth: (v: boolean) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
+const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,29 +34,12 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-3 md:gap-5">
-            {user ? (
-              <button
-                onClick={() => supabase.auth.signOut()}
-                className="px-4 md:px-5 py-2 md:py-2.5 text-[10px] md:text-[11px] font-semibold text-[#111111]/70 hover:text-black transition-colors"
-              >
-                Sair
-              </button>
-            ) : (
-              <>
-                <a
-                  href="#landing-pricing"
-                  className="hidden md:block px-4 py-2.5 text-[11px] font-semibold text-[#111111]/70 hover:text-black transition-colors"
-                >
-                  Planos
-                </a>
-                <button
-                  onClick={() => setShowAuth(true)}
-                  className="inline-block px-4 py-2 md:px-6 md:py-3 rounded-full bg-[#0d0d0d] text-white text-[10px] md:text-[11px] font-semibold hover:bg-black transition-colors shadow-md whitespace-nowrap"
-                >
-                  Acessar Editorial
-                </button>
-              </>
-            )}
+            <a
+              href="#landing-hero"
+              className="inline-block px-4 py-2 md:px-6 md:py-3 rounded-full bg-[#0d0d0d] text-white text-[10px] md:text-[11px] font-semibold hover:bg-black transition-colors shadow-md whitespace-nowrap"
+            >
+              Comecar
+            </a>
           </div>
 
         </div>
@@ -78,9 +54,6 @@ const Header: React.FC<HeaderProps> = ({ user, setShowAuth }) => {
             <a href="#landing-hero" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Veredito</a>
             <a href="#landing-benefits" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Diferenciais</a>
             <a href="#landing-flow" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Como Funciona</a>
-            {!user && (
-               <a href="#landing-pricing" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Planos</a>
-            )}
           </div>
         </div>
 
