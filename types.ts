@@ -5,11 +5,6 @@ export interface EditorialSection {
 }
 
 
-export interface PremiumFixGroup {
-  title: string;
-  items: string[];
-}
-
 export interface AnalysisContext {
   label: string;
   promptContext: string;
@@ -23,7 +18,6 @@ export interface CritiqueResult {
   sections: EditorialSection[];
   fashionTips: string[];
   suggestedAccessories: string[];
-  premiumFixes?: PremiumFixGroup[];
   shareCaption?: string;
 }
 

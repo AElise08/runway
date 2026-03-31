@@ -541,11 +541,11 @@ const App: React.FC = () => {
       let jsonStr: string;
       try {
         // Tentativa principal: Gemini
-        jsonStr = await analyzeLookGemini(base64, false, challengeContext);
+        jsonStr = await analyzeLookGemini(base64, challengeContext);
       } catch (geminiErr: any) {
         // Fallback: Mistral (caso o Gemini esteja fora ou com quota esgotada)
         console.warn("Gemini falhou, usando Mistral como fallback:", geminiErr?.message || geminiErr);
-        jsonStr = await analyzeLookMistral(base64, false, challengeContext);
+        jsonStr = await analyzeLookMistral(base64, challengeContext);
       }
 
       // JSON parse seguro — evita tela branca silenciosa se a IA retornar algo inesperado

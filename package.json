@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@google/genai": "^1.46.0",
-    "@imgly/background-removal": "^1.7.0",
     "@mistralai/mistralai": "^1.4.0",
     "@supabase/supabase-js": "^2.100.1",
     "html2canvas": "^1.4.1",

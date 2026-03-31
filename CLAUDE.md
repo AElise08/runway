@@ -4,7 +4,7 @@
 - **Frontend:** React 19 + TypeScript + Vite
 - **Backend:** Supabase
 - **AI:** Google Gemini (`@google/genai`) e Mistral AI (`@mistralai/mistralai`)
-- **UI:** Lucide React, html2canvas, background removal (`@imgly/background-removal`)
+- **UI:** Lucide React, html2canvas
 
 ## Estrutura
 ```

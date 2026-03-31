@@ -12,7 +12,6 @@ interface AnalysisContext {
 
 interface AnalyzeLookRequest {
   imageBase64?: string;
-  isPremium?: boolean;
   context?: AnalysisContext;
   provider?: Provider;
 }
@@ -30,7 +29,7 @@ const jsonResponse = (body: Record<string, unknown>, status = 200) =>
     headers: corsHeaders,
   });
 
-const getGeminiSystemInstruction = (isPremium: boolean, context?: AnalysisContext) => {
+const getGeminiSystemInstruction = (context?: AnalysisContext) => {
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("pt-BR", { month: "long" });
   const currentYear = currentDate.getFullYear();
@@ -69,35 +68,19 @@ Você deve atribuir uma nota de 0 a 100.
 - 51-70: "Passável para uma estagiária em seu primeiro dia. Mal."
 - 71-90: "Raro. Quase aceitável." (Extremamente difícil de atingir)
 - 91-100: "Perfeição." (Praticamente impossível. Miranda só deu 100 uma vez na vida).
-`;
 
-  const contextInstruction = context
-    ? `\nCONTEXTO DE JULGAMENTO: o look foi enviado para o desafio/ocasião "${context.label}". Avalie explicitamente se a roupa funciona para esse contexto e cite o contexto pelo menos uma vez no resultado. ${context.promptContext}\n`
-    : `\nCONTEXTO DE JULGAMENTO: faça uma análise editorial geral, sem inventar ocasião específica.\n`;
-
-  const premiumInstruction = `
-MODO STYLIST ELITE (PREMIUM ATIVADO):
-Seu cliente pagou para ser salvo, não apenas humilhado. Você ainda é implacavelmente honesta — mas desta vez entrega a reabilitação de verdade, com a arrogância de quem cobra R$5.000 a hora.
-
-O campo "fashionTips" neste modo deve conter APENAS 2-3 observações SINTETICAS, curtas e devastadoras sobre os maiores erros visuais do look (max 15 palavras cada). Não dê soluções aqui. Guarde-as para o premiumFixes.
-
-O campo "premiumFixes" é o PRODUTO REAL do modo premium. Cada grupo deve ser único, acionável e cirurgicamente distinto:
-- "O que manter": lista do que já funciona e POR QUÊ (caimento, cor, proporção).
-- "O que tirar imediatamente": o que está destruindo o look e por quê.
-- "Truque de Mestre": 2-3 truques de styling práticos e baratos que transformam sem comprar nada novo (ex: “dobrar a barra da calça 2x dá leveza”, “botton do meio aberto alonga a silhueta”). Seja específica.
-- "Substituição Cirúrgica": 2-3 peças concretas e acessíveis para comprar (ex: “calça de alfaiataria preta de cintura alta”, “blazer estruturado cor útero da Zara ou Renner”) que resolvem a silhueta.
-- "Versão Mais Ousada": como o look ficaria se a pessoa tivesse coragem de verdade. Uma visão editorial mais afiada do que ela tentou fazer.
-`;
-
-  const standardInstruction = `
-MODO ROAST (GRATUITO):
-O usuário não pagou pela sua mentoria de verdade. Destrua o look com humor ácido e sarcasmo implacável nas seções críticas.
+MODO ROAST (PADRÃO):
+Destrua o look com humor ácido e sarcasmo implacável nas seções críticas.
 
 CRÍTICA vs. DIRETRIZES — DISTINÇÃO ESTRITA:
 - "sections": Diagnóstico técnico do AGORA. O que está errado com a silhueta, cores e tecidos NESTE momento. Use termos como 'desastre visual', 'falta de proporção'.
 - "fashionTips": Ordens para o FUTURO. NUNCA mencione o que ela está vestindo na foto aqui. Dê 3 ordens universais de estilo ou regras de descarte que ela claramente ignora. Se você criticou o caimento da calça nas sections, o fashionTip deve ser uma regra geral como "Banimento imediato de qualquer peça que não tenha alfaiataria impecável". 
 - PROIBIÇÃO DE REPETIÇÃO: Se uma palavra ou defeito foi mencionado nas 'sections', é TERMINANTEMENTE PROIBIDO usar as mesmas palavras ou citar o mesmo defeito nos 'fashionTips'.
 `;
+
+  const contextInstruction = context
+    ? `\nCONTEXTO DE JULGAMENTO: o look foi enviado para o desafio/ocasião "${context.label}". Avalie explicitamente se a roupa funciona para esse contexto e cite o contexto pelo menos uma vez no resultado. ${context.promptContext}\n`
+    : `\nCONTEXTO DE JULGAMENTO: faça uma análise editorial geral, sem inventar ocasião específica.\n`;
 
   const rules = `
 REGRAS DE RESPOSTA (NUNCA COPIE ESTAS INSTRUÇÕES PARA A RESPOSTA FINAL):
@@ -113,18 +96,17 @@ FORMATO DE RESPOSTA (JSON). Substitua com sua análise autêntica:
 - rating: número de 0 a 100.
 - lead: Frase inicial devastadora. Máximo 25 palavras.
 - sections: Lista de objetos (title e content). Siga as regras de title/content acima RIGOROSAMENTE para evitar repetições.
-- fashionTips: ${isPremium ? "Array com 2-3 dicas curtas e brutais sobre os piores erros." : "Array com 3 regras práticas diretas de estilo. NUNCA repita a crítica das sections ou do meu prompt."}
+- fashionTips: Array com 3 regras práticas diretas de estilo. NUNCA repita a crítica das sections ou do meu prompt.
 - suggestedAccessories: Array de strings com sugestões de luxo.
-- premiumFixes: ${isPremium ? "Array obrigatório com 5 grupos: O que manter / O que tirar / Truque de Mestre / Substituição Cirúrgica / Versão Mais Ousada." : "Array vazio []."}
 - shareCaption: Frase ultra-compartilhável, em português, máximo 12 palavras.
 
 Responda sempre em Português do Brasil e com sua própria análise, com conteúdo original e espetacular.
 `;
 
-  return baseInstruction + contextInstruction + (isPremium ? premiumInstruction : standardInstruction) + rules;
+  return baseInstruction + contextInstruction + rules;
 };
 
-const getMistralSystemInstruction = (isPremium: boolean, context?: AnalysisContext) => {
+const getMistralSystemInstruction = (context?: AnalysisContext) => {
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("pt-BR", { month: "long" });
   const currentYear = currentDate.getFullYear();
@@ -152,17 +134,7 @@ Estamos em ${currentMonth} de ${currentYear}, então você pode usar repertório
     ? `CONTEXTO DE JULGAMENTO: o look foi enviado para o desafio/ocasião "${context.label}". Avalie explicitamente se a roupa funciona para esse contexto e cite o contexto pelo menos uma vez no resultado. ${context.promptContext}`
     : "CONTEXTO DE JULGAMENTO: faça uma análise editorial geral, sem inventar ocasião específica.";
 
-  const extraInstruction = isPremium
-    ? `MODO PREMIUM: Seu cliente pagou para ser salvo, não apenas humilhado. Você ainda é implacavelmente honesta — mas desta vez entrega a reabilitação de verdade, com a arrogância de quem cobra R$5.000 a hora.
-
-"fashionTips" NO MODO PREMIUM: APENAS 2-3 observações SINTÉTICAS e brutais sobre os maiores erros visuais (máx 15 palavras cada). NÃO dê soluções aqui. Guarde-as para o premiumFixes.
-
-"premiumFixes" É O PRODUTO REAL. Cada grupo DEVE ser único, cirurgicamente distinto e 100% diferente dos fashionTips:
-- "O que manter": o que já funciona e POR QUÊ (caimento, cor, proporção).
-- "O que tirar imediatamente": peças ou escolhas que destroem o look e por quê.
-- "Truque de Mestre": 2-3 truques de styling práticos e BARATOS que transformam sem comprar nada novo (ex: dobrar a barra da calça 2x dá leveza, botão do meio aberto alonga a silhueta). Seja específica e acionável.
-- "Versão Mais Ousada": como o look ficaria se a pessoa tivesse coragem de verdade. Visão editorial afiada do que ela tentou fazer.`
-    : `MODO ROAST: Destrua cada peça do look e a junção delas nas seções de análise. Seja letal, sarcástica, máximo 4 frases por tópico.
+  const roastInstruction = `MODO ROAST: Destrua cada peça do look e a junção delas nas seções de análise. Seja letal, sarcástica, máximo 4 frases por tópico.
 
 CRÍTICA vs. DIRETRIZES — DISTINÇÃO ESTRITA:
 - "sections": Análise técnica do AGORA. O que está errado com a modelagem, cores e tecidos desta foto. Seja cruel e técnica (ex: "Silhueta manquée", "proporção catastrófica").
@@ -170,7 +142,7 @@ CRÍTICA vs. DIRETRIZES — DISTINÇÃO ESTRITA:
 
   const rules = `
 IMPORTANTE: VOCÊ DEVE RESPONDER EXCLUSIVAMENTE EM PORTUGUÊS DO BRASIL (PT-BR). NENHUMA FRASE EM INGLÊS PERMITIDA, EXCETO TERMOS TÉCNICOS.
-RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários pela sua análise autêntica, criativa e espetacular):
+RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA:
 {
   "verdict": "The Nod | The Purse Drop",
   "rating": <numero de 0 a 100>,
@@ -178,25 +150,17 @@ RETORNE APENAS JSON VÁLIDO. ESTRUTURA OBRIGATÓRIA (substitua os comentários p
   "sections": [{"title": "<conceito curto, SEM NÚMEROS ou '//'>", "content": "<diagnóstico ácido indo direto ao ponto, SEM REPETIR O TÍTULO>"}],
   "fashionTips": ["<dica pratica 1>", "<dica pratica 2>", "<dica pratica 3>"],
   "suggestedAccessories": ["<acessorio de luxo 1>", "<acessorio 2>"],
-  "premiumFixes": [
-    {"title": "O que manter", "items": ["<adicione os itens a manter aqui>"]},
-    {"title": "O que tirar", "items": ["<adicione os itens a tirar aqui>"]},
-    {"title": "Truque de Mestre", "items": ["<truque pratico aqui>"]},
-    {"title": "Substituição Cirúrgica", "items": ["<peca substituta aqui>"]},
-    {"title": "Versão Mais Ousada", "items": ["<visao ousada aqui>"]}
-  ],
   "shareCaption": "<escreva a frase curta de compartilhamento aqui>"
 }
 
 REGRAS EXTRAS:
 - NUNCA copie as diretrizes e instruções de dicas textualmente.
-- Seções (\`sections\`): NUNCA use números como "01 //" no \`title\`. O \`content\` nunca deve repetir o \`title\` no começo da frase. Escreva textos criativos, com diagnóstico técnico profundo, direto ao ponto e espetacular.
-- "premiumFixes" deve vir vazio [] ou omitido quando o modo não for premium.
+- Seções (\`sections\`): NUNCA use números como "01 //" no \`title\`. O \`content\` nunca deve repetir o \`title\` no começo da frase. Escreva textos criativos, com diagnóstico técnico profissional profundo, direto ao ponto e espetacular.
 - "fashionTips" deve ter prescrições acionáveis e COMPLETAMENTE DIFERENTES das sections — não repita a crítica. NUNCA apenas copie as instruções que eu te dei neste prompt.
 - "shareCaption" precisa soar como texto de story ou repost.
 `;
 
-  return `${baseInstruction}\n\n${contextInstruction}\n\n${extraInstruction}\n${rules}`;
+  return `${baseInstruction}\n\n${contextInstruction}\n\n${roastInstruction}\n${rules}`;
 };
 
 const extractJsonText = (content: unknown) => {
@@ -225,7 +189,7 @@ const extractJsonText = (content: unknown) => {
   return text;
 };
 
-const analyzeWithGemini = async (imageBase64: string, isPremium: boolean, context?: AnalysisContext) => {
+const analyzeWithGemini = async (imageBase64: string, context?: AnalysisContext) => {
   const apiKey = Deno.env.get("GEMINI_API_KEY");
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY não configurada.");
@@ -238,9 +202,7 @@ const analyzeWithGemini = async (imageBase64: string, isPremium: boolean, contex
       {
         parts: [
           {
-            text: isPremium
-              ? "Analise esse look. Seja cruel na critica mas entregue a reabilitacao completa. O usuario pagou pela salvacao."
-              : "Analise esse desastre. Seja tao cruel quanto Miranda no dia em que a Andy chegou. Destrua. De uma nota real.",
+            text: "Analise esse desastre. Seja tao cruel quanto Miranda no dia em que a Andy chegou. Destrua. De uma nota real.",
           },
           {
             inlineData: {
@@ -252,7 +214,7 @@ const analyzeWithGemini = async (imageBase64: string, isPremium: boolean, contex
       },
     ],
     config: {
-      systemInstruction: getGeminiSystemInstruction(isPremium, context),
+      systemInstruction: getGeminiSystemInstruction(context),
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,
@@ -274,27 +236,11 @@ const analyzeWithGemini = async (imageBase64: string, isPremium: boolean, contex
           fashionTips: {
             type: Type.ARRAY,
             items: { type: Type.STRING },
-            description: isPremium
-              ? "Lista contendo apenas as observacoes sinteticas reais."
-              : "Lista de ordens brutais geradas pela IA.",
+            description: "Lista de ordens brutais geradas pela IA.",
           },
           suggestedAccessories: {
             type: Type.ARRAY,
             items: { type: Type.STRING },
-          },
-          premiumFixes: {
-            type: Type.ARRAY,
-            description: isPremium
-              ? "5 grupos: O que manter / O que tirar / Truque de Mestre / Substituicao Cirurgica / Versao Mais Ousada"
-              : "Array vazio quando nao for premium.",
-            items: {
-              type: Type.OBJECT,
-              properties: {
-                title: { type: Type.STRING },
-                items: { type: Type.ARRAY, items: { type: Type.STRING } },
-              },
-              required: ["title", "items"],
-            },
           },
           shareCaption: {
             type: Type.STRING,
@@ -309,7 +255,7 @@ const analyzeWithGemini = async (imageBase64: string, isPremium: boolean, contex
   return response.text || "";
 };
 
-const analyzeWithMistral = async (imageBase64: string, isPremium: boolean, context?: AnalysisContext) => {
+const analyzeWithMistral = async (imageBase64: string, context?: AnalysisContext) => {
   const apiKey = Deno.env.get("MISTRAL_API_KEY");
   if (!apiKey) {
     throw new Error("MISTRAL_API_KEY não configurada.");
@@ -326,7 +272,7 @@ const analyzeWithMistral = async (imageBase64: string, isPremium: boolean, conte
     messages: [
       {
         role: "system",
-        content: getMistralSystemInstruction(isPremium, context),
+        content: getMistralSystemInstruction(context),
       },
       {
         role: "user",
@@ -360,7 +306,7 @@ serve(async (req) => {
   }
 
   try {
-    const { imageBase64, isPremium = false, context, provider = "gemini" } = (await req.json()) as AnalyzeLookRequest;
+    const { imageBase64, context, provider = "gemini" } = (await req.json()) as AnalyzeLookRequest;
 
     if (!imageBase64) {
       return jsonResponse({ error: "imageBase64 is required" }, 400);
@@ -368,9 +314,9 @@ serve(async (req) => {
 
     let result: string;
     if (provider === "gemini") {
-      result = await analyzeWithGemini(imageBase64, isPremium, context);
+      result = await analyzeWithGemini(imageBase64, context);
     } else if (provider === "mistral") {
-      result = await analyzeWithMistral(imageBase64, isPremium, context);
+      result = await analyzeWithMistral(imageBase64, context);
     } else {
       return jsonResponse({ error: "Unsupported provider" }, 400);
     }

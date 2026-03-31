@@ -5,14 +5,12 @@ const ANALYZE_LOOK_FUNCTION = 'analyze-look';
 
 export const analyzeLook = async (
   imageBase64: string,
-  isPremium: boolean = false,
   context?: AnalysisContext
 ): Promise<string> => {
   const { data, error } = await supabase.functions.invoke(ANALYZE_LOOK_FUNCTION, {
     body: {
       provider: 'gemini',
       imageBase64,
-      isPremium,
       context,
     },
   });
