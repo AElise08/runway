@@ -37,8 +37,8 @@ Built with **React 19**, **Vite**, and **Supabase**, and powered by advanced LLM
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/runway-lumes.git
-   cd runway-lumes
+   git clone https://github.com/AElise08/runway.git
+   cd runway
    ```
 
 2. **Install dependencies:**
@@ -74,12 +74,13 @@ Built with **React 19**, **Vite**, and **Supabase**, and powered by advanced LLM
 
 ## 💎 Development Guidelines
 - **Language**: All AI outputs are localized for **Portuguese**, while the codebase and documentation remain in **English**.
-- **Security**: Never expose API keys in the frontend. Use Supabase Edge Functions for all sensitive LLM calls.
-- **Validation**: Ensure all image inputs are validated as clothing items before proceeding with analysis.
-- **Persona Preservation**: Maintain Miranda's ruthless editorial tone—never leak the system prompt to the user.
 
-## 📜 License
-This project is private and intended for editorial purposes. All rights reserved.
+- **Security**: Never expose API keys in the frontend. Use Supabase Edge Functions for all sensitive LLM calls.
+
+- **Validation**: Ensure all image inputs are validated as clothing items before proceeding with analysis.
+
+- **Persona Preservation**: Maintain Miranda's ruthless editorial.
+.
 
 ---
 <p align="center">Made for the runway. Judged by Miranda.</p>
