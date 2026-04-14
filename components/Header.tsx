@@ -27,10 +27,7 @@ const Header: React.FC = () => {
           </nav>
 
           <div className="flex flex-col items-center justify-center flex-1">
-            <h1 className="text-xl md:text-3xl font-serif tracking-[0.05em] font-bold text-black whitespace-nowrap">Runway Lumes</h1>
-            <span className="text-[6px] md:text-[7px] uppercase tracking-[0.3em] text-black/40 font-black">
-              Season
-            </span>
+            <img src="/sapatos.png" alt="Sapatos The Devil Wears Prada" className="h-8 md:h-12 object-contain" />
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-3 md:gap-5">

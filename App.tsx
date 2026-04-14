@@ -694,10 +694,8 @@ const App: React.FC = () => {
               className="relative z-10 w-full max-w-6xl mx-auto pt-44 md:pt-56 px-4"
             >
               <div className="relative flex flex-col items-center text-center w-full">
-                <div className="max-w-4xl space-y-6 mt-8">
-                  <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif tracking-tight leading-[1] text-white font-bold drop-shadow-xl">
-                    Julgamento editorial.<br/>Sem falsos elogios.
-                  </h2>
+                <div className="max-w-4xl space-y-6 mt-8 flex flex-col items-center">
+                  <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full max-w-lg md:max-w-2xl object-contain drop-shadow-2xl" />
                   <p className="max-w-2xl mx-auto text-base md:text-xl text-white/90 leading-relaxed font-medium drop-shadow-md">
                     Comece a entender onde o seu look funciona e onde ele precisa de correção profissional em segundos.
                   </p>
