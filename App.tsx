@@ -74,36 +74,30 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
 ];
 
 const LANDING_PILLARS = [
-  {
-    title: 'Roast Compartilhavel',
-    body: 'Um veredito memoravel, visualmente forte e pronto para virar story antes da dignidade voltar.',
-  },
-  {
-    title: 'Desafios Tematicos',
-    body: 'Look de trabalho, date night e outros contextos para aumentar comparacao, curiosidade e retorno.',
-  },
-  {
-    title: 'Diagnostico Direto',
-    body: 'Receba um parecer editorial rapido, seco e compartilhavel sem cadastro, plano ou atrito.',
-  },
+  { title: '"Isso é compartilhável."', body: 'Veredito devastador que vai virar story antes da sua dignidade perceber.' },
+  { title: '"Escolha seu campo de batalha."', body: 'Trabalho, encontro, primeira impressão... Cada contexto tem seu nível de tragédia.' },
+  { title: '"Sem rodeios."', body: 'Parecer em segundos. Sem cadastro, sem plano. Miranda não tem paciência para formulários.' },
+  { title: '"Capa de revista ou humilhação pública."', body: 'Não existe meio termo. Ou o look merece destaque, ou merece documentação do fracasso.' },
+  { title: '"O veredito é incontestável."', body: 'Miranda não volta atrás. Aceite o resultado ou mude o look e tente de novo.' },
+  { title: '"Exportável para Stories."', body: 'Formato pronto para Instagram, TikTok e WhatsApp. Miranda quer que todos vejam.' },
+  { title: '"Zero filtros de empatia."', body: 'A IA foi treinada sem educação. Se quiser elogios, fale com sua mãe.' },
+  { title: '"Selo Miranda de Avaliação."', body: 'Cada look recebe uma nota de 0 a 100 e um selo editorial com assinatura.' },
+  { title: '"Diagnóstico em 3 segundos."', body: 'Miranda olha, julga e sentencia antes do café esfriar. A IA faz o mesmo.' },
+  { title: '"Vereditos colecionáveis."', body: 'Cada análise gera uma raridade: comum, rara ou lendária.' },
+  { title: '"Moda não perdoa."', body: 'Se o look for bom, Miranda acena. Se for ruim, alguém será demitido.' },
+  { title: '"Use quantas vezes quiser."', body: '3 análises gratuitas por dia. Amanhã Miranda volta a julgar.' },
+  { title: '"Dicas corretivas incluídas."', body: 'Cada veredito vem com conselho especializado. Arrogante, mas útil.' },
+  { title: '"Funciona com qualquer look."', body: 'Casual, social, esportivo ou fashion week. Miranda julga todos os universos.' },
+  { title: '"Feito para viralizar."', body: 'Quanto pior o veredito, mais compartilhável. A matemática do caos estético.' },
 ];
 
 const LANDING_FLOW = [
-  {
-    step: '01',
-    title: 'Escolha o contexto',
-    body: 'Defina se a analise sera geral, para trabalho, encontro, primeira impressao ou fashion week.',
-  },
-  {
-    step: '02',
-    title: 'Envie o look',
-    body: 'Use a camera ou importe uma foto e receba um Runway Index com comentario editorial.',
-  },
-  {
-    step: '03',
-    title: 'Compartilhe o veredito',
-    body: 'Exporte a capa e publique o julgamento enquanto a dignidade ainda esta em choque.',
-  },
+  { step: '01', title: 'Escolha o campo de batalha',
+    body: 'Trabalho, encontro, fashion week... Miranda adapta a crueldade ao contexto.' },
+  { step: '02', title: 'Envie o look',
+    body: 'Câmera ou galeria. Não faça Miranda esperar.' },
+  { step: '03', title: 'Receba sua capa',
+    body: 'Veredito editorial + capa de revista exclusiva. Publique nos Stories e aguarde as consequências.' },
 ];
 
 const DAILY_USAGE_LIMIT = 3;
@@ -676,28 +670,43 @@ const App: React.FC = () => {
     return () => stopCamera();
   }, []);
 
+  // Lipstick cursor SVG (inline data URI)
+  const lipstickCursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='28' style='font-size:28px'%3E%F0%9F%92%84%3C/text%3E%3C/svg%3E") 4 28, auto`;
+
   return (
-    <div className={`min-h-screen transition-colors duration-1000 relative w-full cursor-[url('data:image/svg+xml;utf8,<svg_xmlns=\"http://www.w3.org/2000/svg\"_width=\"32\"_height=\"32\"_style=\"font-size:24px\"><text_y=\"24\">💄</text></svg>'),_auto] ${state === 'idle' ? 'bg-[#FAFAFA] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
+    <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-white text-[#111111] selection:bg-[#B71C1C] selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`} style={{ cursor: lipstickCursor }}>
       <Header />
 
       <main className="w-full">
         {state === 'idle' && (
           <div className="animate-in fade-in duration-1000 w-full flex flex-col items-center">
-            {/* Full-width seamless hero background */}
+            {/* Hero background — Deep red runway */}
             <div className="absolute top-0 left-0 w-full h-[85vh] md:h-[95vh] z-0 pointer-events-none overflow-hidden">
-               <img src="/fashion-bg.png" alt="Editorial Fashion Frame" className="w-full h-full object-cover object-top opacity-95" />
-               <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-[#FAFAFA]" />
+               <div className="w-full h-full bg-gradient-to-b from-[#7A0000] via-[#8B0000] to-[#5C0000]" />
+               {/* RUNWAY watermark */}
+               <div className="absolute top-[15%] left-1/2 -translate-x-1/2 whitespace-nowrap select-none">
+                 <span className="text-[18vw] font-serif font-bold text-white/[0.08] tracking-tighter uppercase" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>RUNWAY</span>
+               </div>
+               {/* Subtle grain texture */}
+               <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
+               {/* Bottom fade to white */}
+               <div className="absolute bottom-0 left-0 w-full h-[30%] bg-gradient-to-t from-white to-transparent" />
             </div>
 
             <div
               id="landing-hero"
-              className="relative z-10 w-full max-w-6xl mx-auto pt-44 md:pt-56 px-4"
+              className="relative z-10 w-full max-w-6xl mx-auto pt-32 md:pt-44 px-4"
             >
               <div className="relative flex flex-col items-center text-center w-full">
-                <div className="max-w-4xl space-y-6 mt-8 flex flex-col items-center">
-                  <div className="w-full h-24 md:h-32"></div> {/* Spacer para o logo que já está no background */}
-                  <p className="max-w-2xl mx-auto text-base md:text-xl text-white/90 leading-relaxed font-medium drop-shadow-md">
-                    Comece a entender onde o seu look funciona e onde ele precisa de correção profissional em segundos.
+                <div className="max-w-4xl space-y-5 mt-8 flex flex-col items-center">
+                  <p className="text-[11px] md:text-[13px] uppercase tracking-[0.4em] text-white/70 font-black">
+                    O julgamento que você não pediu, mas merece
+                  </p>
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white tracking-tight leading-[1.05] drop-shadow-xl">
+                    Você na capa da <span className="italic">Runway.</span>
+                  </h2>
+                  <p className="max-w-2xl mx-auto text-base md:text-lg text-white/80 leading-relaxed font-medium">
+                    Envie seu look. Receba o veredito de Miranda Priestly. Sua capa de revista sai de qualquer jeito — com elogio ou humilhação.
                   </p>
                 </div>
 
@@ -715,8 +724,8 @@ const App: React.FC = () => {
                             onClick={() => setSelectedChallengeKey(challenge.key)}
                             className={`rounded-xl border px-3 py-3 md:py-4 text-center transition-all ${
                               selectedChallenge.key === challenge.key
-                                ? 'border-black bg-black text-white shadow-md scale-100'
-                                : 'border-black/10 bg-[#FAFAFA] text-black/60 hover:bg-black/5 hover:text-black scale-[0.98]'
+                                ? 'border-[#B71C1C] bg-[#B71C1C] text-white shadow-md scale-100'
+                                : 'border-black/10 bg-[#FAFAFA] text-black/60 hover:bg-[#B71C1C]/5 hover:text-[#B71C1C] scale-[0.98]'
                             }`}
                           >
                             <span className="block text-[10px] md:text-xs font-bold leading-tight">
@@ -734,12 +743,12 @@ const App: React.FC = () => {
                       <button
                         onClick={startCamera}
                         disabled={isLimitReached}
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl w-full sm:w-auto disabled:opacity-50 disabled:pointer-events-none"
+                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#B71C1C] text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:bg-[#8B0000] w-full sm:w-auto disabled:opacity-50 disabled:pointer-events-none"
                       >
-                        Usar a Câmera
+                        Mostrar o Look
                       </button>
-                    <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-black/20 bg-white text-black font-bold text-sm transition-all hover:bg-black/5 w-full sm:w-auto">
-                      Importar Foto
+                    <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-[#B71C1C]/30 bg-white text-[#B71C1C] font-bold text-sm transition-all hover:bg-[#B71C1C]/5 w-full sm:w-auto">
+                      Já Tenho Foto
                       <input
                         type="file"
                         accept="image/*"
@@ -749,7 +758,7 @@ const App: React.FC = () => {
                     </label>
                   </div>
                     <div className="flex flex-col items-center gap-1 mt-2">
-                      <span className="text-xs text-white/80 drop-shadow-sm font-semibold">
+                      <span className="text-xs text-black/50 font-semibold">
                         {remainingUses} de {DAILY_USAGE_LIMIT} análises gratuitas restantes hoje
                       </span>
                       {isLimitReached && (
@@ -771,40 +780,41 @@ const App: React.FC = () => {
         )}
 
         <section id="landing-benefits" className="max-w-6xl mx-auto mt-16 md:mt-24 px-4 relative z-10">
-              <div className="bg-[#111111] text-white rounded-[2.5rem] px-6 py-12 md:px-16 md:py-20 shadow-2xl relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+              <div className="bg-white rounded-[2.5rem] px-6 py-12 md:px-16 md:py-20 relative overflow-hidden border border-black/5">
                 
                 <div className="max-w-3xl mx-auto text-center space-y-4 relative z-10">
-                  <h3 className="text-3xl md:text-5xl font-serif font-bold text-white tracking-tight">O que você ganha</h3>
-                  <p className="text-white/60 text-base md:text-lg">
-                    Simplificamos a avaliação de imagem. Foco no que realmente importa, com ferramentas inteligentes.
+                  <p className="text-[11px] uppercase tracking-[0.4em] text-[#B71C1C] font-black">"Isso é tudo."</p>
+                  <h3 className="text-3xl md:text-5xl font-serif font-bold text-black tracking-tight">Por que se submeter a isso?</h3>
+                  <p className="text-black/50 text-base md:text-lg">
+                    Miranda não negocia. Ela julga. Estas são as regras.
                   </p>
                 </div>
                 
-                <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                  {LANDING_PILLARS.map((pillar) => (
-                    <div key={pillar.title} className="rounded-2xl bg-white/5 border border-white/5 p-8 transition-all hover:bg-white/10">
-                      <div className="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center font-bold text-lg mb-6">
-                        +
+                <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 relative z-10">
+                  {LANDING_PILLARS.map((pillar, i) => (
+                    <div key={pillar.title} className="rounded-2xl bg-[#FFF5F5] border border-[#D32F2F]/10 p-6 transition-all hover:border-[#D32F2F]/30 hover:shadow-md group">
+                      <div className="w-10 h-10 rounded-lg bg-[#B71C1C] text-white flex items-center justify-center font-bold text-sm mb-4">
+                        {String(i + 1).padStart(2, '0')}
                       </div>
-                      <h4 className="text-xl font-bold text-white mb-3">{pillar.title}</h4>
-                      <p className="text-white/50 text-sm leading-relaxed">{pillar.body}</p>
+                      <h4 className="text-base font-bold text-black mb-2 font-serif italic">{pillar.title}</h4>
+                      <p className="text-black/50 text-sm leading-relaxed">{pillar.body}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </section>
 
-            <section id="landing-flow" className="max-w-5xl mx-auto mt-20 md:mt-32 mb-10">
+            <section id="landing-flow" className="max-w-5xl mx-auto mt-20 md:mt-32 mb-10 px-4">
               <div className="text-center space-y-4 mb-16">
+                <p className="text-[11px] uppercase tracking-[0.4em] text-[#B71C1C] font-black">Procedimento</p>
                 <h3 className="text-3xl md:text-4xl font-serif font-bold text-black">Como Funciona</h3>
-                <p className="text-black/50 text-base">Receba seu veredito editorial em três passos rápidos.</p>
+                <p className="text-black/50 text-base">Três passos. Miranda não espera mais que isso.</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
                 {LANDING_FLOW.map((item, index) => (
                   <div key={item.step} className="flex flex-col items-center text-center group">
-                    <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                    <div className="w-16 h-16 rounded-full bg-[#B71C1C] text-white flex items-center justify-center text-xl font-bold mb-6 group-hover:scale-110 transition-transform shadow-lg">
                       {index + 1}
                     </div>
                     <h4 className="text-xl font-bold text-black mb-3">{item.title}</h4>
@@ -814,18 +824,23 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <section className="w-full bg-[#050505] text-white py-24 md:py-32 rounded-t-[3rem] mt-32 text-center">
-              <div className="max-w-3xl mx-auto px-6">
-                <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Sua imagem editorial no automático.</h3>
-                <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
-                  A avaliação final está a um clique no botão abaixo.
+            <section className="w-full bg-[#8B0000] text-white py-24 md:py-32 rounded-t-[3rem] mt-32 text-center relative overflow-hidden">
+              {/* Subtle RUNWAY watermark */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap select-none pointer-events-none">
+                <span className="text-[14vw] font-serif font-bold text-white/[0.06] tracking-tighter uppercase" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>RUNWAY</span>
+              </div>
+              <div className="max-w-3xl mx-auto px-6 relative z-10">
+                <p className="text-[11px] uppercase tracking-[0.4em] text-white/50 font-black mb-6">"Estou esperando."</p>
+                <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6">A audiência começa agora.</h3>
+                <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto">
+                  Miranda está esperando. E ela não gosta de esperar.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="px-10 py-4 bg-white text-black font-bold uppercase text-xs tracking-widest rounded-full hover:-translate-y-1 transition-transform"
+                    className="px-10 py-4 bg-white text-[#8B0000] font-bold uppercase text-xs tracking-widest rounded-full hover:-translate-y-1 hover:shadow-xl transition-all"
                   >
-                    Abrir a Câmera
+                    Estou Pronta.
                   </button>
                 </div>
               </div>
@@ -1280,6 +1295,13 @@ const App: React.FC = () => {
             <a href="#" className="hover:text-white transition-colors">London</a>
           </div>
         </div>
+
+        <p className="text-[9px] text-white/25 text-center max-w-2xl leading-relaxed mt-8">
+          Este site é um projeto de fã independente e NÃO tem afiliação oficial com Disney,
+          20th Century Studios ou com os proprietários de "O Diabo Veste Prada".
+          Todos os direitos das marcas mencionadas pertencem a seus respectivos detentores.
+          Imagens utilizadas são do site oficial público do filme.
+        </p>
       </footer>
     </div>
   );
