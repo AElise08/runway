@@ -810,17 +810,8 @@ const App: React.FC = () => {
               />
               <div className="absolute inset-0 bg-black/10"></div>
               
-              <div className="relative z-10 max-w-5xl mx-auto px-4 py-20 md:py-32 flex justify-center">
-                <div className="bg-white p-10 md:p-16 max-w-3xl text-center shadow-2xl border border-black/5">
-                  <h3 className="text-3xl md:text-5xl font-serif font-bold text-black mb-6">Spring Eternal</h3>
-                  <div className="w-12 h-[1px] bg-[#B71C1C] mx-auto mb-8"></div>
-                  <p className="text-black/70 text-sm md:text-base leading-relaxed font-serif">
-                    Every spring, fashion's perennial ritual unfolds: florals return to the runway, appearing in prints, embroidery and three-dimensional appliqués. From delicate petals cascading across silk dresses to bold oversized blooms on structured coats, designers consistently turn to the garden as a source of inspiration. But this repetition is far from predictable. It is a reflection of something deeply human: our desire for renewal, optimism and transformation after the long winter months.
-                  </p>
-                  <p className="mt-8 text-[11px] uppercase tracking-[0.4em] text-[#B71C1C] font-black">
-                    "Florals? For spring? Groundbreaking."
-                  </p>
-                </div>
+              <div className="relative z-10 w-full h-[400px] md:h-[600px]">
+                {/* Apenas a imagem de fundo agora é vista nesta seção */}
               </div>
             </section>
 
@@ -1301,7 +1292,7 @@ const App: React.FC = () => {
       <footer className="w-full bg-white border-t border-black/5 text-black/50 py-16 px-12 flex flex-col items-center justify-center gap-12 md:gap-16 transition-all duration-1000 z-50">
         
         <div className="flex justify-center w-full max-w-lg mb-8">
-          <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full object-contain opacity-70 hover:opacity-100 transition-opacity" style={{ filter: 'brightness(0) invert(0.1)' }} />
+          <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full object-contain opacity-70 hover:opacity-100 transition-opacity" />
         </div>
 
         <div className="flex flex-col md:flex-row justify-between w-full max-w-6xl items-center gap-12">
