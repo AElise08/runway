@@ -677,7 +677,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-[#FAFAFA] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
+    <div className={`min-h-screen transition-colors duration-1000 relative w-full cursor-[url('data:image/svg+xml;utf8,<svg_xmlns=\"http://www.w3.org/2000/svg\"_width=\"32\"_height=\"32\"_style=\"font-size:24px\"><text_y=\"24\">💄</text></svg>'),_auto] ${state === 'idle' ? 'bg-[#FAFAFA] text-[#111111] selection:bg-black selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`}>
       <Header />
 
       <main className="w-full">
@@ -695,7 +695,7 @@ const App: React.FC = () => {
             >
               <div className="relative flex flex-col items-center text-center w-full">
                 <div className="max-w-4xl space-y-6 mt-8 flex flex-col items-center">
-                  <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full max-w-lg md:max-w-2xl object-contain drop-shadow-2xl" />
+                  <div className="w-full h-24 md:h-32"></div> {/* Spacer para o logo que já está no background */}
                   <p className="max-w-2xl mx-auto text-base md:text-xl text-white/90 leading-relaxed font-medium drop-shadow-md">
                     Comece a entender onde o seu look funciona e onde ele precisa de correção profissional em segundos.
                   </p>
@@ -1263,15 +1263,22 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <footer className="w-full bg-[#050505] text-white/50 py-16 px-12 flex flex-col md:flex-row justify-between items-center gap-12 md:gap-16 transition-all duration-1000 z-50">
-        <div className="text-[10px] uppercase tracking-[1em] font-light">
-          &copy; {new Date().getFullYear()} Runway Lumes Group
+      <footer className="w-full bg-[#050505] text-white/50 py-16 px-12 flex flex-col items-center justify-center gap-12 md:gap-16 transition-all duration-1000 z-50">
+        
+        <div className="flex justify-center w-full max-w-lg mb-8">
+          <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
         </div>
-        <div className="flex flex-wrap justify-center gap-8 md:gap-20 text-[10px] uppercase tracking-[0.6em] font-black opacity-80">
-          <a href="#" className="hover:text-white transition-colors">Paris</a>
-          <a href="#" className="hover:text-white transition-colors">Milan</a>
-          <a href="#" className="hover:text-white transition-colors">New York</a>
-          <a href="#" className="hover:text-white transition-colors">London</a>
+
+        <div className="flex flex-col md:flex-row justify-between w-full max-w-6xl items-center gap-12">
+          <div className="text-[10px] uppercase tracking-[1em] font-light">
+            &copy; {new Date().getFullYear()} Runway Lumes Group
+          </div>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-20 text-[10px] uppercase tracking-[0.6em] font-black opacity-80">
+            <a href="#" className="hover:text-white transition-colors">Paris</a>
+            <a href="#" className="hover:text-white transition-colors">Milan</a>
+            <a href="#" className="hover:text-white transition-colors">New York</a>
+            <a href="#" className="hover:text-white transition-colors">London</a>
+          </div>
         </div>
       </footer>
     </div>

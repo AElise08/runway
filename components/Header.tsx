@@ -5,55 +5,49 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
-      <div className="rounded-[2.5rem] bg-white text-[#111111] shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col transition-all duration-300">
-        
-        <div className="px-4 py-3 md:px-8 md:py-4 flex items-center justify-between">
-          
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex flex-1 items-center justify-start">
+    <header className="absolute top-0 left-0 w-full z-50 bg-white shadow-sm font-serif">
+      <div className="flex flex-col w-full">
+        {/* Top bar with RUNWAY logo */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-black/10">
+          <div className="flex-1"></div>
+          <div className="flex-1 flex justify-center">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-black tracking-tighter" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>
+              RUNWAY
+            </h1>
+          </div>
+          <div className="flex flex-1 justify-end">
             <button 
-              className="p-2 -ml-2 text-black/70 hover:text-black focus:outline-none"
+              className="p-2 text-black hover:opacity-70 transition-opacity focus:outline-none"
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
+              {isOpen ? <X size={24} /> : <Menu size={24} strokeWidth={1.5} />}
             </button>
           </div>
+        </div>
 
-          <nav className="hidden md:flex flex-1 items-center gap-8 text-[11px] font-semibold text-[#111111]/70">
-            <a href="#landing-hero" className="hover:text-black transition-colors">Veredito</a>
-            <a href="#landing-benefits" className="hover:text-black transition-colors">Diferenciais</a>
-            <a href="#landing-flow" className="hover:text-black transition-colors">Como Funciona</a>
-          </nav>
-
-          <div className="flex flex-col items-center justify-center flex-1">
-            <img src="/sapatos.png" alt="Sapatos The Devil Wears Prada" className="h-8 md:h-12 object-contain" />
-          </div>
-
-          <div className="flex flex-1 items-center justify-end gap-3 md:gap-5">
-            <a
-              href="#landing-hero"
-              className="inline-block px-4 py-2 md:px-6 md:py-3 rounded-full bg-[#0d0d0d] text-white text-[10px] md:text-[11px] font-semibold hover:bg-black transition-colors shadow-md whitespace-nowrap"
-            >
-              Comecar
-            </a>
-          </div>
-
+        {/* Bottom bar with categories and shoes */}
+        <div className="hidden md:flex items-center justify-center gap-12 py-3 border-b border-black/10">
+          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Fashion</a>
+          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Beauty</a>
+          <img src="/sapatos.png" alt="Sapatos The Devil Wears Prada" className="h-6 md:h-8 object-contain" />
+          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">People</a>
+          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Travel</a>
         </div>
 
         {/* Collapsible Mobile Menu */}
         <div 
-          className={`overflow-hidden transition-all duration-300 md:hidden ${
-            isOpen ? 'max-h-64 opacity-100 mb-4' : 'max-h-0 opacity-0'
+          className={`overflow-hidden transition-all duration-300 md:hidden bg-white border-b border-black/10 ${
+            isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 border-transparent'
           }`}
         >
-          <div className="flex flex-col items-center gap-4 pt-4 pb-2 px-4 border-t border-black/5">
-            <a href="#landing-hero" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Veredito</a>
-            <a href="#landing-benefits" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Diferenciais</a>
-            <a href="#landing-flow" onClick={() => setIsOpen(false)} className="text-[14px] font-semibold text-[#111111]/80 hover:text-black">Como Funciona</a>
+          <div className="flex flex-col items-center gap-4 py-6">
+            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Fashion</a>
+            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Beauty</a>
+            <img src="/sapatos.png" alt="Sapatos" className="h-6 object-contain my-1" />
+            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">People</a>
+            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Travel</a>
           </div>
         </div>
-
       </div>
     </header>
   );
