@@ -27,11 +27,11 @@ const Header: React.FC = () => {
 
         {/* Bottom bar with categories and shoes */}
         <div className="hidden md:flex items-center justify-center gap-12 py-3 border-b border-black/10">
-          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Fashion</a>
-          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Beauty</a>
+          <a href="https://runwayonline.com/fashion" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Fashion</a>
+          <a href="https://runwayonline.com/beauty" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Beauty</a>
           <img src="/sapatos.png" alt="Sapatos The Devil Wears Prada" className="h-6 md:h-8 object-contain" />
-          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">People</a>
-          <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Travel</a>
+          <a href="https://runwayonline.com/people" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">People</a>
+          <a href="https://runwayonline.com/travel" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60 transition-opacity">Travel</a>
         </div>
 
         {/* Collapsible Mobile Menu */}
@@ -41,11 +41,11 @@ const Header: React.FC = () => {
           }`}
         >
           <div className="flex flex-col items-center gap-4 py-6">
-            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Fashion</a>
-            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Beauty</a>
+            <a href="https://runwayonline.com/fashion" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Fashion</a>
+            <a href="https://runwayonline.com/beauty" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Beauty</a>
             <img src="/sapatos.png" alt="Sapatos" className="h-6 object-contain my-1" />
-            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">People</a>
-            <a href="#" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Travel</a>
+            <a href="https://runwayonline.com/people" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">People</a>
+            <a href="https://runwayonline.com/travel" target="_blank" rel="noopener noreferrer" className="text-black text-xs font-bold uppercase tracking-widest hover:opacity-60">Travel</a>
           </div>
         </div>
       </div>

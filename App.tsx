@@ -76,19 +76,7 @@ const CHALLENGE_OPTIONS: ChallengeOption[] = [
 const LANDING_PILLARS = [
   { title: '"Isso é compartilhável."', body: 'Veredito devastador que vai virar story antes da sua dignidade perceber.' },
   { title: '"Escolha seu campo de batalha."', body: 'Trabalho, encontro, primeira impressão... Cada contexto tem seu nível de tragédia.' },
-  { title: '"Sem rodeios."', body: 'Parecer em segundos. Sem cadastro, sem plano. Miranda não tem paciência para formulários.' },
-  { title: '"Capa de revista ou humilhação pública."', body: 'Não existe meio termo. Ou o look merece destaque, ou merece documentação do fracasso.' },
   { title: '"O veredito é incontestável."', body: 'Miranda não volta atrás. Aceite o resultado ou mude o look e tente de novo.' },
-  { title: '"Exportável para Stories."', body: 'Formato pronto para Instagram, TikTok e WhatsApp. Miranda quer que todos vejam.' },
-  { title: '"Zero filtros de empatia."', body: 'A IA foi treinada sem educação. Se quiser elogios, fale com sua mãe.' },
-  { title: '"Selo Miranda de Avaliação."', body: 'Cada look recebe uma nota de 0 a 100 e um selo editorial com assinatura.' },
-  { title: '"Diagnóstico em 3 segundos."', body: 'Miranda olha, julga e sentencia antes do café esfriar. A IA faz o mesmo.' },
-  { title: '"Vereditos colecionáveis."', body: 'Cada análise gera uma raridade: comum, rara ou lendária.' },
-  { title: '"Moda não perdoa."', body: 'Se o look for bom, Miranda acena. Se for ruim, alguém será demitido.' },
-  { title: '"Use quantas vezes quiser."', body: '3 análises gratuitas por dia. Amanhã Miranda volta a julgar.' },
-  { title: '"Dicas corretivas incluídas."', body: 'Cada veredito vem com conselho especializado. Arrogante, mas útil.' },
-  { title: '"Funciona com qualquer look."', body: 'Casual, social, esportivo ou fashion week. Miranda julga todos os universos.' },
-  { title: '"Feito para viralizar."', body: 'Quanto pior o veredito, mais compartilhável. A matemática do caos estético.' },
 ];
 
 const LANDING_FLOW = [
@@ -670,8 +658,16 @@ const App: React.FC = () => {
     return () => stopCamera();
   }, []);
 
-  // Lipstick cursor SVG (inline data URI)
-  const lipstickCursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='28' style='font-size:28px'%3E%F0%9F%92%84%3C/text%3E%3C/svg%3E") 4 28, auto`;
+  // Lipstick cursor SVG (polished vector graphic)
+  const lipstickSVG = `<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <g transform="rotate(-30 16 16)">
+      <rect x="12" y="18" width="8" height="12" rx="1" fill="#111111" />
+      <rect x="11.5" y="16" width="9" height="4" fill="#D4AF37" />
+      <path d="M12 16V8C12 8 16 4 19 2C20 8 20 16 20 16H12Z" fill="#D32F2F" />
+      <rect x="13" y="19" width="1.5" height="10" fill="#444" opacity="0.5" />
+    </g>
+  </svg>`.replace(/\n|\r/g, '');
+  const lipstickCursor = `url("data:image/svg+xml;utf8,${encodeURIComponent(lipstickSVG)}") 4 4, auto`;
 
   return (
     <div className={`min-h-screen transition-colors duration-1000 relative w-full ${state === 'idle' ? 'bg-white text-[#111111] selection:bg-[#B71C1C] selection:text-white' : 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black'}`} style={{ cursor: lipstickCursor }}>
@@ -680,8 +676,8 @@ const App: React.FC = () => {
       <main className="w-full">
         {state === 'idle' && (
           <div className="animate-in fade-in duration-1000 w-full flex flex-col items-center">
-            {/* Hero background — Deep red runway */}
-            <div className="absolute top-0 left-0 w-full h-[85vh] md:h-[95vh] z-0 pointer-events-none overflow-hidden">
+            {/* Hero background — Deep red runway expanded */}
+            <div className="absolute top-0 left-0 w-full h-[95vh] md:h-[110vh] z-0 pointer-events-none overflow-hidden">
                <div className="w-full h-full bg-gradient-to-b from-[#7A0000] via-[#8B0000] to-[#5C0000]" />
                {/* RUNWAY watermark */}
                <div className="absolute top-[15%] left-1/2 -translate-x-1/2 whitespace-nowrap select-none">
@@ -695,7 +691,7 @@ const App: React.FC = () => {
 
             <div
               id="landing-hero"
-              className="relative z-10 w-full max-w-6xl mx-auto pt-32 md:pt-44 px-4"
+              className="relative z-10 w-full max-w-6xl mx-auto pt-36 md:pt-48 px-4"
             >
               <div className="relative flex flex-col items-center text-center w-full">
                 <div className="max-w-4xl space-y-5 mt-8 flex flex-col items-center">
@@ -1278,10 +1274,10 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <footer className="w-full bg-[#050505] text-white/50 py-16 px-12 flex flex-col items-center justify-center gap-12 md:gap-16 transition-all duration-1000 z-50">
+      <footer className="w-full bg-white border-t border-black/5 text-black/50 py-16 px-12 flex flex-col items-center justify-center gap-12 md:gap-16 transition-all duration-1000 z-50">
         
         <div className="flex justify-center w-full max-w-lg mb-8">
-          <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
+          <img src="/info.png" alt="The Devil Wears Prada 2" className="w-full object-contain opacity-70 hover:opacity-100 transition-opacity" style={{ filter: 'brightness(0) invert(0.1)' }} />
         </div>
 
         <div className="flex flex-col md:flex-row justify-between w-full max-w-6xl items-center gap-12">
@@ -1289,14 +1285,14 @@ const App: React.FC = () => {
             &copy; {new Date().getFullYear()} Runway Lumes Group
           </div>
           <div className="flex flex-wrap justify-center gap-8 md:gap-20 text-[10px] uppercase tracking-[0.6em] font-black opacity-80">
-            <a href="#" className="hover:text-white transition-colors">Paris</a>
-            <a href="#" className="hover:text-white transition-colors">Milan</a>
-            <a href="#" className="hover:text-white transition-colors">New York</a>
-            <a href="#" className="hover:text-white transition-colors">London</a>
+            <a href="https://runwayonline.com/paris" className="hover:text-black transition-colors">Paris</a>
+            <a href="https://runwayonline.com/milan" className="hover:text-black transition-colors">Milan</a>
+            <a href="https://runwayonline.com/ny" className="hover:text-black transition-colors">New York</a>
+            <a href="https://runwayonline.com/london" className="hover:text-black transition-colors">London</a>
           </div>
         </div>
 
-        <p className="text-[9px] text-white/25 text-center max-w-2xl leading-relaxed mt-8">
+        <p className="text-[9px] text-black/30 text-center max-w-2xl leading-relaxed mt-8">
           Este site é um projeto de fã independente e NÃO tem afiliação oficial com Disney,
           20th Century Studios ou com os proprietários de "O Diabo Veste Prada".
           Todos os direitos das marcas mencionadas pertencem a seus respectivos detentores.
