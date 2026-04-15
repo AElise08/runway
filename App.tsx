@@ -602,7 +602,7 @@ const App: React.FC = () => {
     if (!exportRef.current) return null;
     const canvas = await html2canvas(exportRef.current, {
       useCORS: true,
-      backgroundColor: '#1A1A1A',
+      backgroundColor: '#0A0A0A',
       scale: 2,
       width: 1080,
       height: 1620,
@@ -1198,88 +1198,112 @@ const App: React.FC = () => {
       {/* Export Template - Hidden from view */}
       {result && exportImage && (
         <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1620px', pointerEvents: 'none' }}>
-          <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-white bg-[#1A1A1A]">
+          <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-white bg-[#0A0A0A]">
 
-            {/* Background: Solid editorial gradient (no person duplication) */}
+            {/* Layer 0: Blurred original image as atmosphere background */}
             <div className="absolute inset-0 z-0">
-              <div className="w-full h-full bg-gradient-to-b from-[#2a0a0a] via-[#1a0505] to-[#0a0a0a]" />
-              <div className="absolute inset-0 bg-gradient-radial from-[#8B0000]/20 via-transparent to-transparent" />
-              <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
+              <img
+                src={exportImage}
+                alt=""
+                className="w-full h-full object-cover"
+                style={{ filter: 'blur(40px) saturate(0.7) brightness(0.35)', transform: 'scale(1.15)' }}
+              />
             </div>
 
-            {/* Masthead: "RUNWAY" — BEHIND the person (z-12, below person cutout at z-14) */}
-            <div className="absolute top-0 left-0 right-0 z-[12] flex justify-center w-full pt-6">
-              <h1 className="text-[14rem] tracking-[-0.03em] leading-none text-white drop-shadow-2xl opacity-90 uppercase text-center" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif", letterSpacing: '-0.02em' }}>
+            {/* Layer 1: Dark tonal gradient over blurred bg */}
+            <div className="absolute inset-0 z-[1]">
+              <div className="w-full h-full bg-gradient-to-b from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/80" />
+              {/* Subtle red glow top-right corner for editorial warmth */}
+              <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-20"
+                style={{ background: 'radial-gradient(circle, rgba(139,0,0,0.5) 0%, transparent 70%)' }} />
+              {/* Film grain texture */}
+              <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
+            </div>
+
+            {/* Layer 2: Masthead "RUNWAY" — BEHIND the person */}
+            <div className="absolute top-0 left-0 right-0 z-[10] flex justify-center w-full pt-4">
+              <h1 className="text-[14.5rem] tracking-[-0.03em] leading-none text-white uppercase text-center" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif", letterSpacing: '-0.02em', textShadow: '0 4px 60px rgba(0,0,0,0.5)' }}>
                 RUNWAY
               </h1>
             </div>
 
-            {/* Person cutout — foreground layer IN FRONT of RUNWAY text */}
+            {/* Layer 3: Person cutout — IN FRONT of RUNWAY text, positioned naturally */}
             {foregroundImage && (
-              <div className="absolute inset-0 z-[14]">
+              <div className="absolute inset-0 z-[14] flex items-end justify-center">
                 <img
                   src={foregroundImage}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="w-full h-[93%] object-contain object-bottom"
+                  style={{ filter: 'contrast(1.05) brightness(1.02)' }}
                 />
               </div>
             )}
 
-            {/* Fallback: original image if segmentation hasn't finished yet */}
+            {/* Fallback: original image if segmentation hasn't finished */}
             {!foregroundImage && (
               <div className="absolute inset-0 z-[14]">
                 <img
                   src={exportImage}
                   alt=""
                   className="w-full h-full object-cover"
+                  style={{ filter: 'contrast(1.08)' }}
                 />
               </div>
             )}
 
-            {/* Gradient overlay for depth — above person and masthead */}
-            <div className="absolute inset-0 z-[15] bg-gradient-to-b from-black/30 via-transparent to-[#1A1A1A]/90 pointer-events-none"></div>
+            {/* Layer 4: Top gradient — subtle, just enough for masthead */}
+            <div className="absolute top-0 left-0 right-0 h-[350px] z-[15] pointer-events-none"
+              style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, transparent 100%)' }} />
 
-            {/* Editorial metadata — integrated, not a sticker */}
-            <div className="absolute top-[340px] left-16 z-20 flex flex-col items-start">
-               <span className="text-white/80 tracking-[0.5em] text-[22px] font-semibold uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Issue No. 4</span>
-               <div className="w-12 h-[2px] bg-[#D32F2F]/70 my-3"></div>
-               <span className="text-white/60 tracking-[0.4em] text-[18px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>The Critical Edition</span>
+            {/* Layer 5: Bottom gradient — stronger, text readability */}
+            <div className="absolute bottom-0 left-0 right-0 h-[650px] z-[15] pointer-events-none"
+              style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.75) 30%, rgba(10,10,10,0.3) 60%, transparent 100%)' }} />
+
+            {/* Layer 6: Side vignette for depth */}
+            <div className="absolute inset-0 z-[15] pointer-events-none"
+              style={{ boxShadow: 'inset 0 0 200px 60px rgba(0,0,0,0.3)' }} />
+
+            {/* Editorial metadata — Issue + Edition */}
+            <div className="absolute top-[310px] left-16 z-[20] flex flex-col items-start">
+               <span className="text-white/85 tracking-[0.5em] text-[22px] font-semibold uppercase" style={{ fontFamily: "'Inter', sans-serif", textShadow: '0 2px 10px rgba(0,0,0,0.6)' }}>Issue No. 4</span>
+               <div className="w-12 h-[2px] bg-[#D32F2F] my-3"></div>
+               <span className="text-white/65 tracking-[0.4em] text-[18px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif", textShadow: '0 2px 10px rgba(0,0,0,0.6)' }}>The Critical Edition</span>
             </div>
 
-            {/* Campaign info — editorial text, no box/border */}
-            <div className="absolute top-[340px] right-16 z-20 text-right">
-              <span className="text-white/70 tracking-[0.4em] text-[18px] font-semibold uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
+            {/* Campaign info — top right */}
+            <div className="absolute top-[310px] right-16 z-[20] text-right">
+              <span className="text-white/70 tracking-[0.4em] text-[18px] font-semibold uppercase" style={{ fontFamily: "'Inter', sans-serif", textShadow: '0 2px 10px rgba(0,0,0,0.6)' }}>
                 {campaignState.isLive ? 'Runway Lumes · Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
               </span>
             </div>
 
             {/* ── HEADLINE ZONE — Bottom of cover ── */}
-            <div className="absolute bottom-[140px] left-16 right-16 z-30">
-              {/* Thin red accent line */}
-              <div className="w-16 h-[2px] bg-[#D32F2F] mb-5"></div>
-              {/* Primary Headline — Didot serif, impactful */}
-              <h2 className="text-white text-[4.2rem] leading-[1.02] tracking-tight drop-shadow-2xl max-w-[820px]" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif" }}>
+            <div className="absolute bottom-[130px] left-16 right-16 z-[30]">
+              {/* Red accent line */}
+              <div className="w-16 h-[3px] bg-[#D32F2F] mb-6"></div>
+              {/* Primary Headline */}
+              <h2 className="text-white text-[4.8rem] leading-[0.98] tracking-tight max-w-[850px]" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif", textShadow: '0 4px 30px rgba(0,0,0,0.7)' }}>
                 {result.coverHeadline || editorialVerdict?.title}
               </h2>
-              {/* Optional subline — Inter sans-serif, clean */}
+              {/* Subline */}
               {(result.coverSubline) && (
-                <p className="mt-4 text-white/65 text-[1.05rem] tracking-[0.02em] max-w-[560px] leading-snug" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
+                <p className="mt-5 text-white/60 text-[1.1rem] tracking-[0.02em] max-w-[580px] leading-snug" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                   {result.coverSubline}
                 </p>
               )}
             </div>
 
-            {/* ── MINIMAL INFO BAR — Bottom strip ── */}
-            <div className="absolute bottom-[45px] left-16 right-16 z-30 flex items-center justify-between">
+            {/* ── BOTTOM INFO BAR ── */}
+            <div className="absolute bottom-[40px] left-16 right-16 z-[30] flex items-center justify-between">
               <div className="flex items-center gap-6">
-                {/* Score — clean pill, doubled size */}
-                <div className="flex items-center gap-3 bg-[#8B0000]/75 border border-white/20 px-7 py-3 rounded-full">
+                {/* Score pill */}
+                <div className="flex items-center gap-3 bg-[#8B0000]/80 border border-white/15 px-7 py-3 rounded-full" style={{ boxShadow: '0 4px 20px rgba(139,0,0,0.3)' }}>
                   <span className="text-white text-[2.6rem] font-bold leading-none" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif" }}>{result.rating}%</span>
                 </div>
-                {/* Meta labels — Inter sans */}
-                <span className="text-white/45 text-[16px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>{activeChallenge.frameLabel}</span>
+                {/* Meta labels */}
+                <span className="text-white/50 text-[16px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>{activeChallenge.frameLabel}</span>
                 <span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>
-                <span className="text-white/45 text-[16px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Runway Lumes</span>
+                <span className="text-white/50 text-[16px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Runway Lumes</span>
               </div>
               {/* Barcode */}
               <div className="flex flex-col items-end gap-1">
