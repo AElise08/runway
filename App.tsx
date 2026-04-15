@@ -1199,61 +1199,63 @@ const App: React.FC = () => {
               <div className="absolute inset-0 opacity-10 mix-blend-overlay z-[11]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
             </div>
 
-            {/* Masthead: "RUNWAY" */}
-            <div className="absolute top-12 left-0 right-0 z-20 flex justify-center w-full px-12">
-              <h1 className="text-[10rem] font-serif tracking-tighter leading-none text-white drop-shadow-2xl mix-blend-difference opacity-90 uppercase" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>
+            {/* Masthead: "RUNWAY" — Full-width Didot, oversized like reference */}
+            <div className="absolute top-0 left-0 right-0 z-20 flex justify-center w-full pt-6">
+              <h1 className="text-[14rem] tracking-[-0.03em] leading-none text-white drop-shadow-2xl mix-blend-difference opacity-95 uppercase text-center" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif", letterSpacing: '-0.02em' }}>
                 RUNWAY
               </h1>
             </div>
 
-            {/* Magazine Headers — compact */}
-            <div className="absolute top-[280px] left-16 z-20 flex flex-col items-start uppercase">
-               <span className="text-white/80 tracking-[0.6em] text-sm font-bold border-b border-[#D32F2F] pb-2 mb-2">Issue No. 4</span>
-               <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
+            {/* Editorial metadata — integrated, not a sticker */}
+            <div className="absolute top-[280px] left-16 z-20 flex flex-col items-start">
+               <span className="text-white/70 tracking-[0.5em] text-[11px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Issue No. 4</span>
+               <div className="w-8 h-[1px] bg-[#D32F2F]/60 my-2"></div>
+               <span className="text-white/50 tracking-[0.35em] text-[10px] uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>The Critical Edition</span>
             </div>
 
-            <div className="absolute top-[276px] right-16 z-20">
-              <div className="border border-[#D32F2F]/50 bg-[#240303]/80 px-5 py-3 uppercase tracking-[0.35em] text-[10px] font-black text-[#FFD8D8]">
-                {campaignState.isLive ? 'Runway Lumes Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
-              </div>
+            {/* Campaign info — editorial text, no box/border */}
+            <div className="absolute top-[280px] right-16 z-20 text-right">
+              <span className="text-white/55 tracking-[0.4em] text-[10px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {campaignState.isLive ? 'Runway Lumes · Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
+              </span>
             </div>
 
             {/* ── HEADLINE ZONE — Bottom of cover ── */}
-            <div className="absolute bottom-[160px] left-16 right-16 z-30">
-              {/* Divider line */}
-              <div className="w-20 h-[3px] bg-[#D32F2F] mb-6"></div>
-              {/* Primary Headline — the single strong phrase */}
-              <h2 className="text-white text-[3.8rem] font-serif italic leading-[1.05] tracking-tight drop-shadow-2xl max-w-[800px]" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>
+            <div className="absolute bottom-[140px] left-16 right-16 z-30">
+              {/* Thin red accent line */}
+              <div className="w-16 h-[2px] bg-[#D32F2F] mb-5"></div>
+              {/* Primary Headline — Didot serif, impactful */}
+              <h2 className="text-white text-[4.2rem] leading-[1.02] tracking-tight drop-shadow-2xl max-w-[820px]" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif" }}>
                 {result.coverHeadline || editorialVerdict?.title}
               </h2>
-              {/* Optional subline */}
+              {/* Optional subline — Inter sans-serif, clean */}
               {(result.coverSubline) && (
-                <p className="mt-4 text-white/70 text-lg font-medium tracking-wide max-w-[600px] leading-snug">
+                <p className="mt-4 text-white/65 text-[1.05rem] tracking-[0.02em] max-w-[560px] leading-snug" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
                   {result.coverSubline}
                 </p>
               )}
             </div>
 
             {/* ── MINIMAL INFO BAR — Bottom strip ── */}
-            <div className="absolute bottom-[60px] left-16 right-16 z-30 flex items-center justify-between">
+            <div className="absolute bottom-[50px] left-16 right-16 z-30 flex items-center justify-between">
               <div className="flex items-center gap-5">
-                {/* Score pill */}
-                <div className="flex items-center gap-2 bg-[#8B0000]/80 border border-[#FFD6D6]/40 px-5 py-2 rounded-full">
-                  <span className="text-white text-2xl font-serif italic font-bold leading-none">{result.rating}%</span>
+                {/* Score — clean pill */}
+                <div className="flex items-center gap-2 bg-[#8B0000]/70 border border-white/15 px-5 py-2 rounded-full">
+                  <span className="text-white text-xl font-bold leading-none" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif" }}>{result.rating}%</span>
                 </div>
-                {/* Meta dots */}
-                <span className="text-white/40 text-[10px] uppercase tracking-[0.3em] font-black">{activeChallenge.frameLabel}</span>
-                <span className="w-1.5 h-1.5 bg-[#D32F2F] rounded-full"></span>
-                <span className="text-white/40 text-[10px] uppercase tracking-[0.3em] font-black">Runway Lumes</span>
+                {/* Meta labels — Inter sans */}
+                <span className="text-white/35 text-[9px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>{activeChallenge.frameLabel}</span>
+                <span className="w-1 h-1 bg-white/25 rounded-full"></span>
+                <span className="text-white/35 text-[9px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Runway Lumes</span>
               </div>
               {/* Barcode */}
-              <div className="flex flex-col items-end gap-2">
+              <div className="flex flex-col items-end gap-1">
                 <div className="bg-white p-2 shadow-xl">
                   <div className="flex flex-col items-center">
-                    <div className="w-28 h-8 flex gap-[2px] items-end justify-between px-1">
-                       {[...Array(28)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 2.5 + 0.8 + 'px'}}></div>)}
+                    <div className="w-24 h-7 flex gap-[2px] items-end justify-between px-1">
+                       {[...Array(24)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 2.2 + 0.6 + 'px'}}></div>)}
                     </div>
-                    <div className="w-full flex justify-between text-[8px] font-mono tracking-widest pt-1 font-bold text-black mt-0.5 border-t border-black/20">
+                    <div className="w-full flex justify-between text-[7px] font-mono tracking-widest pt-0.5 font-bold text-black mt-0.5 border-t border-black/15">
                       <span>ISSN 8921</span>
                       <span>MIRANDA</span>
                     </div>
