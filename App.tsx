@@ -1207,15 +1207,15 @@ const App: React.FC = () => {
             </div>
 
             {/* Editorial metadata — integrated, not a sticker */}
-            <div className="absolute top-[360px] left-16 z-20 flex flex-col items-start">
-               <span className="text-white/70 tracking-[0.5em] text-[11px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Issue No. 4</span>
-               <div className="w-8 h-[1px] bg-[#D32F2F]/60 my-2"></div>
-               <span className="text-white/50 tracking-[0.35em] text-[10px] uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>The Critical Edition</span>
+            <div className="absolute top-[340px] left-16 z-20 flex flex-col items-start">
+               <span className="text-white/80 tracking-[0.5em] text-[22px] font-semibold uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Issue No. 4</span>
+               <div className="w-12 h-[2px] bg-[#D32F2F]/70 my-3"></div>
+               <span className="text-white/60 tracking-[0.4em] text-[18px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>The Critical Edition</span>
             </div>
 
             {/* Campaign info — editorial text, no box/border */}
-            <div className="absolute top-[360px] right-16 z-20 text-right">
-              <span className="text-white/55 tracking-[0.4em] text-[10px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <div className="absolute top-[340px] right-16 z-20 text-right">
+              <span className="text-white/70 tracking-[0.4em] text-[18px] font-semibold uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
                 {campaignState.isLive ? 'Runway Lumes · Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
               </span>
             </div>
@@ -1237,25 +1237,25 @@ const App: React.FC = () => {
             </div>
 
             {/* ── MINIMAL INFO BAR — Bottom strip ── */}
-            <div className="absolute bottom-[50px] left-16 right-16 z-30 flex items-center justify-between">
-              <div className="flex items-center gap-5">
-                {/* Score — clean pill */}
-                <div className="flex items-center gap-2 bg-[#8B0000]/70 border border-white/15 px-5 py-2 rounded-full">
-                  <span className="text-white text-xl font-bold leading-none" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif" }}>{result.rating}%</span>
+            <div className="absolute bottom-[45px] left-16 right-16 z-30 flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                {/* Score — clean pill, doubled size */}
+                <div className="flex items-center gap-3 bg-[#8B0000]/75 border border-white/20 px-7 py-3 rounded-full">
+                  <span className="text-white text-[2.6rem] font-bold leading-none" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif" }}>{result.rating}%</span>
                 </div>
                 {/* Meta labels — Inter sans */}
-                <span className="text-white/35 text-[9px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>{activeChallenge.frameLabel}</span>
-                <span className="w-1 h-1 bg-white/25 rounded-full"></span>
-                <span className="text-white/35 text-[9px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Runway Lumes</span>
+                <span className="text-white/45 text-[16px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>{activeChallenge.frameLabel}</span>
+                <span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>
+                <span className="text-white/45 text-[16px] uppercase tracking-[0.3em]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Runway Lumes</span>
               </div>
               {/* Barcode */}
               <div className="flex flex-col items-end gap-1">
-                <div className="bg-white p-2 shadow-xl">
+                <div className="bg-white p-2.5 shadow-xl">
                   <div className="flex flex-col items-center">
-                    <div className="w-24 h-7 flex gap-[2px] items-end justify-between px-1">
-                       {[...Array(24)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 2.2 + 0.6 + 'px'}}></div>)}
+                    <div className="w-28 h-8 flex gap-[2px] items-end justify-between px-1">
+                       {[...Array(28)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 2.2 + 0.6 + 'px'}}></div>)}
                     </div>
-                    <div className="w-full flex justify-between text-[7px] font-mono tracking-widest pt-0.5 font-bold text-black mt-0.5 border-t border-black/15">
+                    <div className="w-full flex justify-between text-[8px] font-mono tracking-widest pt-0.5 font-bold text-black mt-0.5 border-t border-black/15">
                       <span>ISSN 8921</span>
                       <span>MIRANDA</span>
                     </div>
