@@ -4,6 +4,7 @@ import Header from './components/Header';
 import VerdictBadge from './components/VerdictBadge';
 import { analyzeLook as analyzeLookGemini } from './services/geminiService';
 import { analyzeLook as analyzeLookMistral } from './services/mistralService';
+import { createPersonCutout } from './services/segmentationService';
 import { AnalysisContext, CritiqueResult, AppState } from './types';
 import { RefreshCw, Quote, Sparkles, X, CameraOff, Clock, Download, Share2 } from 'lucide-react';
 
@@ -328,6 +329,7 @@ const App: React.FC = () => {
   const [state, setState] = useState<AppState | 'camera'>('idle');
   const [image, setImage] = useState<string | null>(null);
   const [exportImage, setExportImage] = useState<string | null>(null);
+  const [foregroundImage, setForegroundImage] = useState<string | null>(null);
   const [result, setResult] = useState<CritiqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
@@ -443,6 +445,11 @@ const App: React.FC = () => {
         });
         setExportImage(exportDataUrl);
 
+        // Segmentação da pessoa — roda em paralelo com a IA, não bloqueia
+        createPersonCutout(exportDataUrl).then(cutout => {
+          if (cutout) setForegroundImage(cutout);
+        }).catch(() => { /* graceful degradation — capa funciona sem cutout */ });
+
         // Compressão apenas para a IA, preservando proporção original.
         const apiDataUrl = createImageDataUrl({
           source: canvas,
@@ -494,6 +501,11 @@ const App: React.FC = () => {
             quality: 1.0,
           });
           setExportImage(exportDataUrl);
+
+          // Segmentação da pessoa — roda em paralelo com a IA
+          createPersonCutout(exportDataUrl).then(cutout => {
+            if (cutout) setForegroundImage(cutout);
+          }).catch(() => {});
 
           const apiDataUrl = createImageDataUrl({
             source: img,
@@ -581,6 +593,7 @@ const App: React.FC = () => {
     setState('idle');
     setImage(null);
     setExportImage(null);
+    setForegroundImage(null);
     setResult(null);
     setError(null);
   };
@@ -1187,24 +1200,44 @@ const App: React.FC = () => {
         <div style={{ position: 'absolute', top: 0, left: '-9999px', width: '1080px', height: '1620px', pointerEvents: 'none' }}>
           <div ref={exportRef} className="w-[1080px] h-[1620px] relative flex flex-col overflow-hidden font-sans text-white bg-[#1A1A1A]">
 
-            {/* Background Image / Photography */}
+            {/* Background: Solid editorial gradient (no person duplication) */}
             <div className="absolute inset-0 z-0">
-              <div 
-                className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${exportImage})` }}
-              />
-              {/* Rich saturated contrast mapping - Vogue meets street culture */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#1A1A1A] z-10 pointer-events-none"></div>
-              {/* Added subtle texture/grain overlay */}
-              <div className="absolute inset-0 opacity-10 mix-blend-overlay z-[11]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
+              <div className="w-full h-full bg-gradient-to-b from-[#2a0a0a] via-[#1a0505] to-[#0a0a0a]" />
+              <div className="absolute inset-0 bg-gradient-radial from-[#8B0000]/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
             </div>
 
-            {/* Masthead: "RUNWAY" — Full-width Didot, oversized like reference */}
-            <div className="absolute top-0 left-0 right-0 z-20 flex justify-center w-full pt-6">
-              <h1 className="text-[14rem] tracking-[-0.03em] leading-none text-white drop-shadow-2xl mix-blend-difference opacity-95 uppercase text-center" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif", letterSpacing: '-0.02em' }}>
+            {/* Masthead: "RUNWAY" — BEHIND the person (z-12, below person cutout at z-14) */}
+            <div className="absolute top-0 left-0 right-0 z-[12] flex justify-center w-full pt-6">
+              <h1 className="text-[14rem] tracking-[-0.03em] leading-none text-white drop-shadow-2xl opacity-90 uppercase text-center" style={{ fontFamily: "'GFS Didot', Didot, 'Playfair Display', serif", letterSpacing: '-0.02em' }}>
                 RUNWAY
               </h1>
             </div>
+
+            {/* Person cutout — foreground layer IN FRONT of RUNWAY text */}
+            {foregroundImage && (
+              <div className="absolute inset-0 z-[14]">
+                <img
+                  src={foregroundImage}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Fallback: original image if segmentation hasn't finished yet */}
+            {!foregroundImage && (
+              <div className="absolute inset-0 z-[14]">
+                <img
+                  src={exportImage}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Gradient overlay for depth — above person and masthead */}
+            <div className="absolute inset-0 z-[15] bg-gradient-to-b from-black/30 via-transparent to-[#1A1A1A]/90 pointer-events-none"></div>
 
             {/* Editorial metadata — integrated, not a sticker */}
             <div className="absolute top-[340px] left-16 z-20 flex flex-col items-start">
