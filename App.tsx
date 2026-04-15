@@ -811,7 +811,7 @@ const App: React.FC = () => {
 
             <section className="w-full relative my-32">
               <div 
-                className="absolute inset-0 w-full h-full bg-cover bg-center bg-fixed"
+                className="absolute inset-0 w-full h-full bg-cover bg-center bg-scroll md:bg-fixed"
                 style={{ backgroundImage: 'url("/spring-florals.png")' }}
               />
               <div className="absolute inset-0 bg-black/10"></div>
@@ -1207,14 +1207,14 @@ const App: React.FC = () => {
             </div>
 
             {/* Editorial metadata — integrated, not a sticker */}
-            <div className="absolute top-[280px] left-16 z-20 flex flex-col items-start">
+            <div className="absolute top-[360px] left-16 z-20 flex flex-col items-start">
                <span className="text-white/70 tracking-[0.5em] text-[11px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>Issue No. 4</span>
                <div className="w-8 h-[1px] bg-[#D32F2F]/60 my-2"></div>
                <span className="text-white/50 tracking-[0.35em] text-[10px] uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>The Critical Edition</span>
             </div>
 
             {/* Campaign info — editorial text, no box/border */}
-            <div className="absolute top-[280px] right-16 z-20 text-right">
+            <div className="absolute top-[360px] right-16 z-20 text-right">
               <span className="text-white/55 tracking-[0.4em] text-[10px] font-medium uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
                 {campaignState.isLive ? 'Runway Lumes · Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
               </span>
