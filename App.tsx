@@ -541,6 +541,12 @@ const App: React.FC = () => {
         if (!Array.isArray(parsed.sections)) parsed.sections = [];
         if (!Array.isArray(parsed.fashionTips)) parsed.fashionTips = [];
         if (!Array.isArray(parsed.suggestedAccessories)) parsed.suggestedAccessories = [];
+        // coverHeadline fallback: use editorial verdict pool title if AI didn't provide one
+        if (!parsed.coverHeadline) {
+          const fallbackMeta = getEditorialVerdictMeta(parsed);
+          parsed.coverHeadline = fallbackMeta.title;
+        }
+        if (!parsed.coverSubline) parsed.coverSubline = '';
       } catch (_parseErr) {
         console.error('JSON inválido da IA - resposta não parseável');
         throw new Error('Miranda teve um surto e a resposta saiu incoerente. Tente novamente.');
@@ -1200,7 +1206,7 @@ const App: React.FC = () => {
               </h1>
             </div>
 
-            {/* Additional Magazine Headers */}
+            {/* Magazine Headers — compact */}
             <div className="absolute top-[280px] left-16 z-20 flex flex-col items-start uppercase">
                <span className="text-white/80 tracking-[0.6em] text-sm font-bold border-b border-[#D32F2F] pb-2 mb-2">Issue No. 4</span>
                <span className="text-white/60 tracking-[0.4em] text-xs">The Critical Edition</span>
@@ -1210,77 +1216,47 @@ const App: React.FC = () => {
               <div className="border border-[#D32F2F]/50 bg-[#240303]/80 px-5 py-3 uppercase tracking-[0.35em] text-[10px] font-black text-[#FFD8D8]">
                 {campaignState.isLive ? 'Runway Lumes Live' : `Runway Lumes · ${campaignState.countdownLabel}`}
               </div>
-              <p className="mt-3 text-right text-[10px] uppercase tracking-[0.35em] text-white/55 font-black">
-                {activeChallenge.label}
-              </p>
             </div>
 
-            {/* Primary Headlines & Asymmetrical Grid */}
-            <div className="absolute top-[380px] left-16 z-30 max-w-[500px]">
-              <div className="space-y-3">
-                <p className="text-[#FFB0B0] text-sm font-black uppercase tracking-[0.45em]">
-                  {editorialVerdict?.strapline}
+            {/* ── HEADLINE ZONE — Bottom of cover ── */}
+            <div className="absolute bottom-[160px] left-16 right-16 z-30">
+              {/* Divider line */}
+              <div className="w-20 h-[3px] bg-[#D32F2F] mb-6"></div>
+              {/* Primary Headline — the single strong phrase */}
+              <h2 className="text-white text-[3.8rem] font-serif italic leading-[1.05] tracking-tight drop-shadow-2xl max-w-[800px]" style={{ fontFamily: 'Didot, "Times New Roman", Times, serif' }}>
+                {result.coverHeadline || editorialVerdict?.title}
+              </h2>
+              {/* Optional subline */}
+              {(result.coverSubline) && (
+                <p className="mt-4 text-white/70 text-lg font-medium tracking-wide max-w-[600px] leading-snug">
+                  {result.coverSubline}
                 </p>
-                <p className="text-white text-4xl font-bold uppercase tracking-[0.18em] mix-blend-difference leading-tight">
-                  {editorialVerdict?.title}
-                </p>
-                <div className="w-16 h-1 bg-[#D32F2F] mt-2 mb-2"></div>
-                <p className="text-white/90 text-sm uppercase tracking-widest font-medium">Share cut for Stories, Reels and Status.</p>
-              </div>
+              )}
             </div>
 
-            {/* Score Element - Selo Miranda */}
-            <div className="absolute top-[400px] right-16 z-30">
-              <div className="w-56 h-56 rounded-full bg-[#8B0000]/88 backdrop-blur-sm flex flex-col justify-center items-center shadow-[0_0_60px_rgba(139,0,0,0.45)] border-[3px] border-[#FFD6D6]/90 p-2 relative overflow-hidden group">
-                <div className="absolute inset-2 rounded-full border border-[#FFD6D6]/45 dashed outline-dashed outline-1 outline-[#FFD6D6]/30"></div>
-                <div className="z-10 flex flex-col items-center">
-                  <p className="text-white/90 text-[11px] font-bold uppercase tracking-[0.4em] mb-1 text-center">
-                    SELO MIRANDA<br/>DE AVALIAÇÃO
-                  </p>
-                  <p className="text-white text-7xl font-serif italic font-black leading-none my-2 drop-shadow-lg">{result.rating}%</p>
-                  <div className="flex gap-1 items-center justify-center">
-                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
-                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
-                    <span className="w-2 h-2 rounded-full bg-[#D32F2F]"></span>
-                  </div>
+            {/* ── MINIMAL INFO BAR — Bottom strip ── */}
+            <div className="absolute bottom-[60px] left-16 right-16 z-30 flex items-center justify-between">
+              <div className="flex items-center gap-5">
+                {/* Score pill */}
+                <div className="flex items-center gap-2 bg-[#8B0000]/80 border border-[#FFD6D6]/40 px-5 py-2 rounded-full">
+                  <span className="text-white text-2xl font-serif italic font-bold leading-none">{result.rating}%</span>
                 </div>
+                {/* Meta dots */}
+                <span className="text-white/40 text-[10px] uppercase tracking-[0.3em] font-black">{activeChallenge.frameLabel}</span>
+                <span className="w-1.5 h-1.5 bg-[#D32F2F] rounded-full"></span>
+                <span className="text-white/40 text-[10px] uppercase tracking-[0.3em] font-black">Runway Lumes</span>
               </div>
-            </div>
-
-            {/* Critical Commentary Box */}
-            <div className="absolute bottom-[280px] left-16 right-16 z-30 bg-[#1A1A1A]/80 backdrop-blur-md border-l-8 border-[#D32F2F] p-8 shadow-2xl">
-               <h3 className="text-white text-[28px] font-serif italic leading-[1.5] text-left opacity-95">
-                 &ldquo;{result.lead}&rdquo;
-               </h3>
-            </div>
-
-            {/* Section Labels & Secondary Info */}
-            <div className="absolute bottom-[80px] left-16 z-30 max-w-[700px] flex gap-4 items-stretch">
-               <div className="w-2 bg-[#D32F2F] flex-shrink-0 mt-1"></div>
-               <div className="py-1">
-                  <h4 className="text-white text-xl font-bold uppercase tracking-[0.2em] mb-1 shadow-black drop-shadow-md">{result.sections[0]?.title}</h4>
-                  <p className="text-white/80 text-sm leading-relaxed" style={{ display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{result.sections[0]?.content}</p>
-               </div>
-            </div>
-
-            <div className="absolute bottom-[84px] right-16 z-30 text-right max-w-[250px]">
-              <p className="text-[10px] uppercase tracking-[0.35em] text-[#FFB0B0] font-black">Runway Lumes App</p>
-              <p className="mt-2 text-white/75 text-sm leading-relaxed">
-                {result.shareCaption || `Miranda me deu ${result.rating}% e um ${editorialVerdict?.title.toLowerCase()}.`}
-              </p>
-            </div>
-
-            {/* Bottom Elements: Barcode */}
-            <div className="absolute bottom-12 right-16 z-40 flex flex-col items-end gap-2">
-              <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em]">RUNWAY INFO</p>
-              <div className="bg-white p-3 shadow-xl">
-                <div className="flex flex-col items-center">
-                  <div className="w-40 h-12 flex gap-[2px] items-end justify-between px-1">
-                     {[...Array(35)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 3 + 1 + 'px'}}></div>)}
-                  </div>
-                  <div className="w-full flex justify-between text-[10px] font-mono tracking-widest pt-1 font-bold text-black mt-1 border-t border-black/20">
-                    <span>ISSN 8921</span>
-                    <span>MIRANDA</span>
+              {/* Barcode */}
+              <div className="flex flex-col items-end gap-2">
+                <div className="bg-white p-2 shadow-xl">
+                  <div className="flex flex-col items-center">
+                    <div className="w-28 h-8 flex gap-[2px] items-end justify-between px-1">
+                       {[...Array(28)].map((_,i) => <div key={i} className="bg-black h-full" style={{width: Math.random() * 2.5 + 0.8 + 'px'}}></div>)}
+                    </div>
+                    <div className="w-full flex justify-between text-[8px] font-mono tracking-widest pt-1 font-bold text-black mt-0.5 border-t border-black/20">
+                      <span>ISSN 8921</span>
+                      <span>MIRANDA</span>
+                    </div>
                   </div>
                 </div>
               </div>

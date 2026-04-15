@@ -20,6 +20,8 @@ Devolva uma resposta em JSON com a estrutura exata:
   "verdict": "The Nod" (se for aceitável) ou "The Purse Drop" (se for horrível),
   "rating": número de 0 a 100,
   "lead": "Uma frase de efeito matadora",
+  "coverHeadline": "Manchete de capa de revista, 4 a 8 palavras, impactante e cruel. Ex: Demitida Antes Do Café, Milagre Couture Inesperado",
+  "coverSubline": "Frase secundária curta, máximo 12 palavras. Complementa a manchete. Ex: O look que fez Miranda suspirar de decepção",
   "shareCaption": "Uma frase curta para story no instagram, bem humilhante",
   "sections": [{"title": "O Desastre", "content": "Descrição"}],
   "fashionTips": ["Dica 1 cruel", "Dica 2 seca"],

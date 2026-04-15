@@ -19,6 +19,8 @@ Responda EXCLUSIVAMENTE com o seguinte JSON valid:
   "verdict": "The Nod" ou "The Purse Drop",
   "rating": número de 0 a 100,
   "lead": "Frase de efeito seca",
+  "coverHeadline": "Manchete de capa, 4 a 8 palavras, impactante. Ex: Demitida Antes Do Café",
+  "coverSubline": "Frase secundária curta, máximo 12 palavras",
   "shareCaption": "Legenda de instagram humilhante",
   "sections": [{"title": "Nome seco", "content": "Análise impiedosa"}],
   "fashionTips": ["Dica de correção 1"],
