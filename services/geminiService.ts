@@ -27,9 +27,9 @@ REGRAS DE JULGAMENTO:
 Devolva uma resposta em JSON com a estrutura exata:
 {
   "verdict": "The Nod" (look com mérito editorial real) ou "The Purse Drop" (look que ofende seus olhos),
-  "rating": número de 0 a 100 (seja RIGOROSA — 50 já é um look decente, 80+ é excepcional),
-  "lead": "Uma frase de efeito devastadora, como uma sentença editorial. Curta e seca.",
-  "coverHeadline": "Manchete de capa de revista, 4 a 8 palavras, impactante e cruel. Ex: Demitida Antes Do Café, Crime Contra A Silhueta",
+  "rating": número de 0 a 100 (seja RIGOROSA — 50 já é um look decente, 75+ é excepcional),
+  "lead": "Uma frase de efeito devastadora, como uma sentença editorial. Curta, icônica e seca.",
+  "coverHeadline": "Manchete de capa de revista, 4 a 8 palavras, impactante e cruel. Ex: Demitida Antes Do Café, Crime Contra A Moda, Audâcia Chamar Isso De Roupa",
   "coverSubline": "Frase secundária curta, máximo 12 palavras. Complementa a manchete.",
   "shareCaption": "Frase curta e humilhante para story do instagram, em português",
   "sections": [{"title": "Título seco e editorial", "content": "Análise impiedosa e detalhada de cada peça visível — tecido, caimento, cor, proporção. Mencione marcas de referência quando relevante."}],

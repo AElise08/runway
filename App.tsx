@@ -88,20 +88,6 @@ const LANDING_FLOW = [
     body: 'Veredito editorial + capa de revista exclusiva. Publique nos Stories e aguarde as consequências.' },
 ];
 
-const DAILY_USAGE_LIMIT = 3;
-
-const getTodayUsageCount = () => {
-  const today = new Date().toDateString();
-  const savedDate = localStorage.getItem('miranda_usage_date');
-  if (savedDate !== today) {
-    localStorage.setItem('miranda_usage_date', today);
-    localStorage.setItem('miranda_usage_count', '0');
-    return 0;
-  }
-  const saved = localStorage.getItem('miranda_usage_count');
-  return saved ? parseInt(saved, 10) : 0;
-};
-
 const EDITORIAL_HERO_BACKGROUND = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
   <svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="1600" height="1200" fill="#050505"/>
@@ -334,10 +320,6 @@ const App: React.FC = () => {
   const [selectedChallengeKey, setSelectedChallengeKey] = useState<ChallengeKey>('none');
   const [activeChallengeKey, setActiveChallengeKey] = useState<ChallengeKey>('none');
   const [isExporting, setIsExporting] = useState(false);
-  const [usageCount, setUsageCount] = useState<number>(() => {
-    if (typeof window === 'undefined') return 0;
-    return getTodayUsageCount();
-  });
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -349,14 +331,8 @@ const App: React.FC = () => {
   const showSharePrompt = result && editorialVerdict ? shouldPromptShare(result, editorialVerdict) : false;
   const selectedChallenge = getChallengeOption(selectedChallengeKey);
   const activeChallenge = getChallengeOption(activeChallengeKey);
-  const remainingUses = Math.max(0, DAILY_USAGE_LIMIT - usageCount);
-  const isLimitReached = usageCount >= DAILY_USAGE_LIMIT;
 
   const startCamera = async () => {
-    if (isLimitReached) {
-      setError('Limite diário de 3 análises atingido. Tente novamente amanhã.');
-      return;
-    }
     try {
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -554,10 +530,6 @@ const App: React.FC = () => {
 
       setResult(parsed);
 
-      const newCount = usageCount + 1;
-      setUsageCount(newCount);
-      localStorage.setItem('miranda_usage_count', newCount.toString());
-
       setState('result');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {
@@ -747,8 +719,7 @@ const App: React.FC = () => {
                   <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xl justify-center z-20">
                       <button
                         onClick={startCamera}
-                        disabled={isLimitReached}
-                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#B71C1C] text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:bg-[#8B0000] w-full sm:w-auto disabled:opacity-50 disabled:pointer-events-none"
+                        className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#B71C1C] text-white font-bold text-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:bg-[#8B0000] w-full sm:w-auto"
                       >
                         Mostrar o Look
                       </button>
@@ -762,16 +733,6 @@ const App: React.FC = () => {
                       />
                     </label>
                   </div>
-                    <div className="flex flex-col items-center gap-1 mt-2">
-                      <span className="text-xs text-black/50 font-semibold">
-                        {remainingUses} de {DAILY_USAGE_LIMIT} análises gratuitas restantes hoje
-                      </span>
-                      {isLimitReached && (
-                        <span className="text-[10px] text-[#FF7070] uppercase tracking-[0.25em]">
-                          Limite atingido, volte amanhã.
-                        </span>
-                      )}
-                    </div>
                   </div>
                 </div>
             </div>

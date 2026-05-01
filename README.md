@@ -1,86 +1,75 @@
-# 👠 Runway — Project Miranda
-**The AI Fashion Editor with an Attitude.**
+# Runway Lumes
 
----
+Runway Lumes is a React/Vite fashion critique app inspired by the Runway/Miranda editorial persona. The user uploads or captures a look, picks a challenge context, receives a harsh Portuguese critique from an AI model, and can export/share a magazine-cover style result.
 
-## 📸 Overview
-**Project Miranda** is a high-end fashion AI application designed to provide ruthless editorial critiques and expert styling advice. Inspired by the world of haute couture and fashion editorial, Miranda doesn't just analyze your look—she diagnoses your style with surgical precision.
+## Current Stack
 
-Built with **React 19**, **Vite**, and **Supabase**, and powered by advanced LLMs (**Google Gemini** and **Mistral AI**), this project delivers a sharp and authentic experience for fashion enthusiasts seeking serious editorial feedback.
+- React 19 + TypeScript + Vite
+- Tailwind-style utility classes through the loaded runtime CSS in `index.html`
+- `lucide-react` for icons
+- `html2canvas` for cover export/share images
+- Google Gemini as the primary AI provider
+- Mistral Pixtral as the fallback AI provider
 
-## ✨ Features
-- **Editorial Diagnosis**: Get a sharp, technical, and brutally honest critique of your outfit across different contexts (Office, Date Night, Fashion Week, etc.).
-- **Dual AI Engine**: Seamless integration with **Google Gemini** and **Mistral AI** via Supabase Edge Functions for reliable analysis.
-- **Snap & Share**: Capture and export your analysis results as high-quality covers with built-in `html2canvas` support.
-- **Responsive Design**: A sleek, modern UI tailored for both desktop and mobile high-fashion experiences.
+## Important Files
 
-## 🛠️ Technology Stack
-- **Frontend**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
-- **Styling**: Vanilla CSS with modern aesthetics
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Backend / Infrastructure**: [Supabase](https://supabase.com/) (Database & Edge Functions)
-- **AI Models**:
-  - [Google Gemini API](https://ai.google.dev/)
-  - [Mistral AI API](https://mistral.ai/)
-- **Imaging**: [html2canvas](https://html2canvas.hertzen.com/)
+- `App.tsx`: main experience, state machine, camera/upload flow, local daily limit, result rendering, export/share logic, and most UI copy.
+- `services/geminiService.ts`: primary image analysis call using `gemini-2.5-flash`.
+- `services/mistralService.ts`: fallback image analysis call using `pixtral-12b-2409`.
+- `types.ts`: shared result/context types expected from the AI response.
+- `components/Header.tsx`: top navigation/header.
+- `components/VerdictBadge.tsx`: verdict pill styling.
+- `public/`: visual assets used by the app.
+- `vite.config.ts`: dev server config and env injection.
 
----
+## Local Setup
 
-## 🚀 Getting Started
+```bash
+npm install
+npm run dev
+```
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (Latest LTS recommended)
-- A [Supabase](https://supabase.com/) account
-- API Keys for Gemini and/or Mistral
+The dev server is configured for port `3000` and host `0.0.0.0`.
 
-### Local Setup
+For a production build:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/AElise08/runway.git
-   cd runway
-   ```
+```bash
+npm run build
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+## Environment Variables
 
-3. **Configure Environment Variables:**
-   Create a `.env` file in the root directory:
-   ```env
-   VITE_SUPABASE_URL=your_supabase_project_url
-   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
+The current code reads these values through Vite's `define` config:
 
-4. **Set Up Supabase Edge Functions:**
-   Configure your AI secrets directly in Supabase:
-   ```bash
-   supabase secrets set GEMINI_API_KEY=your_gemini_key
-   supabase secrets set MISTRAL_API_KEY=your_mistral_key
-   ```
+```env
+GEMINI_API_KEY=your_gemini_key
+MISTRAL_API_KEY=your_mistral_key
+```
 
-5. **Deploy the Analysis Function:**
-   ```bash
-   supabase functions deploy analyze-look
-   ```
+Important: this means the current frontend bundle can expose provider keys. For production, move AI calls behind a backend or Supabase Edge Function and keep secrets server-side. The older README mentioned Supabase Edge Functions, but there is no Supabase client/function code in this repo right now.
 
-6. **Run the Development Server:**
-   ```bash
-   npm run dev
-   ```
+## Product Behavior
 
----
+- There is no daily local usage limit; personal use is only constrained by provider API availability/quota.
+- Campaign release date is currently `2026-05-01T00:00:00`; after that date the app treats the campaign as live.
+- Challenge options are defined in `CHALLENGE_OPTIONS`: free roast, office, date night, first impression, and fashion week.
+- Images are resized separately for display/export and AI analysis:
+  - AI max dimension: `800`
+  - display max dimension: `1920`
+  - export max dimension: `3840`
+- Gemini is tried first. If it fails, the app falls back to Mistral.
+- The AI must return JSON matching `CritiqueResult`; `App.tsx` applies minimal fallbacks for missing fields.
+- Export/share uses a hidden cover DOM node rendered through `html2canvas`.
 
-## 💎 Development Guidelines
-- **Language**: All AI outputs are localized for **Portuguese**, while the codebase and documentation remain in **English**.
+## Maintenance Notes For Future Codex Work
 
-- **Security**: Never expose API keys in the frontend. Use Supabase Edge Functions for all sensitive LLM calls.
+- Keep Miranda's output in Portuguese unless the product direction changes.
+- Preserve the JSON contract in both AI prompts when changing result rendering.
+- If adding new required fields to `CritiqueResult`, update both provider prompts and the parse fallback in `processImage`.
+- Avoid putting secrets directly in the frontend before shipping publicly.
+- The repo intentionally ignores `node_modules`, `dist`, `.env*`, `.DS_Store`, and macOS `._*` metadata files.
+- `npm run build` currently succeeds, with a Vite warning that the main JS chunk is slightly over 500 kB.
 
-- **Validation**: Ensure all image inputs are validated as clothing items before proceeding with analysis.
+## Cleanup Done
 
-- **Persona Preservation**: Maintain Miranda's ruthless editorial.
-.
-
----
-<p align="center">Made for the runway. Judged by Miranda.</p>
+- Removed stray macOS AppleDouble metadata files (`._*`) from the working tree.
